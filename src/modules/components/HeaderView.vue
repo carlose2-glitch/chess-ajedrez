@@ -119,6 +119,13 @@
         >
           Ver partida
         </a>
+
+        <a
+          href="#"
+          class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2"
+        >
+          Iniciar sesion
+        </a>
       </div>
     </div>
   </div>
