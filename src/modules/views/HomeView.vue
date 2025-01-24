@@ -1,5 +1,9 @@
 <template>
-  <HeaderView />
+  <div class="flex flex-col">
+    <HeaderView />
+    <main></main>
+  </div>
+
   <h1 class="text-green-500">hola</h1>
 </template>
 

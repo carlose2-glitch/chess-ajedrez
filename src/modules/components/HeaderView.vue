@@ -1,58 +1,48 @@
 <template>
-  <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+  <nav class="bg-gray-800 border-gray-200 px-4 lg:px-6 py-2.5">
     <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-      <a href="https://flowbite.com" class="flex items-center">
+      <a href="#" class="flex items-center">
         <img
-          src="https://flowbite.com/docs/images/logo.svg"
+          src="../../images/logo-ajedrez-transparente.png"
           class="mr-3 h-6 sm:h-9"
           alt="Flowbite Logo"
         />
-        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
-          >Flowbite</span
+        <span class="self-center text-xl text-white font-semibold whitespace-nowrap dark:text-white"
+          >Chess</span
         >
       </a>
       <div class="flex items-center lg:order-2">
         <a
           href="#"
-          class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-          >Log in</a
+          class="text-white hidden lg:block hover:bg-gray-100 hover:text-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+          >Iniciar sesion</a
         >
-        <a
-          href="#"
-          class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-          >Get started</a
-        >
+
         <button
           data-collapse-toggle="mobile-menu-2"
           type="button"
-          class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="mobile-menu-2"
           aria-expanded="false"
         >
-          <span class="sr-only">Open main menu</span>
           <svg
+            @click="changeValue"
             class="w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
+            viewBox="0 0 14 14"
+            id="meteor-icon-kit__solid-bars-s"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              fill-rule="evenodd"
-              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-          <svg
-            class="hidden w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path>
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M1.5 3.5C0.67157 3.5 0 2.82843 0 2C0 1.17157 0.67157 0.5 1.5 0.5H12.5C13.3284 0.5 14 1.17157 14 2C14 2.82843 13.3284 3.5 12.5 3.5H1.5zM1.5 8.5C0.67157 8.5 0 7.8284 0 7C0 6.1716 0.67157 5.5 1.5 5.5H12.5C13.3284 5.5 14 6.1716 14 7C14 7.8284 13.3284 8.5 12.5 8.5H1.5zM1.5 13.5C0.67157 13.5 0 12.8284 0 12C0 11.1716 0.67157 10.5 1.5 10.5H12.5C13.3284 10.5 14 11.1716 14 12C14 12.8284 13.3284 13.5 12.5 13.5H1.5z"
+                fill="#ede8e8"
+              ></path>
+            </g>
           </svg>
         </button>
       </div>
@@ -64,48 +54,82 @@
           <li>
             <a
               href="#"
-              class="block py-2 pr-4 pl-3 text-white rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
+              class="block py-2 pr-4 pl-3 text-gray-400 hover:text-gray-200 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
               aria-current="page"
-              >Home</a
+              >Ranking</a
             >
           </li>
           <li>
             <a
               href="#"
-              class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >Company</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >Marketplace</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >Features</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >Team</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >Contact</a
+              class="block py-2 pr-4 pl-3 text-gray-400 hover:text-gray-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
+              >Ver partida</a
             >
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <!-- Ventana nodal del menu hamburguesa -->
+  <div v-if="modal" class="w-full h-screen bg-gray-700/50 fixed">
+    <div class="p-6 flex flex-col">
+      <div class="flex flex-col items-center justify-center gap-4 h-[40rem]">
+        <svg
+          @click="modal = !modal"
+          class="h-10 w-10"
+          viewBox="0 -0.5 8 8"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          fill="#000000"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <title>close_mini [#ebe5e5]</title>
+            <desc>Created with Sketch.</desc>
+            <defs></defs>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g
+                id="Dribbble-Light-Preview"
+                transform="translate(-385.000000, -206.000000)"
+                fill="#000000"
+              >
+                <g id="icons" transform="translate(56.000000, 160.000000)">
+                  <polygon
+                    id="close_mini-[#ebe5e5]"
+                    points="334.6 49.5 337 51.6 335.4 53 333 50.9 330.6 53 329 51.6 331.4 49.5 329 47.4 330.6 46 333 48.1 335.4 46 337 47.4"
+                  ></polygon>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+
+        <a
+          href="#"
+          class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 rounded-lg font-bold text-xl px-5 py-2.5 text-center me-2 mb-2"
+        >
+          Ranking
+        </a>
+        <a
+          href="#"
+          class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2"
+        >
+          Ver partida
+        </a>
+      </div>
+    </div>
+  </div>
 </template>
+
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+const modal = ref<boolean>(false);
+
+const changeValue = () => {
+  modal.value = !modal.value;
+};
+</script>
