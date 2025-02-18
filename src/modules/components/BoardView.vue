@@ -1,13 +1,19 @@
 <template>
   <div class="w-full flex justify-center relative">
+    <!-- tablero -->
     <img src="/src/images/Tablero de Ajedrez_.png" class="rounded-md w-full" alt="tablero" />
-
+    <!-- numeros y letras -->
     <p v-for="(n, index) in i" v-bind:key="n" :class="stylesNumbers(index)">{{ n }}</p>
     <p v-for="(l, index) in letters" v-bind:key="l" :class="stylesLetters(index)">{{ l }}</p>
+
+    <!-- piezas -->
+    <BoardPieces />
   </div>
 </template>
 
 <script lang="ts" setup>
+import BoardPieces from './BoardPieces.vue';
+
 const i = [8, 7, 6, 5, 4, 3, 2, 1];
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
