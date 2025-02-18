@@ -3,7 +3,7 @@
     <HeaderView />
     <main class="w-full h-auto flex justify-center">
       <div class="bg-gray-700 w-[90%]">
-        <div class="flex flex-col m-auto items-center bg-gray-400 max-w-[28rem]">
+        <div class="flex flex-col m-auto items-center bg-gray-400 max-w-[32rem]">
           <PlayerBar />
 
           <BoardView />
