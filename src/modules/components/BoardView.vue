@@ -23,14 +23,14 @@ const arrayStylesNumbers = [
 ];
 
 const arrayStylesLetters = [
-  'font-bold text-xs bottom-0/7 right-7/8 absolute font-serif text-[#bebaba]',
-  'absolute text-xs bottom-0/7 right-6/8 font-serif font-bold',
-  'font-bold right-5/8 text-xs absolute font-serif bottom-0/7 text-[#bebaba]',
-  'absolute right-4/8 text-xs bottom-0/7 font-serif font-bold',
-  'font-bold right-3/8 text-xs absolute font-serif bottom-0/7 text-[#bebaba]',
-  'absolute right-2/8 text-xs bottom-0/7 font-serif font-bold',
-  'font-bold right-1/8 text-xs absolute font-serif bottom-0/7 text-[#bebaba]',
-  'absolute right-0/8 text-xs bottom-0/7 font-serif font-bold',
+  'font-bold text-xs bottom-0/7 pr-1 right-7/8 absolute font-serif text-[#bebaba]',
+  'absolute text-xs bottom-0/7 pr-1 right-6/8 font-serif font-bold',
+  'font-bold right-5/8 text-xs pr-1 absolute font-serif bottom-0/7 text-[#bebaba]',
+  'absolute right-4/8 text-xs pr-1 bottom-0/7 font-serif font-bold',
+  'font-bold right-3/8 text-xs pr-1 absolute font-serif bottom-0/7 text-[#bebaba]',
+  'absolute right-2/8 text-xs pr-1 bottom-0/7 font-serif font-bold',
+  'font-bold right-1/8 text-xs pr-1 absolute font-serif bottom-0/7 text-[#bebaba]',
+  'absolute right-0/8 text-xs pr-1 bottom-0/7 font-serif font-bold',
 ];
 
 const stylesNumbers = (i: number) => {
