@@ -1,7 +1,7 @@
 <template>
   <img
     src="../../images/Tablero de Ajedrez_.png"
-    class="w-full absolute opacity-100"
+    class="w-full absolute opacity-10"
     alt="tablero"
     ref="manipulatorTable"
   />
@@ -14,6 +14,10 @@ const manipulatorTable = ref<HTMLElement | null>(null);
 
 onMounted(() => manipulatorTable.value?.addEventListener('click', tablero));
 
+const emits = defineEmits<{
+  positions: [column: number, row: number];
+}>();
+
 const tablero = (e: unknown) => {
   /*evento del mouse para capturar ña posicion */
   const y = e.layerY;
@@ -25,6 +29,7 @@ const tablero = (e: unknown) => {
 
   const fila = Math.floor((y * 8) / heightScreen);
   const columna = Math.floor((x * 8) / heightScreen);
-  console.log(columna, fila);
+
+  emits('positions', columna, fila);
 };
 </script>
