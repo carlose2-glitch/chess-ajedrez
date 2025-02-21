@@ -4,13 +4,11 @@
   <img
     v-for="p in extractPositionPieces"
     v-bind:key="p.name"
-    @click="choosePiece(p.name)"
+    @click="choosePiece(p.name, p.class)"
     :src="'/src/images/' + p.src"
     :alt="p.name"
-    :class="classStylePiece(p.left, p.top)"
+    :class="p.class"
   />
-
-  <!-- manipulador de las piezas -->
 </template>
 
 <script lang="ts" setup>
@@ -19,11 +17,17 @@ import { piecesManipulator } from '../pieces-board/pieces';
 
 const extractPositionPieces: Pieces[] = piecesManipulator().pieces;
 
-const choosePiece = (piece: string) => {
-  console.log(piece);
-};
+const emits = defineEmits<{
+  information: [piece: string, column: number, row: number];
+}>();
 
-const classStylePiece = (left: string, top: string) => {
-  return `absolute left-${left} top-${top} w-1/8 cursor-pointer`;
+const choosePiece = (piece: string, clas: string) => {
+  /*extraccion de la posicion de la fila y columna del tablero */
+  const column = Number(clas.slice(14, -31));
+  const row = Number(clas.slice(22, -23));
+  /*const column = Number(left.slice(0, -2));*/
+  /* const row = Number(top.slice(0, -2));*/
+
+  emits('information', piece, column, row);
 };
 </script>

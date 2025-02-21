@@ -1,19 +1,28 @@
 <template>
   <div class="w-full flex justify-center relative">
     <!-- tablero -->
-    <img src="/src/images/Tablero de Ajedrez_.png" class="rounded-md w-full" alt="tablero" />
+    <img
+      src="/src/images/Tablero de Ajedrez_.png"
+      ref="manipulatorTable"
+      class="rounded-md w-full"
+      alt="tablero"
+    />
     <!-- numeros y letras -->
     <p v-for="(n, index) in i" v-bind:key="n" :class="stylesNumbers(index)">{{ n }}</p>
     <p v-for="(l, index) in letters" v-bind:key="l" :class="stylesLetters(index)">{{ l }}</p>
 
     <!-- piezas -->
-    <BoardPieces />
+    <BoardPieces @information="choosePiece" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import BoardPieces from './BoardPieces.vue';
 
+const manipulatorTable = ref<HTMLElement | null>(null);
+
+/* estilos del diseño del tablero */
 const i = [8, 7, 6, 5, 4, 3, 2, 1];
 const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 
@@ -45,5 +54,29 @@ const stylesNumbers = (i: number) => {
 
 const stylesLetters = (i: number) => {
   return arrayStylesLetters[i];
+};
+
+/* escucha la posicion del evento */
+
+onMounted(() => manipulatorTable.value?.addEventListener('click', boardClick));
+/*evento del destino de la pieza */
+const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight: number } }) => {
+  /*evento del mouse para capturar la posicion */
+  const y = e.layerY;
+  const x = e.layerX;
+
+  /*tamaño del tablero */
+  const heightScreen = e.target.clientHeight;
+
+  const row: number = Math.floor((y * 8) / heightScreen);
+  const column: number = Math.floor((x * 8) / heightScreen);
+
+  console.log(row, column);
+};
+
+/*evento de la pieza seleccionada */
+
+const choosePiece = (piece: string, column: number, row: number) => {
+  console.log(piece, column, row);
 };
 </script>
