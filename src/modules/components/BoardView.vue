@@ -13,14 +13,21 @@
 
     <!-- piezas -->
     <BoardPieces @information="choosePiece" />
+    <ManipulatorBoard :column="c" :row="r" :screen="sc" :pieces="p" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import BoardPieces from './BoardPieces.vue';
+import ManipulatorBoard from './ManipulatorBoard.vue';
 
 const manipulatorTable = ref<HTMLElement | null>(null);
+
+const c = ref<string | null>(null);
+const r = ref<string | null>(null);
+const sc = ref<string | null>(null);
+const p = ref<string | null>(null);
 
 /* estilos del diseño del tablero */
 const i = [8, 7, 6, 5, 4, 3, 2, 1];
@@ -77,6 +84,8 @@ const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight:
 /*evento de la pieza seleccionada */
 
 const choosePiece = (piece: string, column: number, row: number) => {
+  c.value = column.toString();
+  r.value = row.toString();
   console.log(piece, column, row);
 };
 </script>
