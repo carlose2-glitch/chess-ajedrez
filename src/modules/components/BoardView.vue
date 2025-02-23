@@ -34,6 +34,7 @@ import ManipulatorBoard from './ManipulatorBoard.vue';
 import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
 import { piecesManipulator } from '../pieces-board/pieces';
 import { funtionPaintins } from '../pieces-board/paintingPictures';
+import { game } from '../pieces-board/gameBoard';
 
 /* piezas del tablero*/
 
@@ -51,13 +52,10 @@ const sc = ref<number | null>(null);
 const p = ref<string | null>(null);
 
 /*control del juego */
-/*const orderGame = () => {
-  for (let p = 0; p < 64; p++) {
-    return;
-  }
-};
 
-const game = ref<GameManipulator>();*/
+const orderGame = game();
+
+console.log(orderGame.array.value);
 
 /* estilos del diseño del tablero */
 const i = [8, 7, 6, 5, 4, 3, 2, 1];

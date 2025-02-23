@@ -25,6 +25,6 @@ export interface Paintings {
 
 export interface GameManipulator {
   piece: string;
-  left: string;
-  top: string;
+  left: number;
+  top: number;
 }
