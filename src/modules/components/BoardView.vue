@@ -12,22 +12,52 @@
     <p v-for="(l, index) in letters" v-bind:key="l" :class="stylesLetters(index)">{{ l }}</p>
 
     <!-- piezas -->
-    <BoardPieces @information="choosePiece" />
-    <ManipulatorBoard :column="c" :row="r" :screen="sc" :pieces="p" />
+    <BoardPieces
+      @information="choosePiece"
+      :extract-position-pieces="extractPositionPieces.pieces.value"
+    />
+    <!-- color de los cuadros -->
+    <ManipulatorBoard
+      :column="c"
+      :row="r"
+      :screen="sc"
+      :pieces="p"
+      :paintings="paintings.array.value"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import BoardPieces from './BoardPieces.vue';
 import ManipulatorBoard from './ManipulatorBoard.vue';
+import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
+import { piecesManipulator } from '../pieces-board/pieces';
+import { funtionPaintins } from '../pieces-board/paintingPictures';
+
+/* piezas del tablero*/
+
+const extractPositionPieces = piecesManipulator();
+
+/*colores de los cuadros del tablero */
+
+const paintings = funtionPaintins();
 
 const manipulatorTable = ref<HTMLElement | null>(null);
 
-const c = ref<string | null>(null);
-const r = ref<string | null>(null);
-const sc = ref<string | null>(null);
+const c = ref<number | null>(null);
+const r = ref<number | null>(null);
+const sc = ref<number | null>(null);
 const p = ref<string | null>(null);
+
+/*control del juego */
+/*const orderGame = () => {
+  for (let p = 0; p < 64; p++) {
+    return;
+  }
+};
+
+const game = ref<GameManipulator>();*/
 
 /* estilos del diseño del tablero */
 const i = [8, 7, 6, 5, 4, 3, 2, 1];
@@ -84,8 +114,18 @@ const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight:
 /*evento de la pieza seleccionada */
 
 const choosePiece = (piece: string, column: number, row: number) => {
-  c.value = column.toString();
-  r.value = row.toString();
-  console.log(piece, column, row);
+  c.value = column;
+  r.value = row;
+  p.value = piece;
 };
+/*escucha la nueva pieza seleccionada */
+watch(p, (p) => {
+  paintings.reload();
+  /*  Posicion de la pieza en la cual se va a colorear  */
+  const position = paintings.array.value.findIndex((e) => e.left === c.value && e.top === r.value);
+
+  /*pintar cuadro */
+
+  paintings.paint(position, c.value, r.value);
+});
 </script>

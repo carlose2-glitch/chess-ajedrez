@@ -2,7 +2,7 @@
   <!-- pieces -->
 
   <img
-    v-for="p in extractPositionPieces"
+    v-for="p in data.extractPositionPieces"
     v-bind:key="p.name"
     @click="choosePiece(p.name, p.class)"
     :src="'/src/images/' + p.src"
@@ -13,9 +13,12 @@
 
 <script lang="ts" setup>
 import type { Pieces } from '../interfaces/pieces.interface';
-import { piecesManipulator } from '../pieces-board/pieces';
 
-const extractPositionPieces: Pieces[] = piecesManipulator().pieces;
+interface ArrayPieces {
+  extractPositionPieces: Pieces[];
+}
+
+const data = defineProps<ArrayPieces>();
 
 const emits = defineEmits<{
   information: [piece: string, column: number, row: number];
