@@ -32,7 +32,6 @@
 import { onMounted, reactive, ref, watch } from 'vue';
 import BoardPieces from './BoardPieces.vue';
 import ManipulatorBoard from './ManipulatorBoard.vue';
-import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
 import { piecesManipulator } from '../pieces-board/pieces';
 import { funtionPaintins } from '../pieces-board/paintingPictures';
 import { game } from '../pieces-board/gameBoard';
@@ -115,6 +114,7 @@ const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight:
 /*evento de la pieza seleccionada */
 
 const choosePiece = (piece: string, column: number, row: number) => {
+  console.log(piece, column, row);
   c.value = column;
   r.value = row;
   p.value = piece;
