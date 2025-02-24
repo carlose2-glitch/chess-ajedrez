@@ -1,20 +1,24 @@
 import { computed, ref } from 'vue';
-import type { GameManipulator } from '../interfaces/pieces.interface';
-import { piecesManipulator } from './pieces';
+import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
 
-export const game = () => {
-  const arrayGame = ref<GameManipulator[]>(array());
+export const game = (order: Pieces[]) => {
+  const arrayGame = ref<GameManipulator[]>(array(order));
+
+  const gameManipulator = (gameModify: Pieces[]) => {
+    arrayGame.value = array(gameModify);
+  };
 
   return {
     array: computed(() => [...arrayGame.value]),
+    gameManipulator,
   };
 };
 
-/*comienzo del juego */
-const array = () => {
+/*comienzo del juego y reconstruccion de los sucesos del juego*/
+const array = (o: Pieces[]) => {
   const order: GameManipulator[] = [];
 
-  const pieces = piecesManipulator().pieces.value;
+  const pieces = o;
 
   for (let f = 0; f < 8; f++) {
     for (let c = 0; c < 8; c++) {

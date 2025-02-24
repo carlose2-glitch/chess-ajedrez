@@ -1,23 +1,38 @@
 import { computed, ref } from 'vue';
-import type { Paintings } from '../interfaces/pieces.interface';
+import type { GameManipulator, Paintings } from '../interfaces/pieces.interface';
 
 export const funtionPaintins = () => {
   const array = ref<Paintings[]>(charts());
-
+  /*colocar todos los cuadros transparentes */
   const reload = () => {
     array.value = charts();
   };
+  /* seleccionar pieza */
   const paint = (p: number, c: number | null, r: number | null) => {
     array.value[p].classs =
       `absolute left-${c}/8 top-${r}/8 w-1/8 h-1/8 cursor-pointer bg-green-400/30`;
+  };
+
+  /* pintar cuadros disponibles en la cual se puede mover*/
+
+  const paintingsAvailable = (game: GameManipulator[]) => {
+    for (const c in game) {
+      if (game[c].piece === '') {
+        array.value[c].classs =
+          `absolute left-${array.value[c].left}/8 top-${array.value[c].top}/8 w-1/8 h-1/8 cursor-pointer bg-green-400/30`;
+      }
+    }
   };
 
   return {
     array: computed(() => [...array.value]),
     reload,
     paint,
+    paintingsAvailable,
   };
 };
+
+/*reiniciar los cuadros a transparentes */
 
 const charts = () => {
   const array: Paintings[] = [];

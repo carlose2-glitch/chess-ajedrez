@@ -8,17 +8,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
 import type { Measures } from '../interfaces/pieces.interface';
 
-const firstRow = ref<number | null>(null);
-const firstColumn = ref<number | null>(null);
+const emits = defineEmits<{
+  secondMovement: [firstColum: number, firstRow: number, piece: string | null];
+}>();
 
-/*ejemplo de como usar los props */
+/*datos de la primera columna y fila */
 const data = defineProps<Measures>();
 
 const movementPiece = (c: number, f: number) => {
-  console.log(firstColumn.value, firstRow.value);
-  console.log(c, f);
+  if (data.column !== c || data.row !== f) {
+    emits('secondMovement', c, f, data.pieces);
+  }
 };
 </script>

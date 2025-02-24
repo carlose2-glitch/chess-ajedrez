@@ -23,12 +23,13 @@
       :screen="sc"
       :pieces="p"
       :paintings="paintings.array.value"
+      @second-movement="finalMovement"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import BoardPieces from './BoardPieces.vue';
 import ManipulatorBoard from './ManipulatorBoard.vue';
 import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
@@ -51,11 +52,15 @@ const r = ref<number | null>(null);
 const sc = ref<number | null>(null);
 const p = ref<string | null>(null);
 
+const dataPieceBoard = reactive({
+  c,
+  r,
+  p,
+});
+
 /*control del juego */
 
-const orderGame = game();
-
-console.log(orderGame.array.value);
+const orderGame = game(extractPositionPieces.pieces.value);
 
 /* estilos del diseño del tablero */
 const i = [8, 7, 6, 5, 4, 3, 2, 1];
@@ -105,8 +110,6 @@ const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight:
 
   const row: number = Math.floor((y * 8) / heightScreen);
   const column: number = Math.floor((x * 8) / heightScreen);
-
-  console.log(row, column);
 };
 
 /*evento de la pieza seleccionada */
@@ -117,7 +120,7 @@ const choosePiece = (piece: string, column: number, row: number) => {
   p.value = piece;
 };
 /*escucha la nueva pieza seleccionada */
-watch(p, (p) => {
+watch(dataPieceBoard, (d) => {
   paintings.reload();
   /*  Posicion de la pieza en la cual se va a colorear  */
   const position = paintings.array.value.findIndex((e) => e.left === c.value && e.top === r.value);
@@ -125,5 +128,16 @@ watch(p, (p) => {
   /*pintar cuadro */
 
   paintings.paint(position, c.value, r.value);
+
+  /* Pintar movimientos disponibles*/
+  paintings.paintingsAvailable(orderGame.array.value);
 });
+
+/* segundo movimiento*/
+
+const finalMovement = (col: number, row: number, piece: string | null) => {
+  extractPositionPieces.modifyBoard(col, row, piece);
+  paintings.reload();
+  orderGame.gameManipulator(extractPositionPieces.pieces.value);
+};
 </script>

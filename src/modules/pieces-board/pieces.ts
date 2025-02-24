@@ -4,8 +4,14 @@ import type { Pieces } from '../interfaces/pieces.interface';
 export const piecesManipulator = () => {
   const pieces = ref<Pieces[]>(array);
 
-  const modifyBoard = () => {
-    pieces.value[0].class = 'absolute left-0/8 top-5/8 w-1/8 cursor-pointer';
+  const modifyBoard = (c: number, f: number, namePiece: string | null) => {
+    pieces.value.find((e, i) => {
+      if (e.name === namePiece) {
+        pieces.value[i].class = `absolute left-${c}/8 top-${f}/8 w-1/8 cursor-pointer`;
+        pieces.value[i].left = `${c}/8`;
+        pieces.value[i].top = `${f}/8`;
+      }
+    });
   };
   return {
     pieces: computed(() => [...pieces.value]),
