@@ -15,6 +15,8 @@
     <BoardPieces
       @information="choosePiece"
       :extract-position-pieces="extractPositionPieces.pieces.value"
+      :turn="turn"
+      :movements="movements"
     />
     <!-- color de los cuadros -->
     <ManipulatorBoard
@@ -29,12 +31,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import BoardPieces from './BoardPieces.vue';
 import ManipulatorBoard from './ManipulatorBoard.vue';
 import { piecesManipulator } from '../pieces-board/pieces';
 import { funtionPaintins } from '../pieces-board/paintingPictures';
 import { game } from '../pieces-board/gameBoard';
+
+const turn = ['white', 'black'];
+
+const movements = ref<number>(0);
 
 /* piezas del tablero*/
 
@@ -97,24 +103,24 @@ const stylesLetters = (i: number) => {
 
 /* escucha la posicion del evento */
 
-onMounted(() => manipulatorTable.value?.addEventListener('click', boardClick));
-/*evento del destino de la pieza */
+/*onMounted(() => manipulatorTable.value?.addEventListener('click', boardClick));
+
 const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight: number } }) => {
-  /*evento del mouse para capturar la posicion */
+  /*evento del mouse para capturar la posicion 
   const y = e.layerY;
   const x = e.layerX;
 
-  /*tamaño del tablero */
+  /*tamaño del tablero 
   const heightScreen = e.target.clientHeight;
 
   const row: number = Math.floor((y * 8) / heightScreen);
   const column: number = Math.floor((x * 8) / heightScreen);
+  console.log(row);
 };
-
+*/
 /*evento de la pieza seleccionada */
 
 const choosePiece = (piece: string, column: number, row: number) => {
-  console.log(piece, column, row);
   c.value = column;
   r.value = row;
   p.value = piece;
@@ -131,6 +137,7 @@ watch(dataPieceBoard, (d) => {
 
   /* Pintar movimientos disponibles*/
   paintings.paintingsAvailable(orderGame.array.value);
+  console.log(d.p);
 });
 
 /* segundo movimiento*/
@@ -139,5 +146,6 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
   extractPositionPieces.modifyBoard(col, row, piece);
   paintings.reload();
   orderGame.gameManipulator(extractPositionPieces.pieces.value);
+  movements.value++;
 };
 </script>
