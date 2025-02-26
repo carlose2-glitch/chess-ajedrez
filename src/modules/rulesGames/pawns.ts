@@ -2,6 +2,7 @@
 
 import type { RulesPieces } from '../interfaces/pieces.interface';
 
+/*blancos */
 export const whitePawns = (c: number, f: number) => {
   const d = {
     top: f,
@@ -17,11 +18,19 @@ export const whitePawns = (c: number, f: number) => {
         left: d.left,
       });
     }
+    return array;
   }
+
+  console.log('si');
+
+  array.push({
+    top: d.top - 1,
+    left: d.left,
+  });
 
   return array;
 };
-
+/*negros */
 export const blackPawns = (c: number, f: number) => {
   const d = {
     top: f,
@@ -38,7 +47,13 @@ export const blackPawns = (c: number, f: number) => {
         left: d.left,
       });
     }
+    return array;
   }
+
+  array.push({
+    top: d.top + 1,
+    left: d.left,
+  });
 
   return array;
 };
