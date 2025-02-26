@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue';
-import type { GameManipulator, Paintings } from '../interfaces/pieces.interface';
+import type { GameManipulator, Paintings, RulesPieces } from '../interfaces/pieces.interface';
 
 export const funtionPaintins = () => {
   const array = ref<Paintings[]>(charts());
@@ -15,14 +15,21 @@ export const funtionPaintins = () => {
 
   /* pintar cuadros disponibles en la cual se puede mover*/
 
-  const paintingsAvailable = (game: GameManipulator[]) => {
-    for (const c in game) {
-      if (game[c].piece === '') {
-        array.value[c].classs =
-          `absolute left-${array.value[c].left}/8 top-${array.value[c].top}/8 w-1/8 h-1/8 cursor-pointer bg-green-400/30`;
-      }
+  const paintingsAvailable = (paint: RulesPieces[]) => {
+    for (const p of paint) {
+      array.value.find((e, i) => {
+        if (e.left === p.left && e.top === p.top) {
+          array.value[i].classs =
+            `absolute left-${e.left}/8 top-${e.top}/8 w-1/8 h-1/8 cursor-pointer bg-green-400/30`;
+        }
+      });
     }
   };
+
+  /* if (game[c].piece === '') {
+    array.value[c].classs =
+      `absolute left-${array.value[c].left}/8 top-${array.value[c].top}/8 w-1/8 h-1/8 cursor-pointer bg-green-400/30`;
+  }*/
 
   return {
     array: computed(() => [...array.value]),

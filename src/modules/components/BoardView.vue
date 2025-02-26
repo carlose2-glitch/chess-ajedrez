@@ -38,6 +38,8 @@ import { piecesManipulator } from '../pieces-board/pieces';
 import { funtionPaintins } from '../pieces-board/paintingPictures';
 import { game } from '../pieces-board/gameBoard';
 
+import { rulesGames } from '../rulesGames/rulesOfPieces';
+
 const turn = ['white', 'black'];
 
 const movements = ref<number>(0);
@@ -52,9 +54,9 @@ const paintings = funtionPaintins();
 
 const manipulatorTable = ref<HTMLElement | null>(null);
 
-const c = ref<number | null>(null);
-const r = ref<number | null>(null);
-const sc = ref<number | null>(null);
+const c = ref<number>(0);
+const r = ref<number>(0);
+const sc = ref<number>(0);
 const p = ref<string | null>(null);
 
 const dataPieceBoard = reactive({
@@ -135,8 +137,13 @@ watch(dataPieceBoard, (d) => {
 
   paintings.paint(position, c.value, r.value);
 
+  const paint = rulesGames(d.p, d.c, d.r);
+
+  console.log(paint);
+
   /* Pintar movimientos disponibles*/
-  paintings.paintingsAvailable(orderGame.array.value);
+  //orderGame.array.value
+  paintings.paintingsAvailable(paint);
   console.log(d.p);
 });
 

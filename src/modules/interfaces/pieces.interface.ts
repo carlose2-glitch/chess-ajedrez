@@ -2,11 +2,9 @@ export interface Pieces {
   name: string;
   left: string;
   src: string;
-  chart: number;
   class: string;
   top: string;
   movements: number;
-  validMovements: string[];
 }
 
 export interface Measures {
@@ -27,4 +25,9 @@ export interface GameManipulator {
   piece: string;
   left: number;
   top: number;
+}
+
+export interface RulesPieces {
+  top: number | null;
+  left: number | null;
 }
