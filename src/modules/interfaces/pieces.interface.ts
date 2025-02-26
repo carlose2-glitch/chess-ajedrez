@@ -28,6 +28,6 @@ export interface GameManipulator {
 }
 
 export interface RulesPieces {
-  top: number | null;
-  left: number | null;
+  top: number;
+  left: number;
 }

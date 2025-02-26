@@ -139,8 +139,6 @@ watch(dataPieceBoard, (d) => {
 
   const paint = rulesGames(d.p, d.c, d.r);
 
-  console.log(paint);
-
   /* Pintar movimientos disponibles*/
   //orderGame.array.value
   paintings.paintingsAvailable(paint);

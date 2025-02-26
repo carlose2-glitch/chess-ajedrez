@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue';
-import type { GameManipulator, Paintings, RulesPieces } from '../interfaces/pieces.interface';
+import type { Paintings, RulesPieces } from '../interfaces/pieces.interface';
 
 export const funtionPaintins = () => {
   const array = ref<Paintings[]>(charts());
@@ -25,11 +25,6 @@ export const funtionPaintins = () => {
       });
     }
   };
-
-  /* if (game[c].piece === '') {
-    array.value[c].classs =
-      `absolute left-${array.value[c].left}/8 top-${array.value[c].top}/8 w-1/8 h-1/8 cursor-pointer bg-green-400/30`;
-  }*/
 
   return {
     array: computed(() => [...array.value]),
