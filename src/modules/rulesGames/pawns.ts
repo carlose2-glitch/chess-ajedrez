@@ -1,9 +1,10 @@
 /*reglas de los peones blancos y negros */
 
-import type { RulesPieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
 
 /*blancos */
-export const whitePawns = (c: number, f: number) => {
+export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) => {
+  /* paso inicial*/
   const d = {
     top: f,
     left: c,
@@ -13,16 +14,19 @@ export const whitePawns = (c: number, f: number) => {
   if (f === 6) {
     for (let i = 0; i < 2; i++) {
       d.top--;
-      array.push({
-        top: d.top,
-        left: d.left,
-      });
+
+      const o = orderGame.find((e) => e.left === c && e.top === d.top);
+
+      if (o?.piece === '') {
+        array.push({
+          top: d.top,
+          left: d.left,
+        });
+      }
     }
     return array;
   }
-
-  console.log('si');
-
+  /*paso al frente */
   array.push({
     top: d.top - 1,
     left: d.left,
@@ -31,7 +35,7 @@ export const whitePawns = (c: number, f: number) => {
   return array;
 };
 /*negros */
-export const blackPawns = (c: number, f: number) => {
+export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) => {
   const d = {
     top: f,
     left: c,
@@ -42,10 +46,14 @@ export const blackPawns = (c: number, f: number) => {
   if (f === 1) {
     for (let i = 0; i < 2; i++) {
       d.top++;
-      array.push({
-        top: d.top,
-        left: d.left,
-      });
+
+      const o = orderGame.find((e) => e.left === c && e.top === d.top);
+      if (o?.piece === '') {
+        array.push({
+          top: d.top,
+          left: d.left,
+        });
+      }
     }
     return array;
   }
