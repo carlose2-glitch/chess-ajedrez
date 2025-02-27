@@ -1,5 +1,6 @@
 import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
 import { bishops } from './bishop';
+import { kings } from './kings';
 import { Knights } from './knights';
 import { blackPawns, whitePawns } from './pawns';
 import { queen } from './queens';
@@ -23,6 +24,7 @@ export const rulesGames = (
   if (name?.includes('bishop')) return bishops(c, f, orderGame, name);
   /*dama blanca y negra */
   if (name?.includes('queen')) return queen(c, f, orderGame, name);
-
+  /*rey blanco y negro */
+  if (name?.includes('king')) return kings(c, f, orderGame, name);
   return array;
 };
