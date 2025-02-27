@@ -148,9 +148,17 @@ watch(dataPieceBoard, (d) => {
 /* segundo movimiento*/
 
 const finalMovement = (col: number, row: number, piece: string | null) => {
+  /* mover pieza graficamente*/
   extractPositionPieces.modifyBoard(col, row, piece);
+
+  /* eliminar pieza graficamente */
+  extractPositionPieces.deletePiece(piece, col, row);
+
+  /* poner todos los cuadros verdes a transparentes */
   paintings.reload();
+  /* control del juego */
   orderGame.gameManipulator(extractPositionPieces.pieces.value);
+
   movements.value++;
 };
 </script>

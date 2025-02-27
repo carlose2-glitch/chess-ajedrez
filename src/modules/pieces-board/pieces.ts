@@ -4,6 +4,7 @@ import type { Pieces } from '../interfaces/pieces.interface';
 export const piecesManipulator = () => {
   const pieces = ref<Pieces[]>(array);
   /*evento de mover pieza */
+
   const modifyBoard = (c: number, f: number, namePiece: string | null) => {
     pieces.value.find((e, i) => {
       if (e.name === namePiece) {
@@ -13,9 +14,26 @@ export const piecesManipulator = () => {
       }
     });
   };
+  /*evento eliminar enemigo */
+  const deletePiece = (p: string | null, c: number, f: number) => {
+    const findEnemy = pieces.value.filter(
+      (e) => Number(e.left.slice(0, 1)) === c && Number(e.top.slice(0, 1)) === f,
+    );
+    if (findEnemy.length === 2) {
+      const deleteEnemy = findEnemy.find((e) => e.name !== p);
+      const newArray = pieces.value.filter((e) => {
+        if (e.name !== deleteEnemy?.name) {
+          return e;
+        }
+      });
+      pieces.value = newArray;
+    }
+  };
+
   return {
     pieces: computed(() => [...pieces.value]),
     modifyBoard,
+    deletePiece,
   };
 };
 
