@@ -142,7 +142,6 @@ watch(dataPieceBoard, (d) => {
   /* Pintar movimientos disponibles*/
   //orderGame.array.value
   paintings.paintingsAvailable(paint);
-  console.log(d.p);
 });
 
 /* segundo movimiento*/

@@ -14,7 +14,6 @@ export const whiteBlackRooks = (
   /*verificacion de la fila baja*/
   for (let i = f + 1; i <= 7; i++) {
     const findPosition = orderGame.find((e) => e.left === c && e.top === i);
-    console.log(findPosition?.piece);
 
     if (findPosition?.piece === '') {
       array.push({
