@@ -3,7 +3,6 @@ import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interfac
 export const Knights = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
   const array: RulesPieces[] = [];
 
-  const opposite = name.includes('white') ? 'black' : 'white';
   const nameFriend = name.includes('white') ? 'white' : 'black';
 
   console.log(Math.abs(c + positionsValid[0].left));
