@@ -73,7 +73,7 @@ const array: Pieces[] = [
     movements: 0,
   },
   {
-    name: 'black-King',
+    name: 'black-king',
     left: '4/8',
     src: 'rey-negro.png',
     class: 'absolute left-4/8 top-0/8 w-1/8 cursor-pointer',
@@ -89,7 +89,7 @@ const array: Pieces[] = [
     movements: 0,
   },
   {
-    name: 'black-Knight2',
+    name: 'black-knight2',
     left: '6/8',
     src: 'caballo-negro.png',
     class: 'absolute left-6/8 top-0/8 w-1/8 cursor-pointer',
@@ -204,7 +204,7 @@ const array: Pieces[] = [
     movements: 0,
   },
   {
-    name: 'white-King',
+    name: 'white-king',
     left: '4/8',
     src: 'rey-blanco.png',
     class: 'absolute left-4/8 top-7/8 w-1/8 cursor-pointer',
@@ -220,7 +220,7 @@ const array: Pieces[] = [
     movements: 0,
   },
   {
-    name: 'white-Knight2',
+    name: 'white-knight2',
     left: '6/8',
     src: 'caballo-blanco.png',
     class: 'absolute left-6/8 top-7/8 w-1/8 cursor-pointer',

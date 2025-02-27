@@ -11,7 +11,6 @@ export const whiteBlackRooks = (
   const opposite = name.includes('white') ? 'black' : 'white';
   const nameFriend = name.includes('white') ? 'white' : 'black';
 
-  console.log(opposite);
   /*verificacion de la fila baja*/
   for (let i = f + 1; i <= 7; i++) {
     const findPosition = orderGame.find((e) => e.left === c && e.top === i);
