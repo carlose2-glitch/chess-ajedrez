@@ -1,5 +1,6 @@
 import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
 import { blackPawns, whitePawns } from './pawns';
+import { whiteBlackRooks } from './rooks';
 
 export const rulesGames = (
   name: string | null,
@@ -11,6 +12,8 @@ export const rulesGames = (
   /*peones*/
   if (name?.includes('white-pawn')) return whitePawns(c, f, orderGame);
   if (name?.includes('black-pawn')) return blackPawns(c, f, orderGame);
+  /*torres blancas y negras */
+  if (name?.includes('rook')) return whiteBlackRooks(c, f, orderGame, name);
 
   return array;
 };
