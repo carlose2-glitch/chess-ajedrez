@@ -11,6 +11,7 @@ export const piecesManipulator = () => {
         pieces.value[i].class = `absolute duration-700 left-${c}/8 top-${f}/8 w-1/8 cursor-pointer`;
         pieces.value[i].left = `${c}/8`;
         pieces.value[i].top = `${f}/8`;
+        pieces.value[i].movements++;
       }
     });
   };

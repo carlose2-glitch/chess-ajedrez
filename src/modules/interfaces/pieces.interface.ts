@@ -25,6 +25,7 @@ export interface GameManipulator {
   piece: string;
   left: number;
   top: number;
+  movements: number;
 }
 
 export interface RulesPieces {

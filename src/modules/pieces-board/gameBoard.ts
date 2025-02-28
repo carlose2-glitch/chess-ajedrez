@@ -34,12 +34,14 @@ const array = (o: Pieces[]) => {
           piece: r.name,
           left: c,
           top: f,
+          movements: r.movements,
         });
       } else {
         order.push({
           piece: '',
           left: c,
           top: f,
+          movements: 0,
         });
       }
     }
