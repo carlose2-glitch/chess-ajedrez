@@ -13,7 +13,12 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
 
   const rook2 = orderGame.find((e) => nameFriend + '-rook2' === e.piece && e.movements === 0);
 
-  console.log(rook2, rook1);
+  if (king?.movements === 0 && rook1) {
+    console.log('enroque torre 1');
+  }
+  if (king?.movements === 0 && rook2) {
+    console.log('enroque torre 2');
+  }
 
   if (king?.movements === 0) {
   }
