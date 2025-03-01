@@ -11,7 +11,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
   };
   const array: RulesPieces[] = [];
 
-  /*encontrar pieza enemiga  izquierda*/
+  /*encontrar pieza enemiga izquierda*/
 
   if (c - 1 >= 0 && f - 1 >= 0) {
     const ei = orderGame.find((e) => e.left === c - 1 && e.top === f - 1);
@@ -20,6 +20,9 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
         top: f - 1,
         left: c - 1,
       });
+    }
+    if (ei?.piece.includes('black-king')) {
+      console.log('jaque');
     }
   }
 
@@ -33,6 +36,9 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
         top: f - 1,
         left: c + 1,
       });
+    }
+    if (ed?.piece.includes('black-king')) {
+      console.log('jaque');
     }
   }
 
@@ -84,6 +90,9 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
         left: c - 1,
       });
     }
+    if (ei?.piece.includes('white-king')) {
+      console.log('jaque');
+    }
   }
 
   /*encontrar pieza enemiga  derecha*/
@@ -96,6 +105,9 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
         top: f + 1,
         left: c + 1,
       });
+    }
+    if (ed?.piece.includes('white-king')) {
+      console.log('jaque');
     }
   }
   if (f === 1) {

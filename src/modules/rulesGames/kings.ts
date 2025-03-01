@@ -4,6 +4,21 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
   const array: RulesPieces[] = [];
   const nameFriend = name.includes('white') ? 'white' : 'black';
 
+  /* enroque rey*/
+  const king = orderGame.find((e) => e.piece === name);
+  /*torre amiga 1 */
+  const rook1 = orderGame.find((e) => nameFriend + '-rook1' === e.piece && e.movements === 0);
+
+  /*torre amiga 2 */
+
+  const rook2 = orderGame.find((e) => nameFriend + '-rook2' === e.piece && e.movements === 0);
+
+  console.log(rook2, rook1);
+
+  if (king?.movements === 0) {
+  }
+
+  /*evalua las posiciones del arreglo */
   for (const p of positionsValid) {
     const findPost = orderGame.find((e) => e.left === c + p.left && e.top === f + p.top);
 
