@@ -29,6 +29,9 @@ export const whiteBlackRooks = (
         top: i,
         left: c,
       });
+      if (findPosition.piece.includes(opposite + '-king')) {
+        console.log('jaque');
+      }
       break;
     }
   }
@@ -50,6 +53,10 @@ export const whiteBlackRooks = (
         top: i,
         left: c,
       });
+
+      if (findPosition.piece.includes(opposite + '-king')) {
+        console.log('jaque');
+      }
       break;
     }
   }
@@ -73,6 +80,10 @@ export const whiteBlackRooks = (
         top: f,
         left: i,
       });
+
+      if (findPosition.piece.includes(opposite + '-king')) {
+        console.log('jaque');
+      }
       break;
     }
   }
@@ -96,6 +107,10 @@ export const whiteBlackRooks = (
         top: f,
         left: i,
       });
+
+      if (findPosition.piece.includes(opposite + '-king')) {
+        console.log('jaque');
+      }
       break;
     }
   }
