@@ -4,6 +4,7 @@ export const Knights = (c: number, f: number, orderGame: GameManipulator[], name
   const array: RulesPieces[] = [];
 
   const nameFriend = name.includes('white') ? 'white' : 'black';
+  const opposite = name.includes('white') ? 'black' : 'white';
 
   console.log(Math.abs(c + positionsValid[0].left));
   console.log(Math.abs(f + positionsValid[0].top));
@@ -16,6 +17,10 @@ export const Knights = (c: number, f: number, orderGame: GameManipulator[], name
         top: findPost.top,
         left: findPost.left,
       });
+    }
+
+    if (findPost?.piece.includes(opposite + '-king')) {
+      console.log('jaque');
     }
   }
 

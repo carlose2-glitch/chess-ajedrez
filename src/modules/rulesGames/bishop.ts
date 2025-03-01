@@ -5,6 +5,7 @@ export const bishops = (c: number, f: number, orderGame: GameManipulator[], name
   const array: RulesPieces[] = [];
 
   const nameFriend = name.includes('white') ? 'white' : 'black';
+  const opposite = name.includes('white') ? 'black' : 'white';
 
   const cis = c - 1;
   const fis = ref<number>(f - 1);
@@ -34,6 +35,10 @@ export const bishops = (c: number, f: number, orderGame: GameManipulator[], name
           top: fis.value,
           left: i,
         });
+
+        if (findPost?.piece.includes(opposite + '-king')) {
+          console.log('jaque');
+        }
         break;
       } else {
         break;
@@ -59,6 +64,9 @@ export const bishops = (c: number, f: number, orderGame: GameManipulator[], name
           top: fds.value,
           left: i,
         });
+        if (findPost?.piece.includes(opposite + '-king')) {
+          console.log('jaque');
+        }
         break;
       } else {
         break;
@@ -83,6 +91,9 @@ export const bishops = (c: number, f: number, orderGame: GameManipulator[], name
           top: fii.value,
           left: i,
         });
+        if (findPost?.piece.includes(opposite + '-king')) {
+          console.log('jaque');
+        }
         break;
       } else {
         break;
@@ -107,6 +118,9 @@ export const bishops = (c: number, f: number, orderGame: GameManipulator[], name
           top: fdi.value,
           left: i,
         });
+        if (findPost?.piece.includes(opposite + '-king')) {
+          console.log('jaque');
+        }
         break;
       } else {
         break;
