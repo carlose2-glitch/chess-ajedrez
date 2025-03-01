@@ -4,7 +4,6 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
   const array: RulesPieces[] = [];
   const nameFriend = name.includes('white') ? 'white' : 'black';
 
-  /* enroque rey*/
   const king = orderGame.find((e) => e.piece === name);
   /*torre amiga 1 */
   const rook1 = orderGame.find((e) => nameFriend + '-rook1' === e.piece && e.movements === 0);
@@ -12,15 +11,61 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
   /*torre amiga 2 */
 
   const rook2 = orderGame.find((e) => nameFriend + '-rook2' === e.piece && e.movements === 0);
-
+  /* enroque rey*/
+  /* enroque izquierda*/
   if (king?.movements === 0 && rook1) {
-    console.log('enroque torre 1');
-  }
-  if (king?.movements === 0 && rook2) {
-    console.log('enroque torre 2');
-  }
+    const savePost: RulesPieces[] = [];
+    for (let i = 1; i <= 3; i++) {
+      const findPost = orderGame.find((e) => e.left === c - i && e.top === f);
 
-  if (king?.movements === 0) {
+      if (findPost?.piece !== '') {
+        break;
+      }
+      savePost.push({
+        top: findPost.top,
+        left: findPost.left,
+      });
+      if (i === 3) {
+        array.push(
+          {
+            top: savePost[0].top,
+            left: savePost[0].left,
+          },
+          {
+            top: savePost[1].top,
+            left: savePost[1].left,
+          },
+        );
+      }
+    }
+  }
+  /*enroque derecha */
+  if (king?.movements === 0 && rook2) {
+    const savePost: RulesPieces[] = [];
+    for (let i = 1; i <= 2; i++) {
+      const findPost = orderGame.find((e) => e.left === c + i && e.top === f);
+
+      if (findPost?.piece !== '') {
+        break;
+      }
+      savePost.push({
+        top: findPost.top,
+        left: findPost.left,
+      });
+
+      if (i === 2) {
+        array.push(
+          {
+            top: savePost[0].top,
+            left: savePost[0].left,
+          },
+          {
+            top: savePost[1].top,
+            left: savePost[1].left,
+          },
+        );
+      }
+    }
   }
 
   /*evalua las posiciones del arreglo */
