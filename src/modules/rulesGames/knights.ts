@@ -6,8 +6,8 @@ export const Knights = (c: number, f: number, orderGame: GameManipulator[], name
   const nameFriend = name.includes('white') ? 'white' : 'black';
   const opposite = name.includes('white') ? 'black' : 'white';
 
-  console.log(Math.abs(c + positionsValid[0].left));
-  console.log(Math.abs(f + positionsValid[0].top));
+  //console.log(Math.abs(c + positionsValid[0].left));
+  //console.log(Math.abs(f + positionsValid[0].top));
 
   for (const i of positionsValid) {
     const findPost = orderGame.find((e) => e.left === c + i.left && e.top === f + i.top);

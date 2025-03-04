@@ -1,4 +1,5 @@
 import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import { observerEnroque } from './observerGameEnroque';
 
 export const kings = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
   const array: RulesPieces[] = [];
@@ -11,9 +12,13 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
   /*torre amiga 2 */
 
   const rook2 = orderGame.find((e) => nameFriend + '-rook2' === e.piece && e.movements === 0);
+
+  /*observador que ninguna pieza la este poniendo en jaque */
+  const decision: boolean = observerEnroque(orderGame, king);
+
   /* enroque rey*/
   /* enroque izquierda*/
-  if (king?.movements === 0 && rook1) {
+  if (king?.movements === 0 && rook1 && decision) {
     const savePost: RulesPieces[] = [];
     for (let i = 1; i <= 3; i++) {
       const findPost = orderGame.find((e) => e.left === c - i && e.top === f);
@@ -40,7 +45,7 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
     }
   }
   /*enroque derecha */
-  if (king?.movements === 0 && rook2) {
+  if (king?.movements === 0 && rook2 && decision) {
     const savePost: RulesPieces[] = [];
     for (let i = 1; i <= 2; i++) {
       const findPost = orderGame.find((e) => e.left === c + i && e.top === f);

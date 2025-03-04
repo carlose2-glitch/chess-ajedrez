@@ -71,6 +71,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
 
   return array;
 };
+
 /*negros */
 export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) => {
   const d = {
@@ -115,6 +116,7 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
       d.top++;
 
       const o = orderGame.find((e) => e.left === c && e.top === d.top);
+
       if (o?.piece === '') {
         array.push({
           top: d.top,
