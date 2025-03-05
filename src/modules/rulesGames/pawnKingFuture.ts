@@ -11,7 +11,7 @@ export const pawnKingFuture = (
   const array: RulesPieces[] = [];
 
   if (name.includes('pawn')) return pawnFuture(c, f, orderGame, name);
-  if (name.includes('king')) return kingFuture(c, f, orderGame, name);
+  if (name.includes('king')) return kingFuture(c, f, orderGame);
 
   return array;
 };
