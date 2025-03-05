@@ -14,7 +14,7 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
   const rook2 = orderGame.find((e) => nameFriend + '-rook2' === e.piece && e.movements === 0);
 
   /*observador que ninguna pieza la este poniendo en jaque */
-  const { right, left, check } = observerEnroque(orderGame, king);
+  const { right, left, check, pEnemies } = observerEnroque(orderGame, king);
 
   /* enroque rey*/
   /* enroque izquierda*/
@@ -76,8 +76,10 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
   /*evalua las posiciones del arreglo */
   for (const p of positionsValid) {
     const findPost = orderGame.find((e) => e.left === c + p.left && e.top === f + p.top);
+    const findPostEnemy = pEnemies.find((e) => e.left === c + p.left && e.top === f + p.top);
 
-    if (findPost && !findPost.piece.includes(nameFriend)) {
+    /*evalua si no hay un enemigo en la posicion */
+    if (findPost && !findPost.piece.includes(nameFriend) && !findPostEnemy) {
       array.push({
         top: findPost.top,
         left: findPost.left,

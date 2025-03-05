@@ -39,5 +39,6 @@ export const observerEnroque = (array: GameManipulator[], p: GameManipulator | u
     right: !findPostCastlingRight.value && !findPostCastlingRight2.value ? true : false,
     left: !findPostCastlingLeft.value && !findPostCastlingLeft2.value ? true : false,
     check: compare ? false : true,
+    pEnemies: positions,
   };
 };
