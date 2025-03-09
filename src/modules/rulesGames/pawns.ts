@@ -1,6 +1,7 @@
 /*reglas de los peones blancos y negros */
 
 import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import { enemyToKing } from './enemyToKing';
 
 /*blancos */
 export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) => {
@@ -10,11 +11,16 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
     left: c,
   };
   const array: RulesPieces[] = [];
+  const myKing = orderGame.find((e) => e.piece === 'white-king');
 
+  /*detectar si un enemigo se encuentra en direccion al rey */
+  /*izquierda */
+  const iz = enemyToKing(c - 1, f - 1, c, f, orderGame, myKing);
   /*encontrar pieza enemiga izquierda*/
 
   if (c - 1 >= 0 && f - 1 >= 0) {
     const ei = orderGame.find((e) => e.left === c - 1 && e.top === f - 1);
+
     if (ei?.piece.includes('black')) {
       array.push({
         top: f - 1,
