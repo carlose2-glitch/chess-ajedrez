@@ -17,7 +17,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
   /*izquierda */
   const iz = enemyToKing(c - 1, f - 1, c, f, orderGame, myKing);
   /*encontrar pieza enemiga izquierda*/
-
+  console.log(iz);
   if (c - 1 >= 0 && f - 1 >= 0) {
     const ei = orderGame.find((e) => e.left === c - 1 && e.top === f - 1);
 

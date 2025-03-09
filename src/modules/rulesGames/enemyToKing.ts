@@ -11,7 +11,7 @@ export const enemyToKing = (
   king: GameManipulator | undefined,
 ) => {
   const decision = {
-    d: false,
+    d: true,
   };
 
   const array: GameManipulator[] = Game;
@@ -27,10 +27,12 @@ export const enemyToKing = (
     const arrayEnemy = orderPieceEnemies(array, color);
     const positions: RulesPieces[] = observer(arrayEnemy, color, newArray);
 
+    //console.log(positions);
+    //console.log(king);
+
     positions.find((e) => {
       if (e.left === king?.left && e.top === king.top) {
-        console.log('jaque');
-        return (decision.d = true);
+        return (decision.d = false);
       }
     });
   }
