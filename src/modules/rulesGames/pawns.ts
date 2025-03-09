@@ -13,15 +13,15 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
   const array: RulesPieces[] = [];
   const myKing = orderGame.find((e) => e.piece === 'white-king');
 
-  /*detectar si un enemigo se encuentra en direccion al rey */
-  /*izquierda */
-  const iz = enemyToKing(c - 1, f - 1, c, f, orderGame, myKing);
   /*encontrar pieza enemiga izquierda*/
-  console.log(iz);
+
   if (c - 1 >= 0 && f - 1 >= 0) {
     const ei = orderGame.find((e) => e.left === c - 1 && e.top === f - 1);
+    /*detectar si un enemigo se encuentra en direccion al rey */
+    /*izquierda */
+    const iz = enemyToKing(c - 1, f - 1, c, f, orderGame, myKing);
 
-    if (ei?.piece.includes('black')) {
+    if (ei?.piece.includes('black') && iz) {
       array.push({
         top: f - 1,
         left: c - 1,
@@ -36,8 +36,9 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
 
   if (c + 1 <= 7 && f - 1 >= 0) {
     const ed = orderGame.find((e) => e.left === c + 1 && e.top === f - 1);
+    const id = enemyToKing(c + 1, f - 1, c, f, orderGame, myKing);
 
-    if (ed?.piece.includes('black')) {
+    if (ed?.piece.includes('black') && id) {
       array.push({
         top: f - 1,
         left: c + 1,
@@ -53,8 +54,9 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
       d.top--;
 
       const o = orderGame.find((e) => e.left === c && e.top === d.top);
+      const front = enemyToKing(c, d.top, c, f, orderGame, myKing);
 
-      if (o?.piece === '') {
+      if (o?.piece === '' && front) {
         array.push({
           top: d.top,
           left: d.left,
@@ -68,7 +70,8 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
   /*paso al frente */
 
   const r = orderGame.find((e) => e.left === c && e.top === d.top - 1);
-  if (r?.piece === '') {
+  const front = enemyToKing(c, d.top - 1, c, f, orderGame, myKing);
+  if (r?.piece === '' && front) {
     array.push({
       top: d.top - 1,
       left: d.left,

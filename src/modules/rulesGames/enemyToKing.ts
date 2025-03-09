@@ -29,7 +29,7 @@ export const enemyToKing = (
 
     //console.log(positions);
     //console.log(king);
-
+    /*detecta si el rey esta en jaque con este movimiento */
     positions.find((e) => {
       if (e.left === king?.left && e.top === king.top) {
         return (decision.d = false);
