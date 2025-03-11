@@ -37,6 +37,8 @@ export const enemyToKing = (
     const color = piec.piece.includes('white') ? 'black' : 'white';
     const arrayEnemy = orderPieceEnemies(newArray, color);
     console.log(1 + 'vacio');
+    //console.log(newArray);
+    //console.log(piec);
     const positions: RulesPieces[] = observer(arrayEnemy, color, newArray);
 
     /*detecta si el rey esta en jaque con este movimiento */
@@ -46,7 +48,7 @@ export const enemyToKing = (
       }
     });
   } else if (movementE && piec) {
-    console.log(2 + 'enemy');
+    // console.log(2 + 'enemy');
     const newArray = order(piec, movementE, array);
     const color = piec.piece.includes('white') ? 'black' : 'white';
     const arrayEnemy = orderPieceEnemies(newArray, color);
@@ -61,7 +63,7 @@ export const enemyToKing = (
     });
   } else if (movementF && piec) {
     const newArray = order(piec, movementF, array);
-    console.log(3 + 'friend');
+    //    console.log(3 + 'friend');
 
     const color = piec.piece.includes('white') ? 'black' : 'white';
     const arrayEnemy = orderPieceEnemies(newArray, color);
@@ -74,7 +76,7 @@ export const enemyToKing = (
       }
     });
   }
-  console.log(decision.d);
+  //  console.log(decision.d);
   return decision.d;
 };
 
@@ -92,6 +94,13 @@ const order = (p: GameManipulator, m: GameManipulator, a: GameManipulator[]) => 
         movements: order.movements,
       });
     } else if (order.left === m.left && order.top === m.top && order.piece.includes(enemyColor)) {
+      array.push({
+        piece: p.piece,
+        left: order.left,
+        top: order.top,
+        movements: order.movements,
+      });
+    } else if (order.left === m.left && order.top === m.top && order.piece === '') {
       array.push({
         piece: p.piece,
         left: order.left,
