@@ -1,11 +1,6 @@
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, RulesPieces } from '@/modules/interfaces/pieces.interface';
 
-export const whiteBlackRooks = (
-  c: number,
-  f: number,
-  orderGame: GameManipulator[],
-  name: string,
-) => {
+export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
   const array: RulesPieces[] = [];
 
   const opposite = name.includes('white') ? 'black' : 'white';

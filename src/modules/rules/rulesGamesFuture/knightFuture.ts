@@ -1,6 +1,6 @@
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, RulesPieces } from '@/modules/interfaces/pieces.interface';
 
-export const Knights = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
+export const knightFuture = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
   const array: RulesPieces[] = [];
 
   const nameFriend = name.includes('white') ? 'white' : 'black';
@@ -26,7 +26,6 @@ export const Knights = (c: number, f: number, orderGame: GameManipulator[], name
 
   return array;
 };
-
 const positionsValid: RulesPieces[] = [
   {
     top: -2,

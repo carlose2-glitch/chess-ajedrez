@@ -1,4 +1,4 @@
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, RulesPieces } from '../../interfaces/pieces.interface';
 import { bishops } from './bishop';
 import { kings } from './kings';
 import { Knights } from './knights';

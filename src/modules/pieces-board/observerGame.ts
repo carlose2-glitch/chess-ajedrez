@@ -1,7 +1,7 @@
 import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
-import { pawnKingFuture } from '../rulesGames/pawnKingFuture';
+import { rulesPFuture } from '../rules/rulesGamesFuture/rulesPFuture';
 
-import { rulesGames } from '../rulesGames/rulesOfPieces';
+//import { rulesGames } from '../rules/rulesGames/rulesOfPieces';
 
 export const observer = (
   array: GameManipulator[],
@@ -10,10 +10,9 @@ export const observer = (
 ) => {
   const positionsArray: RulesPieces[] = [];
 
-  const arrayPieces = ['-rook', '-knight', '-bishop', '-queen'];
-  const arrayPawnKing = ['-pawn', '-king'];
+  const arrayPiecesF = ['-pawn', '-king', '-rook', '-knight', '-bishop', '-queen'];
 
-  for (const sp of arrayPieces) {
+  /*for (const sp of arrayPieces) {
     for (const p of array) {
       if (p.piece.includes(colorsEnemys + sp)) {
         const position: RulesPieces[] = rulesGames(p.piece, p.left, p.top, arrayGame);
@@ -27,12 +26,12 @@ export const observer = (
         }
       }
     }
-  }
+  }*/
 
-  for (const sp of arrayPawnKing) {
+  for (const sp of arrayPiecesF) {
     for (const p of array) {
       if (p.piece.includes(colorsEnemys + sp)) {
-        const position: RulesPieces[] = pawnKingFuture(p.piece, p.left, p.top, arrayGame);
+        const position: RulesPieces[] = rulesPFuture(p.piece, p.left, p.top, arrayGame);
         if (position.length > 0) {
           for (const i of position) {
             positionsArray.push({

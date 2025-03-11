@@ -1,6 +1,6 @@
 /*reglas de los peones blancos y negros */
 
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, RulesPieces } from '../../interfaces/pieces.interface';
 import { enemyToKing } from './enemyToKing';
 
 /*blancos */
@@ -12,6 +12,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
   };
   const array: RulesPieces[] = [];
   const myKing = orderGame.find((e) => e.piece === 'white-king');
+  console.log('peon blanco');
 
   /*encontrar pieza enemiga izquierda*/
 
@@ -89,12 +90,15 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
   };
 
   const array: RulesPieces[] = [];
+  const myKing = orderGame.find((e) => e.piece === 'black-king');
 
   /*encontrar pieza enemiga  izquierda*/
 
   if (c - 1 >= 0 && f + 1 <= 7) {
     const ei = orderGame.find((e) => e.left === c - 1 && e.top === f + 1);
-    if (ei?.piece.includes('white')) {
+    const iz = enemyToKing(c - 1, f + 1, c, f, orderGame, myKing);
+
+    if (ei?.piece.includes('white') && iz) {
       array.push({
         top: f + 1,
         left: c - 1,
@@ -109,8 +113,9 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
 
   if (c + 1 <= 7 && f + 1 <= 7) {
     const ed = orderGame.find((e) => e.left === c + 1 && e.top === f + 1);
+    const id = enemyToKing(c + 1, f + 1, c, f, orderGame, myKing);
 
-    if (ed?.piece.includes('white')) {
+    if (ed?.piece.includes('white') && id) {
       array.push({
         top: f + 1,
         left: c + 1,
@@ -125,8 +130,9 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
       d.top++;
 
       const o = orderGame.find((e) => e.left === c && e.top === d.top);
+      const front = enemyToKing(c, d.top, c, f, orderGame, myKing);
 
-      if (o?.piece === '') {
+      if (o?.piece === '' && front) {
         array.push({
           top: d.top,
           left: d.left,
@@ -139,8 +145,8 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
   }
   /*paso al frente */
   const r = orderGame.find((e) => e.left === c && e.top === d.top + 1);
-
-  if (r?.piece === '') {
+  const front = enemyToKing(c, d.top + 1, c, f, orderGame, myKing);
+  if (r?.piece === '' && front) {
     array.push({
       top: d.top + 1,
       left: d.left,

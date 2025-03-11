@@ -1,4 +1,4 @@
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, RulesPieces } from '../../interfaces/pieces.interface';
 import { observerEnroque } from './observerGameEnroque';
 
 export const kings = (c: number, f: number, orderGame: GameManipulator[], name: string) => {

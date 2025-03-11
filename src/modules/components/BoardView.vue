@@ -38,7 +38,7 @@ import { piecesManipulator } from '../pieces-board/pieces';
 import { funtionPaintins } from '../pieces-board/paintingPictures';
 import { game } from '../pieces-board/gameBoard';
 
-import { rulesGames } from '../rulesGames/rulesOfPieces';
+import { rulesGames } from '../rules/rulesGames/rulesOfPieces';
 
 const turn = ['white', 'black'];
 

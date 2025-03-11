@@ -1,4 +1,4 @@
-import type { GameManipulator } from '../interfaces/pieces.interface';
+import type { GameManipulator } from '../../interfaces/pieces.interface';
 
 export const orderPieceEnemies = (a: GameManipulator[], ce: string) => {
   const array: GameManipulator[] = [];

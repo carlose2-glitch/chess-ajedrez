@@ -1,6 +1,7 @@
 import { ref } from 'vue';
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
-import { observer } from '../pieces-board/observerGame';
+import type { GameManipulator, RulesPieces } from '../../interfaces/pieces.interface';
+import { observer } from '../../pieces-board/observerGame';
+import { orderPieceEnemies } from './orderPiecesEnemies';
 
 export const observerEnroque = (array: GameManipulator[], p: GameManipulator | undefined) => {
   const colorsEnemys = p?.piece.includes('white') ? 'black' : 'white';
@@ -9,17 +10,7 @@ export const observerEnroque = (array: GameManipulator[], p: GameManipulator | u
   const findPostCastlingLeft = ref<RulesPieces | undefined>(undefined);
   const findPostCastlingLeft2 = ref<RulesPieces | undefined>(undefined);
   /*adjunta todas los nombres y las posiciones de las piezas enemigas */
-  const orderPiece: GameManipulator[] = [];
-  for (const search of array) {
-    if (search.piece.includes(colorsEnemys)) {
-      orderPiece.push({
-        piece: search.piece,
-        left: search.left,
-        top: search.top,
-        movements: search.movements,
-      });
-    }
-  }
+  const orderPiece: GameManipulator[] = orderPieceEnemies(array, colorsEnemys);
 
   /*buscar si hay alguna pieza enemiga poniendo en jaque al rey */
   const positions: RulesPieces[] = observer(orderPiece, colorsEnemys, array);

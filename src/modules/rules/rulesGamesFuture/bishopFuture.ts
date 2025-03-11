@@ -1,7 +1,7 @@
+import type { GameManipulator, RulesPieces } from '@/modules/interfaces/pieces.interface';
 import { ref } from 'vue';
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
 
-export const bishops = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
+export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
   const array: RulesPieces[] = [];
 
   const nameFriend = name.includes('white') ? 'white' : 'black';

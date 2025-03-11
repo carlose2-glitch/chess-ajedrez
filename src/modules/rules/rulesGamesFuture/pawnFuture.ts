@@ -1,4 +1,4 @@
-import type { GameManipulator, RulesPieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, RulesPieces } from '@/modules/interfaces/pieces.interface';
 
 export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], name: string) => {
   const array: RulesPieces[] = [];
