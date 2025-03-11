@@ -34,8 +34,12 @@ const fafb = (
   nameFriend: string,
   opposite: string,
 ) => {
+  interface Pass {
+    d: boolean;
+  }
   const array: RulesPieces[] = [];
-
+  const arrayTwo: RulesPieces[] = [];
+  const decisions: Pass[] = [];
   const final = {
     d: true,
   };
@@ -45,30 +49,49 @@ const fafb = (
     const fb = enemyToKing(c, i, c, f, orderGame, miKing);
 
     final.d = fb;
+    decisions.push({
+      d: fb,
+    });
+
+    if (findPosition?.piece === '' && fb) {
+      arrayTwo.push({
+        top: i,
+        left: c,
+      });
+    } else if (!findPosition?.piece.includes(nameFriend) && fb) {
+      arrayTwo.push({
+        top: i,
+        left: c,
+      });
+    }
 
     if (findPosition?.piece === '') {
       array.push({
         top: i,
         left: c,
       });
-    }
-
-    if (findPosition?.piece.includes(nameFriend)) {
-      break;
-    }
-    if (findPosition?.piece.includes(opposite)) {
+    } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: i,
         left: c,
       });
-      if (findPosition.piece.includes(opposite + '-king')) {
+      if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');
       }
+      break;
+    } else {
       break;
     }
   }
 
-  return final.d ? array : [];
+  if (decisions[0]) {
+    if (decisions[0].d) {
+      return arrayTwo;
+    } else if (!decisions[0].d && decisions[decisions.length - 1].d) {
+      return array;
+    }
+  }
+  return [];
 };
 /*funcion fila alta */
 const fafa = (
@@ -79,42 +102,66 @@ const fafa = (
   nameFriend: string,
   opposite: string,
 ) => {
+  interface Pass {
+    d: boolean;
+  }
   const array: RulesPieces[] = [];
+  const arrayTwo: RulesPieces[] = [];
+  const decisions: Pass[] = [];
 
   const final = {
     d: true,
   };
 
   for (let i = f - 1; i >= 0; i--) {
-    console.log(i);
     const findPosition = orderGame.find((e) => e.left === c && e.top === i);
     const fa = enemyToKing(c, i, c, f, orderGame, miKing);
     final.d = fa;
+
+    decisions.push({
+      d: fa,
+    });
+
+    if (findPosition?.piece === '' && fa) {
+      arrayTwo.push({
+        top: i,
+        left: c,
+      });
+    } else if (!findPosition?.piece.includes(nameFriend) && fa) {
+      arrayTwo.push({
+        top: i,
+        left: c,
+      });
+    }
 
     if (findPosition?.piece === '') {
       array.push({
         top: i,
         left: c,
       });
-    }
-
-    if (findPosition?.piece.includes(nameFriend)) {
-      break;
-    }
-    if (findPosition?.piece.includes(opposite)) {
+    } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: i,
         left: c,
       });
-
-      if (findPosition.piece.includes(opposite + '-king')) {
+      if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');
       }
       break;
+    } else {
+      break;
+    }
+  }
+  console.log(decisions);
+  if (decisions[0]) {
+    if (decisions[0].d) {
+      return arrayTwo;
+    } else if (!decisions[0].d && decisions[decisions.length - 1].d) {
+      return array;
     }
   }
 
-  return final.d ? array : [];
+  return [];
 };
 /*funcion columna izquierda */
 const faci = (
@@ -125,7 +172,12 @@ const faci = (
   nameFriend: string,
   opposite: string,
 ) => {
+  interface Pass {
+    d: boolean;
+  }
   const array: RulesPieces[] = [];
+  const arrayTwo: RulesPieces[] = [];
+  const decisions: Pass[] = [];
 
   const final = {
     d: true,
@@ -137,29 +189,49 @@ const faci = (
 
     final.d = ci;
 
+    decisions.push({
+      d: ci,
+    });
+
+    if (findPosition?.piece === '' && ci) {
+      arrayTwo.push({
+        top: f,
+        left: i,
+      });
+    } else if (!findPosition?.piece.includes(nameFriend) && ci) {
+      arrayTwo.push({
+        top: f,
+        left: i,
+      });
+    }
+
     if (findPosition?.piece === '' && ci) {
       array.push({
         top: f,
         left: i,
       });
-    }
-
-    if (findPosition?.piece.includes(nameFriend)) {
-      break;
-    }
-    if (findPosition?.piece.includes(opposite)) {
+    } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: f,
         left: i,
       });
-
-      if (findPosition.piece.includes(opposite + '-king')) {
+      if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');
       }
       break;
+    } else {
+      break;
     }
   }
-  return final.d ? array : [];
+
+  if (decisions[0]) {
+    if (decisions[0].d) {
+      return arrayTwo;
+    } else if (!decisions[0].d && decisions[decisions.length - 1].d) {
+      return array;
+    }
+  }
+  return [];
 };
 /*funcion columna derecha */
 const facd = (
@@ -170,7 +242,12 @@ const facd = (
   nameFriend: string,
   opposite: string,
 ) => {
+  interface Pass {
+    d: boolean;
+  }
   const array: RulesPieces[] = [];
+  const arrayTwo: RulesPieces[] = [];
+  const decisions: Pass[] = [];
 
   const final = {
     d: true,
@@ -182,27 +259,47 @@ const facd = (
 
     final.d = cd;
 
+    decisions.push({
+      d: cd,
+    });
+
+    if (findPosition?.piece === '' && cd) {
+      arrayTwo.push({
+        top: f,
+        left: i,
+      });
+    } else if (!findPosition?.piece.includes(nameFriend) && cd) {
+      arrayTwo.push({
+        top: f,
+        left: i,
+      });
+    }
+
     if (findPosition?.piece === '') {
       array.push({
         top: f,
         left: i,
       });
-    }
-
-    if (findPosition?.piece.includes(nameFriend)) {
-      break;
-    }
-    if (findPosition?.piece.includes(opposite)) {
+    } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: f,
         left: i,
       });
-
-      if (findPosition.piece.includes(opposite + '-king')) {
+      if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');
       }
       break;
+    } else {
+      break;
     }
   }
-  return final.d ? array : [];
+
+  if (decisions[0]) {
+    if (decisions[0].d) {
+      return arrayTwo;
+    } else if (!decisions[0].d && decisions[decisions.length - 1].d) {
+      return array;
+    }
+  }
+  return [];
 };

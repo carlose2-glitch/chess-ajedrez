@@ -52,7 +52,7 @@ const fafsi = (
     decisions.push({
       d: is,
     });
-    console.log(is);
+
     if (fis.value >= 0) {
       if (findPost?.piece === '' && is) {
         arrayTwo.push({
