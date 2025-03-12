@@ -32,7 +32,17 @@ export const piecesManipulator = () => {
     if (findEnemyCap && findEnemy[0].name.includes('pawn')) {
       const colorEnemy = findEnemy[0].name.includes('white') ? 'black' : 'white';
       if (colorEnemy === 'white') {
-        console.log('enemigo blanco');
+        const pawnEnemy = orderGame.find(
+          (e) =>
+            e.left === findEnemyCap.left &&
+            e.top === findEnemyCap.top - 1 &&
+            e.piece.includes('white-pawn') &&
+            e.movements === 1,
+        );
+
+        const newArray = pieces.value.filter((e) => e.name !== pawnEnemy?.piece);
+
+        pieces.value = newArray;
       } else if (colorEnemy === 'black') {
         const pawnEnemy = orderGame.find(
           (e) =>
