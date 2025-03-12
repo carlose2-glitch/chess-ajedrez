@@ -5,7 +5,12 @@ export const piecesManipulator = () => {
   const pieces = ref<Pieces[]>(array);
   /*evento de mover pieza */
 
-  const modifyBoard = (c: number, f: number, namePiece: string | null) => {
+  const modifyBoard = (
+    c: number,
+    f: number,
+    namePiece: string | null,
+    orderGame: GameManipulator[],
+  ) => {
     pieces.value.find((e, i) => {
       if (e.name === namePiece) {
         pieces.value[i].class = `absolute duration-700 left-${c}/8 top-${f}/8 w-1/8 cursor-pointer`;
@@ -14,6 +19,42 @@ export const piecesManipulator = () => {
         pieces.value[i].movements++;
       }
     });
+    /*movimiento enroque */
+    const piece = orderGame.find((e) => e.piece === namePiece);
+
+    if (piece?.piece.includes('king') && piece.left === 4 && piece.movements === 0) {
+      if (c === 6) {
+        pieces.value.find((e, i) => {
+          if (
+            e.left === '7/8' &&
+            e.name.includes('rook') &&
+            e.movements === 0 &&
+            e.top === `${piece.top}/8`
+          ) {
+            pieces.value[i].class =
+              `absolute duration-700 left-5/8 top-${f}/8 w-1/8 cursor-pointer`;
+            pieces.value[i].left = '5/8';
+            pieces.value[i].top = `${f}/8`;
+            pieces.value[i].movements++;
+          }
+        });
+      } else if (c === 2) {
+        pieces.value.find((e, i) => {
+          if (
+            e.left === '0/8' &&
+            e.name.includes('rook') &&
+            e.movements === 0 &&
+            e.top === `${f}/8`
+          ) {
+            pieces.value[i].class =
+              `absolute duration-700 left-3/8 top-${f}/8 w-1/8 cursor-pointer`;
+            pieces.value[i].left = '3/8';
+            pieces.value[i].top = `${f}/8`;
+            pieces.value[i].movements++;
+          }
+        });
+      }
+    }
   };
   /*evento eliminar enemigo */
   const deletePiece = (p: string | null, c: number, f: number, orderGame: GameManipulator[]) => {

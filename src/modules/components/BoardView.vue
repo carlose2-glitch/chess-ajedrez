@@ -148,7 +148,7 @@ watch(dataPieceBoard, (d) => {
 
 const finalMovement = (col: number, row: number, piece: string | null) => {
   /* mover pieza graficamente*/
-  extractPositionPieces.modifyBoard(col, row, piece);
+  extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
 
   /* eliminar pieza graficamente */
   extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);
