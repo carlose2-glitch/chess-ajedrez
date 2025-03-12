@@ -151,7 +151,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
   extractPositionPieces.modifyBoard(col, row, piece);
 
   /* eliminar pieza graficamente */
-  extractPositionPieces.deletePiece(piece, col, row);
+  extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);
 
   /* poner todos los cuadros verdes a transparentes */
   paintings.reload();

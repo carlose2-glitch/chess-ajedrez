@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue';
-import type { Pieces } from '../interfaces/pieces.interface';
+import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
 
 export const piecesManipulator = () => {
   const pieces = ref<Pieces[]>(array);
@@ -16,18 +16,36 @@ export const piecesManipulator = () => {
     });
   };
   /*evento eliminar enemigo */
-  const deletePiece = (p: string | null, c: number, f: number) => {
+  const deletePiece = (p: string | null, c: number, f: number, orderGame: GameManipulator[]) => {
     const findEnemy = pieces.value.filter(
       (e) => Number(e.left.slice(0, 1)) === c && Number(e.top.slice(0, 1)) === f,
     );
     if (findEnemy.length === 2) {
       const deleteEnemy = findEnemy.find((e) => e.name !== p);
-      const newArray = pieces.value.filter((e) => {
-        if (e.name !== deleteEnemy?.name) {
-          return e;
-        }
-      });
+      const newArray = pieces.value.filter((e) => e.name !== deleteEnemy?.name);
       pieces.value = newArray;
+    }
+
+    /*captura al paso eliminar*/
+    const findEnemyCap = orderGame.find((e) => e.left === c && e.top === f && e.piece === '');
+
+    if (findEnemyCap && findEnemy[0].name.includes('pawn')) {
+      const colorEnemy = findEnemy[0].name.includes('white') ? 'black' : 'white';
+      if (colorEnemy === 'white') {
+        console.log('enemigo blanco');
+      } else if (colorEnemy === 'black') {
+        const pawnEnemy = orderGame.find(
+          (e) =>
+            e.left === findEnemyCap.left &&
+            e.top === findEnemyCap.top + 1 &&
+            e.piece.includes('black-pawn') &&
+            e.movements === 1,
+        );
+
+        const newArray = pieces.value.filter((e) => e.name !== pawnEnemy?.piece);
+
+        pieces.value = newArray;
+      }
     }
   };
 

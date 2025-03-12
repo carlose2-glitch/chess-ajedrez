@@ -36,7 +36,7 @@ export const enemyToKing = (
     const newArray = order(piec, movement, array);
     const color = piec.piece.includes('white') ? 'black' : 'white';
     const arrayEnemy = orderPieceEnemies(newArray, color);
-    console.log(1 + 'vacio');
+    //console.log(1 + 'vacio');
     //console.log(newArray);
     //console.log(piec);
     const positions: RulesPieces[] = observer(arrayEnemy, color, newArray);

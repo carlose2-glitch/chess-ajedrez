@@ -79,6 +79,37 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
     });
   }
 
+  /*captura al paso */
+  /*verifica que sea un peon negro y que la pieza solo halla hecho un movimiento*/
+  const blackPawns = orderGame.filter(
+    (e) => e.top === 3 && e.piece.includes('black-pawn') && e.movements === 1,
+  );
+
+  if (d.top === 3 && blackPawns[0]) {
+    /*filtra el peon que este tanto del lado derecho como el izquierdo y tambien verifica que tanto diagonal izquierdo como derecho este vacio*/
+    const filterPawnLeft = blackPawns.filter((e) => e.left === c - 1);
+    const filterPawnRight = blackPawns.filter((e) => e.left === c + 1);
+    /*si esta vacio el espacio a mover */
+    const left = orderGame.find((e) => e.left === c - 1 && e.top === d.top - 1 && e.piece === '');
+    const right = orderGame.find((e) => e.left === c + 1 && e.top === d.top - 1 && e.piece === '');
+    /*verifica si los pasos diagonales estan en jaque */
+    const captureOnTheGoLeft = enemyToKing(c - 1, d.top - 1, c, d.top, orderGame, myKing);
+    const captureOnTheGoRight = enemyToKing(c + 1, d.top - 1, c, d.top, orderGame, myKing);
+
+    if (filterPawnLeft[0] && left && captureOnTheGoLeft) {
+      array.push({
+        top: left.top,
+        left: left.left,
+      });
+    }
+    if (filterPawnRight[0] && right && captureOnTheGoRight) {
+      array.push({
+        top: right.top,
+        left: right.left,
+      });
+    }
+  }
+
   return array;
 };
 
@@ -151,6 +182,35 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
       top: d.top + 1,
       left: d.left,
     });
+  }
+
+  const whitePawns = orderGame.filter(
+    (e) => e.top === 4 && e.piece.includes('white-pawn') && e.movements === 1,
+  );
+
+  if (d.top === 4 && whitePawns[0]) {
+    /*filtra el peon que este tanto del lado derecho como el izquierdo y tambien verifica que tanto diagonal izquierdo como derecho este vacio*/
+    const filterPawnLeft = whitePawns.filter((e) => e.left === c - 1);
+    const filterPawnRight = whitePawns.filter((e) => e.left === c + 1);
+    /*si esta vacio el espacio a mover */
+    const left = orderGame.find((e) => e.left === c - 1 && e.top === d.top + 1 && e.piece === '');
+    const right = orderGame.find((e) => e.left === c + 1 && e.top === d.top + 1 && e.piece === '');
+    /*verifica si los pasos diagonales estan en jaque */
+    const captureOnTheGoLeft = enemyToKing(c - 1, d.top + 1, c, d.top, orderGame, myKing);
+    const captureOnTheGoRight = enemyToKing(c + 1, d.top + 1, c, d.top, orderGame, myKing);
+
+    if (filterPawnLeft[0] && left && captureOnTheGoLeft) {
+      array.push({
+        top: left.top,
+        left: left.left,
+      });
+    }
+    if (filterPawnRight[0] && right && captureOnTheGoRight) {
+      array.push({
+        top: right.top,
+        left: right.left,
+      });
+    }
   }
 
   return array;
