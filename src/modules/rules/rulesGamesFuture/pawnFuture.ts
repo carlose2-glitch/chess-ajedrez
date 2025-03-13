@@ -11,6 +11,7 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
         array.push({
           top: r - 1,
           left: c - 1,
+          co: false,
         });
       }
     }
@@ -24,6 +25,7 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
         array.push({
           top: r - 1,
           left: c + 1,
+          co: false,
         });
       }
     }
@@ -38,6 +40,7 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
         array.push({
           top: r + 1,
           left: c - 1,
+          co: false,
         });
       }
     }
@@ -51,6 +54,7 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
         array.push({
           top: r + 1,
           left: c + 1,
+          co: false,
         });
       }
     }

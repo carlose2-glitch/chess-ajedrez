@@ -11,6 +11,7 @@ export const kingFuture = (c: number, r: number, orderGame: GameManipulator[]) =
       array.push({
         top: findPost.top,
         left: findPost.left,
+        co: false,
       });
     }
   }
@@ -18,7 +19,7 @@ export const kingFuture = (c: number, r: number, orderGame: GameManipulator[]) =
   return array;
 };
 
-const positionsValid: RulesPieces[] = [
+const positionsValid = [
   {
     top: -1,
     left: -1,

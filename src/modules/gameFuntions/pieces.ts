@@ -2,7 +2,7 @@ import { computed, ref } from 'vue';
 import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
 
 export const piecesManipulator = () => {
-  const pieces = ref<Pieces[]>(array);
+  const pieces = ref<Pieces[]>(arrayTest);
   /*evento de mover pieza */
 
   const modifyBoard = (
@@ -366,6 +366,25 @@ const array: Pieces[] = [
     left: '7/8',
     src: 'peon-blanco.png',
     class: 'absolute left-7/8 top-6/8 w-1/8 cursor-pointer',
+    top: '6/8',
+    movements: 0,
+  },
+];
+/*arreglo para hacer pruebas */
+const arrayTest: Pieces[] = [
+  {
+    name: 'white-pawn8',
+    left: '5/8',
+    src: 'peon-blanco.png',
+    class: 'absolute left-5/8 top-1/8 w-1/8 cursor-pointer',
+    top: '1/8',
+    movements: 0,
+  },
+  {
+    name: 'black-pawn3',
+    left: '2/8',
+    src: 'peon-negro.png',
+    class: 'absolute left-2/8 top-6/8 w-1/8 cursor-pointer',
     top: '6/8',
     movements: 0,
   },

@@ -58,11 +58,13 @@ const fafsi = (
         arrayTwo.push({
           top: fis.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend) && is) {
         arrayTwo.push({
           top: fis.value,
           left: i,
+          co: false,
         });
       }
 
@@ -70,11 +72,13 @@ const fafsi = (
         array.push({
           top: fis.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fis.value,
           left: i,
+          co: false,
         });
 
         if (findPost?.piece.includes(opposite + '-king')) {
@@ -139,11 +143,13 @@ const fasd = (
         arrayTwo.push({
           top: fds.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend) && ds) {
         arrayTwo.push({
           top: fds.value,
           left: i,
+          co: false,
         });
       }
 
@@ -151,11 +157,13 @@ const fasd = (
         array.push({
           top: fds.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fds.value,
           left: i,
+          co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
           console.log('jaque');
@@ -216,11 +224,13 @@ const faii = (
         arrayTwo.push({
           top: fii.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend) && ii) {
         arrayTwo.push({
           top: fii.value,
           left: i,
+          co: false,
         });
       }
 
@@ -228,11 +238,13 @@ const faii = (
         array.push({
           top: fii.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fii.value,
           left: i,
+          co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
           console.log('jaque');
@@ -294,11 +306,13 @@ const faid = (
         arrayTwo.push({
           top: fdi.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend) && di) {
         arrayTwo.push({
           top: fdi.value,
           left: i,
+          co: false,
         });
       }
 
@@ -306,11 +320,13 @@ const faid = (
         array.push({
           top: fdi.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fdi.value,
           left: i,
+          co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
           console.log('jaque');

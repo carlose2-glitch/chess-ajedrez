@@ -16,6 +16,7 @@ export const knightFuture = (c: number, f: number, orderGame: GameManipulator[],
       array.push({
         top: findPost.top,
         left: findPost.left,
+        co: false,
       });
     }
 
@@ -26,7 +27,7 @@ export const knightFuture = (c: number, f: number, orderGame: GameManipulator[],
 
   return array;
 };
-const positionsValid: RulesPieces[] = [
+const positionsValid = [
   {
     top: -2,
     left: -1,

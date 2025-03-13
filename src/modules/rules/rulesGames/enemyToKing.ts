@@ -1,6 +1,6 @@
 import type { GameManipulator, RulesPieces } from '../../interfaces/pieces.interface';
 import { orderPieceEnemies } from './orderPiecesEnemies';
-import { observer } from '../../pieces-board/observerGame';
+import { observer } from '../../gameFuntions/observerGame';
 
 export const enemyToKing = (
   cf: number,

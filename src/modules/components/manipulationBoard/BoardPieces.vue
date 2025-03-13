@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Pieces } from '../interfaces/pieces.interface';
+import type { Pieces } from '../../interfaces/pieces.interface';
 
 interface ArrayPieces {
   extractPositionPieces: Pieces[];

@@ -14,6 +14,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: i,
         left: c,
+        co: false,
       });
     }
     if (findPosition?.piece.includes(nameFriend)) {
@@ -23,6 +24,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: i,
         left: c,
+        co: false,
       });
       if (findPosition.piece.includes(opposite + '-king')) {
         console.log('jaque');
@@ -38,6 +40,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: i,
         left: c,
+        co: false,
       });
     }
     if (findPosition?.piece.includes(nameFriend)) {
@@ -47,6 +50,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: i,
         left: c,
+        co: false,
       });
 
       if (findPosition.piece.includes(opposite + '-king')) {
@@ -65,6 +69,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: f,
         left: i,
+        co: false,
       });
     }
     if (findPosition?.piece.includes(nameFriend)) {
@@ -74,6 +79,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: f,
         left: i,
+        co: false,
       });
 
       if (findPosition.piece.includes(opposite + '-king')) {
@@ -92,6 +98,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: f,
         left: i,
+        co: false,
       });
     }
     if (findPosition?.piece.includes(nameFriend)) {
@@ -101,6 +108,7 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
       array.push({
         top: f,
         left: i,
+        co: false,
       });
 
       if (findPosition.piece.includes(opposite + '-king')) {

@@ -12,22 +12,6 @@ export const observer = (
 
   const arrayPiecesF = ['-pawn', '-king', '-rook', '-knight', '-bishop', '-queen'];
 
-  /*for (const sp of arrayPieces) {
-    for (const p of array) {
-      if (p.piece.includes(colorsEnemys + sp)) {
-        const position: RulesPieces[] = rulesGames(p.piece, p.left, p.top, arrayGame);
-        if (position.length > 0) {
-          for (const i of position) {
-            positionsArray.push({
-              top: i.top,
-              left: i.left,
-            });
-          }
-        }
-      }
-    }
-  }*/
-
   for (const sp of arrayPiecesF) {
     for (const p of array) {
       if (p.piece.includes(colorsEnemys + sp)) {
@@ -37,6 +21,7 @@ export const observer = (
             positionsArray.push({
               top: i.top,
               left: i.left,
+              co: i.co,
             });
           }
         }

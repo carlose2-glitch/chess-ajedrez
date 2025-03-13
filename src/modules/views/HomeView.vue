@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import BoardView from '../components/BoardView.vue';
+import BoardView from '../components/view/BoardView.vue';
 import ButtonPlay from '../components/ButtonPlay.vue';
 import HeaderView from '../components/HeaderView.vue';
 import PlayerBar from '../components/PlayerBar.vue';

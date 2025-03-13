@@ -29,16 +29,19 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
       savePost.push({
         top: findPost.top,
         left: findPost.left,
+        co: false,
       });
       if (i === 3) {
         array.push(
           {
             top: savePost[0].top,
             left: savePost[0].left,
+            co: false,
           },
           {
             top: savePost[1].top,
             left: savePost[1].left,
+            co: false,
           },
         );
       }
@@ -56,6 +59,7 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
       savePost.push({
         top: findPost.top,
         left: findPost.left,
+        co: false,
       });
 
       if (i === 2) {
@@ -63,10 +67,12 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
           {
             top: savePost[0].top,
             left: savePost[0].left,
+            co: false,
           },
           {
             top: savePost[1].top,
             left: savePost[1].left,
+            co: false,
           },
         );
       }
@@ -83,13 +89,14 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
       array.push({
         top: findPost.top,
         left: findPost.left,
+        co: false,
       });
     }
   }
   return array;
 };
 
-const positionsValid: RulesPieces[] = [
+const positionsValid = [
   {
     top: -1,
     left: -1,

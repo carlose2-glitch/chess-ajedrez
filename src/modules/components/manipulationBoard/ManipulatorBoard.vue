@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Measures } from '../interfaces/pieces.interface';
+import type { Measures } from '../../interfaces/pieces.interface';
 
 const emits = defineEmits<{
   secondMovement: [firstColum: number, firstRow: number, piece: string | null];

@@ -31,4 +31,5 @@ export interface GameManipulator {
 export interface RulesPieces {
   top: number;
   left: number;
+  co: boolean;
 }

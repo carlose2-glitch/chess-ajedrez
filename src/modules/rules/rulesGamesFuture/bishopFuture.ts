@@ -29,11 +29,13 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
         array.push({
           top: fis.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fis.value,
           left: i,
+          co: false,
         });
 
         if (findPost?.piece.includes(opposite + '-king')) {
@@ -58,11 +60,13 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
         array.push({
           top: fds.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fds.value,
           left: i,
+          co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
           console.log('jaque');
@@ -85,11 +89,13 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
         array.push({
           top: fii.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fii.value,
           left: i,
+          co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
           console.log('jaque');
@@ -112,11 +118,13 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
         array.push({
           top: fdi.value,
           left: i,
+          co: false,
         });
       } else if (!findPost?.piece.includes(nameFriend)) {
         array.push({
           top: fdi.value,
           left: i,
+          co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
           console.log('jaque');

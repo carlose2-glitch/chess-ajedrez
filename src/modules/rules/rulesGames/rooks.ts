@@ -57,11 +57,13 @@ const fafb = (
       arrayTwo.push({
         top: i,
         left: c,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend) && fb) {
       arrayTwo.push({
         top: i,
         left: c,
+        co: false,
       });
     }
 
@@ -69,11 +71,13 @@ const fafb = (
       array.push({
         top: i,
         left: c,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: i,
         left: c,
+        co: false,
       });
       if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');
@@ -126,11 +130,13 @@ const fafa = (
       arrayTwo.push({
         top: i,
         left: c,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend) && fa) {
       arrayTwo.push({
         top: i,
         left: c,
+        co: false,
       });
     }
 
@@ -138,11 +144,13 @@ const fafa = (
       array.push({
         top: i,
         left: c,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: i,
         left: c,
+        co: false,
       });
       if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');
@@ -197,11 +205,13 @@ const faci = (
       arrayTwo.push({
         top: f,
         left: i,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend) && ci) {
       arrayTwo.push({
         top: f,
         left: i,
+        co: false,
       });
     }
 
@@ -209,11 +219,13 @@ const faci = (
       array.push({
         top: f,
         left: i,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: f,
         left: i,
+        co: false,
       });
       if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');
@@ -267,11 +279,13 @@ const facd = (
       arrayTwo.push({
         top: f,
         left: i,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend) && cd) {
       arrayTwo.push({
         top: f,
         left: i,
+        co: false,
       });
     }
 
@@ -279,11 +293,13 @@ const facd = (
       array.push({
         top: f,
         left: i,
+        co: false,
       });
     } else if (!findPosition?.piece.includes(nameFriend)) {
       array.push({
         top: f,
         left: i,
+        co: false,
       });
       if (findPosition?.piece.includes(opposite + '-king')) {
         console.log('jaque');

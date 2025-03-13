@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import type { GameManipulator, RulesPieces } from '../../interfaces/pieces.interface';
-import { observer } from '../../pieces-board/observerGame';
+import { observer } from '../../gameFuntions/observerGame';
 import { orderPieceEnemies } from './orderPiecesEnemies';
 
 export const observerEnroque = (array: GameManipulator[], p: GameManipulator | undefined) => {

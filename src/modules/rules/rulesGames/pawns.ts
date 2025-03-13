@@ -26,6 +26,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
       array.push({
         top: f - 1,
         left: c - 1,
+        co: f - 1 === 0 ? true : false,
       });
     }
     if (ei?.piece.includes('black-king')) {
@@ -43,6 +44,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
       array.push({
         top: f - 1,
         left: c + 1,
+        co: f - 1 === 0 ? true : false,
       });
     }
     if (ed?.piece.includes('black-king')) {
@@ -61,6 +63,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
         array.push({
           top: d.top,
           left: d.left,
+          co: false,
         });
       } else {
         break;
@@ -76,6 +79,7 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
     array.push({
       top: d.top - 1,
       left: d.left,
+      co: d.top - 1 === 0 ? true : false,
     });
   }
 
@@ -100,12 +104,14 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
       array.push({
         top: left.top,
         left: left.left,
+        co: false,
       });
     }
     if (filterPawnRight[0] && right && captureOnTheGoRight) {
       array.push({
         top: right.top,
         left: right.left,
+        co: false,
       });
     }
   }
@@ -133,6 +139,7 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
       array.push({
         top: f + 1,
         left: c - 1,
+        co: f + 1 === 7 ? true : false,
       });
     }
     if (ei?.piece.includes('white-king')) {
@@ -150,6 +157,7 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
       array.push({
         top: f + 1,
         left: c + 1,
+        co: f + 1 === 7 ? true : false,
       });
     }
     if (ed?.piece.includes('white-king')) {
@@ -167,6 +175,7 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
         array.push({
           top: d.top,
           left: d.left,
+          co: false,
         });
       } else {
         break;
@@ -181,6 +190,7 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
     array.push({
       top: d.top + 1,
       left: d.left,
+      co: d.top + 1 === 7 ? true : false,
     });
   }
 
@@ -203,12 +213,14 @@ export const blackPawns = (c: number, f: number, orderGame: GameManipulator[]) =
       array.push({
         top: left.top,
         left: left.left,
+        co: false,
       });
     }
     if (filterPawnRight[0] && right && captureOnTheGoRight) {
       array.push({
         top: right.top,
         left: right.left,
+        co: false,
       });
     }
   }

@@ -32,13 +32,14 @@
 
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue';
-import BoardPieces from './BoardPieces.vue';
-import ManipulatorBoard from './ManipulatorBoard.vue';
-import { piecesManipulator } from '../pieces-board/pieces';
-import { funtionPaintins } from '../pieces-board/paintingPictures';
-import { game } from '../pieces-board/gameBoard';
+import BoardPieces from '../manipulationBoard/BoardPieces.vue';
+import ManipulatorBoard from '../manipulationBoard/ManipulatorBoard.vue';
+import { piecesManipulator } from '../../gameFuntions/pieces';
+import { funtionPaintins } from '../../gameFuntions/paintingPictures';
+import { game } from '../../gameFuntions/gameBoard';
 
-import { rulesGames } from '../rules/rulesGames/rulesOfPieces';
+import { rulesGames } from '../../rules/rulesGames/rulesOfPieces';
+import { coronation } from '../../gameFuntions/coronation';
 
 const turn = ['white', 'black'];
 
@@ -140,8 +141,11 @@ watch(dataPieceBoard, (d) => {
   const paint = rulesGames(d.p, d.c, d.r, orderGame.array.value);
 
   /* Pintar movimientos disponibles*/
-  //orderGame.array.value
+
   paintings.paintingsAvailable(paint);
+
+  /*coronacion */
+  coronation(orderGame.array.value, paint);
 });
 
 /* segundo movimiento*/
