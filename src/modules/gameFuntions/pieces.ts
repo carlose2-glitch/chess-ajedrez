@@ -3,6 +3,7 @@ import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
 
 export const piecesManipulator = () => {
   const pieces = ref<Pieces[]>(arrayTest);
+  const piecesCoronation = array;
   /*evento de mover pieza */
 
   const modifyBoard = (
@@ -100,10 +101,61 @@ export const piecesManipulator = () => {
     }
   };
 
+  /*coronacion del peon */
+  const coPawnEvent = (c: number, r: number, p: string | null, pchange: string | null) => {
+    console.log(c, r, p, pchange);
+    /*extrae todas las piezas menos el peon a remover */
+    const newArray = pieces.value.filter((e) => e.name !== p);
+
+    /*extrae los datos de la pieza  */
+    const newPiece = piecesCoronation.find((e) => e.src === pchange);
+
+    /* extrae las piezas que hay en el tablero*/
+    const sortPiece = pieces.value.filter((e) => e.src === pchange);
+    /*orderna de mayor a menor cual es la pieza a sumar */
+    if (sortPiece.length > 0) {
+      const higherPiece = sortPiece.sort((a, b) => {
+        if (a.name > b.name) {
+          return -1;
+        }
+        return 0;
+      });
+      /*extrae el numero de la pieza mayor que hay en tablero */
+      const number = Number(higherPiece[0].name.charAt(higherPiece[0].name.length - 1)) + 1;
+      const newName = higherPiece[0].name.slice(0, -1);
+
+      /* insertar nueva pieza */
+      if (pchange) {
+        newArray.push({
+          name: newName + number,
+          left: `${c}/8`,
+          src: pchange,
+          class: `absolute animate-grow duration-700 left-${c}/8 top-${r}/8 w-1/8 cursor-pointer`,
+          top: `${r}/8`,
+          movements: 0,
+        });
+      }
+      pieces.value = newArray;
+    } else {
+      if (newPiece) {
+        newArray.push({
+          name: newPiece?.name + 1,
+          left: `${c}/8`,
+          src: newPiece?.src,
+          class: `absolute animate-grow duration-700 left-${c}/8 top-${r}/8 w-1/8 cursor-pointer`,
+          top: `${r}/8`,
+          movements: 0,
+        });
+      }
+      pieces.value = newArray;
+    }
+  };
+
   return {
     pieces: computed(() => [...pieces.value]),
     modifyBoard,
     deletePiece,
+    coPawnEvent,
   };
 };
 
@@ -376,8 +428,24 @@ const arrayTest: Pieces[] = [
     name: 'white-pawn8',
     left: '5/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-5/8 top-1/8 w-1/8 cursor-pointer',
-    top: '1/8',
+    class: 'absolute left-5/8 top-2/8 w-1/8 cursor-pointer',
+    top: '2/8',
+    movements: 0,
+  },
+  {
+    name: 'black-pawn5',
+    left: '4/8',
+    src: 'peon-negro.png',
+    class: 'absolute left-4/8 top-0/8 w-1/8 cursor-pointer',
+    top: '0/8',
+    movements: 0,
+  },
+  {
+    name: 'white-pawn9',
+    left: '6/8',
+    src: 'peon-blanco.png',
+    class: 'absolute left-6/8 top-7/8 w-1/8 cursor-pointer',
+    top: '7/8',
     movements: 0,
   },
   {
@@ -386,6 +454,22 @@ const arrayTest: Pieces[] = [
     src: 'peon-negro.png',
     class: 'absolute left-2/8 top-6/8 w-1/8 cursor-pointer',
     top: '6/8',
+    movements: 0,
+  },
+  {
+    name: 'black-pawn4',
+    left: '5/8',
+    src: 'peon-negro.png',
+    class: 'absolute left-5/8 top-6/8 w-1/8 cursor-pointer',
+    top: '6/8',
+    movements: 0,
+  },
+  {
+    name: 'black-knight1',
+    left: '1/8',
+    src: 'caballo-negro.png',
+    class: 'absolute left-1/8 top-0/8 w-1/8 cursor-pointer',
+    top: '0/8',
     movements: 0,
   },
 ];

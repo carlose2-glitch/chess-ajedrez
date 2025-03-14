@@ -27,6 +27,13 @@
       :paintings="paintings.array.value"
       @second-movement="finalMovement"
     />
+    <CoronationPawn
+      v-if="coronationView"
+      :c="colCoronation"
+      :r="rowCoronation"
+      :p="pieceCo"
+      @select-piece="coronationFuntion"
+    />
   </div>
 </template>
 
@@ -40,10 +47,20 @@ import { game } from '../../gameFuntions/gameBoard';
 
 import { rulesGames } from '../../rules/rulesGames/rulesOfPieces';
 import { coronation } from '../../gameFuntions/coronation';
+import CoronationPawn from '../manipulationBoard/CoronationPawn.vue';
 
 const turn = ['white', 'black'];
 
 const movements = ref<number>(0);
+
+/*mostrar piezas al hacer coronacion del peon */
+const coronationView = ref<boolean>(false);
+const coMovement = ref<boolean>(false);
+
+const rowCoronation = ref<number | null>(null);
+const colCoronation = ref<number | null>(null);
+const pieceCo = ref<string | null>(null);
+const piechaCo = ref<string | null>('');
 
 /* piezas del tablero*/
 
@@ -124,6 +141,8 @@ const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight:
 /*evento de la pieza seleccionada */
 
 const choosePiece = (piece: string, column: number, row: number) => {
+  coronationView.value = false;
+  coMovement.value = false;
   c.value = column;
   r.value = row;
   p.value = piece;
@@ -145,23 +164,47 @@ watch(dataPieceBoard, (d) => {
   paintings.paintingsAvailable(paint);
 
   /*coronacion */
-  coronation(orderGame.array.value, paint);
+  const coronationFuntion = coronation(paint);
+  coronationView.value = coronationFuntion.d;
+  rowCoronation.value = coronationFuntion.f;
+  colCoronation.value = coronationFuntion.c;
+  pieceCo.value = d.p;
+  console.log(coronationView.value);
 });
 
 /* segundo movimiento*/
 
 const finalMovement = (col: number, row: number, piece: string | null) => {
   /* mover pieza graficamente*/
-  extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
 
-  /* eliminar pieza graficamente */
-  extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);
+  if (coMovement.value) {
+    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
+    extractPositionPieces.coPawnEvent(col, row, piece, piechaCo.value);
 
-  /* poner todos los cuadros verdes a transparentes */
-  paintings.reload();
-  /* control del juego */
-  orderGame.gameManipulator(extractPositionPieces.pieces.value);
+    extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);
+
+    paintings.reload();
+    orderGame.gameManipulator(extractPositionPieces.pieces.value);
+
+    coMovement.value = false;
+  } else {
+    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
+
+    /* eliminar pieza graficamente */
+    extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);
+
+    /* poner todos los cuadros verdes a transparentes */
+    paintings.reload();
+    /* control del juego */
+    orderGame.gameManipulator(extractPositionPieces.pieces.value);
+  }
 
   movements.value++;
+};
+
+const coronationFuntion = (name: string | null) => {
+  coMovement.value = coronationView.value;
+  coronationView.value = false;
+  piechaCo.value = name;
 };
 </script>

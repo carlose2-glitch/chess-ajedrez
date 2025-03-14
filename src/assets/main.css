@@ -12,3 +12,17 @@
     }
   }
 } */
+
+@theme {
+  --animate-grow: grow 1s ease-out;
+  @keyframes grow {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    30% {
+      transform: scale(1);
+      opacity: 100;
+    }
+  }
+}

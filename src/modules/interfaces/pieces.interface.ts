@@ -33,3 +33,9 @@ export interface RulesPieces {
   left: number;
   co: boolean;
 }
+
+export interface CoronationDatai {
+  c: number | null;
+  r: number | null;
+  p: string | null;
+}
