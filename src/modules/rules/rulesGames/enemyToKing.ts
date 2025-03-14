@@ -47,6 +47,7 @@ export const enemyToKing = (
         return (decision.d = false);
       }
     });
+    //console.log(cf, ff);
   } else if (movementE && piec) {
     // console.log(2 + 'enemy');
     const newArray = order(piec, movementE, array);
@@ -61,6 +62,7 @@ export const enemyToKing = (
         return (decision.d = false);
       }
     });
+    //console.log(cf, ff);
   } else if (movementF && piec) {
     const newArray = order(piec, movementF, array);
     //    console.log(3 + 'friend');
@@ -68,13 +70,15 @@ export const enemyToKing = (
     const color = piec.piece.includes('white') ? 'black' : 'white';
     const arrayEnemy = orderPieceEnemies(newArray, color);
     const positions: RulesPieces[] = observer(arrayEnemy, color, newArray);
-
+    //console.log(positions);
+    //console.log(king);
     /*detecta si el rey esta en jaque con este movimiento */
     positions.find((e) => {
       if (e.left === king?.left && e.top === king.top) {
         return (decision.d = false);
       }
     });
+    //console.log(cf, ff);
   }
   //  console.log(decision.d);
   return decision.d;

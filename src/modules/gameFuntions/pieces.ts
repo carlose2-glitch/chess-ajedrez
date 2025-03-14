@@ -2,7 +2,7 @@ import { computed, ref } from 'vue';
 import type { GameManipulator, Pieces } from '../interfaces/pieces.interface';
 
 export const piecesManipulator = () => {
-  const pieces = ref<Pieces[]>(arrayTest);
+  const pieces = ref<Pieces[]>(array);
   const piecesCoronation = array;
   /*evento de mover pieza */
 

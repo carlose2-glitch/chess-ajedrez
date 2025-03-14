@@ -169,7 +169,6 @@ watch(dataPieceBoard, (d) => {
   rowCoronation.value = coronationFuntion.f;
   colCoronation.value = coronationFuntion.c;
   pieceCo.value = d.p;
-  console.log(coronationView.value);
 });
 
 /* segundo movimiento*/

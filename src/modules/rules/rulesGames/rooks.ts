@@ -11,7 +11,7 @@ export const whiteBlackRooks = (
 
   const opposite = name.includes('white') ? 'black' : 'white';
   const nameFriend = name.includes('white') ? 'white' : 'black';
-  const miKing = orderGame.find((e) => e.piece === 'white-king');
+  const miKing = orderGame.find((e) => e.piece === nameFriend + '-king');
 
   /*funcion de fila baja*/
   const afb: RulesPieces[] = fafb(orderGame, c, f, miKing, nameFriend, opposite);
@@ -48,12 +48,14 @@ const fafb = (
     const findPosition = orderGame.find((e) => e.left === c && e.top === i);
     const fb = enemyToKing(c, i, c, f, orderGame, miKing);
 
+    console.log('torre ', fb);
     final.d = fb;
     decisions.push({
       d: fb,
     });
 
     if (findPosition?.piece === '' && fb) {
+      console.log('marcar');
       arrayTwo.push({
         top: i,
         left: c,
@@ -160,7 +162,7 @@ const fafa = (
       break;
     }
   }
-  console.log(decisions);
+  //console.log(decisions);
   if (decisions[0]) {
     if (decisions[0].d) {
       return arrayTwo;

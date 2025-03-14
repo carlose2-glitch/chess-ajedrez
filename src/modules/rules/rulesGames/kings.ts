@@ -1,5 +1,7 @@
 import type { GameManipulator, RulesPieces } from '../../interfaces/pieces.interface';
+
 import { observerEnroque } from './observerGameEnroque';
+import { positionKing } from './positionKing';
 
 export const kings = (c: number, f: number, orderGame: GameManipulator[], name: string) => {
   const array: RulesPieces[] = [];
@@ -84,8 +86,12 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
     const findPost = orderGame.find((e) => e.left === c + p.left && e.top === f + p.top);
     const findPostEnemy = pEnemies.find((e) => e.left === c + p.left && e.top === f + p.top);
 
+    const isNotcheck = positionKing(king, c + p.left, f + p.top, c, f, orderGame);
+    console.log('rey' + king?.piece);
+    console.log(isNotcheck, c + p.left, f + p.top);
+
     /*evalua si no hay un enemigo en la posicion */
-    if (findPost && !findPost.piece.includes(nameFriend) && !findPostEnemy) {
+    if (findPost && !findPost.piece.includes(nameFriend) && !findPostEnemy && isNotcheck) {
       array.push({
         top: findPost.top,
         left: findPost.left,
