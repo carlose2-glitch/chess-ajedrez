@@ -87,8 +87,6 @@ export const kings = (c: number, f: number, orderGame: GameManipulator[], name: 
     const findPostEnemy = pEnemies.find((e) => e.left === c + p.left && e.top === f + p.top);
 
     const isNotcheck = positionKing(king, c + p.left, f + p.top, c, f, orderGame);
-    console.log('rey' + king?.piece);
-    console.log(isNotcheck, c + p.left, f + p.top);
 
     /*evalua si no hay un enemigo en la posicion */
     if (findPost && !findPost.piece.includes(nameFriend) && !findPostEnemy && isNotcheck) {

@@ -130,7 +130,6 @@ const fasd = (
   for (let i = cds; i <= 7; i++) {
     const findPost = orderGame.find((e) => e.left === i && e.top === fds.value);
 
-    console.log('superior derecha');
     const ds = enemyToKing(i, fds.value, c, f, orderGame, miKing);
     final.d = ds;
 

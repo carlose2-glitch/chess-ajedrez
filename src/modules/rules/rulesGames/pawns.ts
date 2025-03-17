@@ -12,7 +12,6 @@ export const whitePawns = (c: number, f: number, orderGame: GameManipulator[]) =
   };
   const array: RulesPieces[] = [];
   const myKing = orderGame.find((e) => e.piece === 'white-king');
-  console.log('peon blanco');
 
   /*encontrar pieza enemiga izquierda*/
 

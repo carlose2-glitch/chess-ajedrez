@@ -39,7 +39,7 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
         });
 
         if (findPost?.piece.includes(opposite + '-king')) {
-          console.log('jaque');
+          //console.log('jaque');
         }
         break;
       } else {
@@ -69,7 +69,7 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
           co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
-          console.log('jaque');
+          //console.log('jaque');
         }
         break;
       } else {
@@ -98,7 +98,7 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
           co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
-          console.log('jaque');
+          //console.log('jaque');
         }
         break;
       } else {
@@ -127,7 +127,7 @@ export const bishopFuture = (c: number, f: number, orderGame: GameManipulator[],
           co: false,
         });
         if (findPost?.piece.includes(opposite + '-king')) {
-          console.log('jaque');
+          //console.log('jaque');
         }
         break;
       } else {

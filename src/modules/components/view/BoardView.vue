@@ -48,6 +48,7 @@ import { game } from '../../gameFuntions/gameBoard';
 import { rulesGames } from '../../rules/rulesGames/rulesOfPieces';
 import { coronation } from '../../gameFuntions/coronation';
 import CoronationPawn from '../manipulationBoard/CoronationPawn.vue';
+import { check } from '@/modules/gameFuntions/check';
 
 const turn = ['white', 'black'];
 
@@ -177,16 +178,22 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
   /* mover pieza graficamente*/
 
   if (coMovement.value) {
+    /*mover pieza */
     extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
+    /* coronacion del peon */
     extractPositionPieces.coPawnEvent(col, row, piece, piechaCo.value);
-
+    /*eliminar pieza*/
     extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);
 
     paintings.reload();
     orderGame.gameManipulator(extractPositionPieces.pieces.value);
 
+    const checkmate = check(orderGame.array.value, piece);
+    console.log(checkmate);
+
     coMovement.value = false;
   } else {
+    /*mover pieza */
     extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
 
     /* eliminar pieza graficamente */
@@ -196,11 +203,13 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     paintings.reload();
     /* control del juego */
     orderGame.gameManipulator(extractPositionPieces.pieces.value);
+    const checkmate = check(orderGame.array.value, piece);
+    console.log(checkmate);
   }
 
   movements.value++;
 };
-
+/*coronacion del peon */
 const coronationFuntion = (name: string | null) => {
   coMovement.value = coronationView.value;
   coronationView.value = false;

@@ -48,7 +48,6 @@ const fafb = (
     const findPosition = orderGame.find((e) => e.left === c && e.top === i);
     const fb = enemyToKing(c, i, c, f, orderGame, miKing);
 
-    console.log('torre ', fb);
     final.d = fb;
     decisions.push({
       d: fb,
