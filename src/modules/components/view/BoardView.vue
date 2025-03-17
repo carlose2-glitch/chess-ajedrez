@@ -2,7 +2,7 @@
   <div class="w-full flex justify-center relative">
     <!-- tablero -->
     <img
-      src="/src/images/Tablero de Ajedrez_.png"
+      src="/src/images/chess-background.jpg"
       ref="manipulatorTable"
       class="rounded-md w-full"
       alt="tablero"
@@ -83,7 +83,7 @@ const dataPieceBoard = reactive({
   r,
   p,
 });
-
+const checkmate = ref<boolean>(false);
 /*control del juego */
 
 const orderGame = game(extractPositionPieces.pieces.value);
@@ -188,8 +188,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     paintings.reload();
     orderGame.gameManipulator(extractPositionPieces.pieces.value);
 
-    const checkmate = check(orderGame.array.value, piece);
-    console.log(checkmate);
+    checkmate.value = check(orderGame.array.value, piece);
 
     coMovement.value = false;
   } else {
@@ -203,8 +202,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     paintings.reload();
     /* control del juego */
     orderGame.gameManipulator(extractPositionPieces.pieces.value);
-    const checkmate = check(orderGame.array.value, piece);
-    console.log(checkmate);
+    checkmate.value = check(orderGame.array.value, piece);
   }
 
   movements.value++;
@@ -215,4 +213,14 @@ const coronationFuntion = (name: string | null) => {
   coronationView.value = false;
   piechaCo.value = name;
 };
+
+/*jaque mate */
+
+const emits = defineEmits<{ final: [f: boolean] }>();
+
+watch(checkmate, (check) => {
+  console.log(check);
+
+  emits('final', check);
+});
 </script>

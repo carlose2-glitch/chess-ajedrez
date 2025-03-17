@@ -20,7 +20,7 @@ export const funtionPaintins = () => {
       array.value.find((e, i) => {
         if (e.left === p.left && e.top === p.top) {
           array.value[i].classs =
-            `absolute left-${e.left}/8 top-${e.top}/8 w-1/8 h-1/8 cursor-pointer bg-green-400/30`;
+            `absolute left-${e.left}/8 top-${e.top}/8 w-1/8 h-1/8 cursor-pointer bg-green-800/50`;
         }
       });
     }
