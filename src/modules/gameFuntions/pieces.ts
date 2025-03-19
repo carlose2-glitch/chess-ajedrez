@@ -14,7 +14,9 @@ export const piecesManipulator = () => {
   ) => {
     pieces.value.find((e, i) => {
       if (e.name === namePiece) {
-        pieces.value[i].class = `absolute duration-700 left-${c}/8 top-${f}/8 w-1/8 cursor-pointer`;
+        const rotate = e.class.includes('180') ? '180' : '360';
+        pieces.value[i].class =
+          `absolute duration-700 left-${c}/8 top-${f}/8 w-1/8 cursor-pointer rotate-${rotate}`;
         pieces.value[i].left = `${c}/8`;
         pieces.value[i].top = `${f}/8`;
         pieces.value[i].movements++;
@@ -26,6 +28,7 @@ export const piecesManipulator = () => {
     if (piece?.piece.includes('king') && piece.left === 4 && piece.movements === 0) {
       if (c === 6) {
         pieces.value.find((e, i) => {
+          const rotate = e.class.includes('180') ? '180' : '360';
           if (
             e.left === '7/8' &&
             e.name.includes('rook') &&
@@ -33,7 +36,7 @@ export const piecesManipulator = () => {
             e.top === `${piece.top}/8`
           ) {
             pieces.value[i].class =
-              `absolute duration-700 left-5/8 top-${f}/8 w-1/8 cursor-pointer`;
+              `absolute duration-700 left-5/8 top-${f}/8 w-1/8 cursor-pointer rotate-${rotate}`;
             pieces.value[i].left = '5/8';
             pieces.value[i].top = `${f}/8`;
             pieces.value[i].movements++;
@@ -41,6 +44,7 @@ export const piecesManipulator = () => {
         });
       } else if (c === 2) {
         pieces.value.find((e, i) => {
+          const rotate = e.class.includes('180') ? '180' : '360';
           if (
             e.left === '0/8' &&
             e.name.includes('rook') &&
@@ -48,7 +52,7 @@ export const piecesManipulator = () => {
             e.top === `${f}/8`
           ) {
             pieces.value[i].class =
-              `absolute duration-700 left-3/8 top-${f}/8 w-1/8 cursor-pointer`;
+              `absolute duration-700 left-3/8 top-${f}/8 w-1/8 cursor-pointer rotate-${rotate}`;
             pieces.value[i].left = '3/8';
             pieces.value[i].top = `${f}/8`;
             pieces.value[i].movements++;
@@ -103,7 +107,7 @@ export const piecesManipulator = () => {
 
   /*coronacion del peon */
   const coPawnEvent = (c: number, r: number, p: string | null, pchange: string | null) => {
-    console.log(c, r, p, pchange);
+    // console.log(c, r, p, pchange);
     /*extrae todas las piezas menos el peon a remover */
     const newArray = pieces.value.filter((e) => e.name !== p);
 
@@ -130,7 +134,7 @@ export const piecesManipulator = () => {
           name: newName + number,
           left: `${c}/8`,
           src: pchange,
-          class: `absolute animate-grow duration-700 left-${c}/8 top-${r}/8 w-1/8 cursor-pointer`,
+          class: `absolute duration-700 left-${c}/8 top-${r}/8 w-1/8 cursor-pointer animate-grow`,
           top: `${r}/8`,
           movements: 0,
         });
@@ -139,10 +143,10 @@ export const piecesManipulator = () => {
     } else {
       if (newPiece) {
         newArray.push({
-          name: newPiece?.name + 1,
+          name: newPiece?.name.slice(0, -1) + 1,
           left: `${c}/8`,
           src: newPiece?.src,
-          class: `absolute animate-grow duration-700 left-${c}/8 top-${r}/8 w-1/8 cursor-pointer`,
+          class: `absolute duration-700 left-${c}/8 top-${r}/8 w-1/8 cursor-pointer animate-grow`,
           top: `${r}/8`,
           movements: 0,
         });
@@ -151,11 +155,34 @@ export const piecesManipulator = () => {
     }
   };
 
+  const rotatePieces = (r: number) => {
+    console.log(r);
+
+    //console.log(pieces.value);
+
+    const newArray = pieces.value.map((e) => {
+      const newClass = e.class.slice(0, 59);
+
+      const obj = {
+        name: e.name,
+        left: e.left,
+        src: e.src,
+        class: newClass + ` rotate-${r}`,
+        top: e.top,
+        movements: e.movements,
+      };
+      return obj;
+    });
+    //console.log(newArray);
+    pieces.value = newArray;
+  };
+
   return {
     pieces: computed(() => [...pieces.value]),
     modifyBoard,
     deletePiece,
     coPawnEvent,
+    rotatePieces,
   };
 };
 
@@ -166,7 +193,7 @@ const array: Pieces[] = [
     name: 'black-rook1',
     left: '0/8',
     src: 'torre-negra.png',
-    class: 'absolute left-0/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-0/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -174,7 +201,7 @@ const array: Pieces[] = [
     name: 'black-knight1',
     left: '1/8',
     src: 'caballo-negro.png',
-    class: 'absolute left-1/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-1/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -182,7 +209,7 @@ const array: Pieces[] = [
     name: 'black-bishop1',
     left: '2/8',
     src: 'alfil-negro.png',
-    class: 'absolute left-2/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-2/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -190,7 +217,7 @@ const array: Pieces[] = [
     name: 'black-queen',
     left: '3/8',
     src: 'Dama-negra.png',
-    class: 'absolute left-3/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-3/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -198,7 +225,7 @@ const array: Pieces[] = [
     name: 'black-king',
     left: '4/8',
     src: 'rey-negro.png',
-    class: 'absolute left-4/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-4/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -206,7 +233,7 @@ const array: Pieces[] = [
     name: 'black-bishop2',
     left: '5/8',
     src: 'alfil-negro.png',
-    class: 'absolute left-5/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-5/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -214,7 +241,7 @@ const array: Pieces[] = [
     name: 'black-knight2',
     left: '6/8',
     src: 'caballo-negro.png',
-    class: 'absolute left-6/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-6/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -222,7 +249,7 @@ const array: Pieces[] = [
     name: 'black-rook2',
     left: '7/8',
     src: 'torre-negra.png',
-    class: 'absolute left-7/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-7/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -230,7 +257,7 @@ const array: Pieces[] = [
     name: 'black-pawn1',
     left: '0/8',
     src: 'peon-negro.png',
-    class: 'absolute left-0/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-0/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -238,7 +265,7 @@ const array: Pieces[] = [
     name: 'black-pawn2',
     left: '1/8',
     src: 'peon-negro.png',
-    class: 'absolute left-1/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-1/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -246,7 +273,7 @@ const array: Pieces[] = [
     name: 'black-pawn3',
     left: '2/8',
     src: 'peon-negro.png',
-    class: 'absolute left-2/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-2/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -254,7 +281,7 @@ const array: Pieces[] = [
     name: 'black-pawn4',
     left: '3/8',
     src: 'peon-negro.png',
-    class: 'absolute left-3/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-3/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -262,7 +289,7 @@ const array: Pieces[] = [
     name: 'black-pawn5',
     left: '4/8',
     src: 'peon-negro.png',
-    class: 'absolute left-4/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-4/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -270,7 +297,7 @@ const array: Pieces[] = [
     name: 'black-pawn6',
     left: '5/8',
     src: 'peon-negro.png',
-    class: 'absolute left-5/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-5/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -278,7 +305,7 @@ const array: Pieces[] = [
     name: 'black-pawn7',
     left: '6/8',
     src: 'peon-negro.png',
-    class: 'absolute left-6/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-6/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -286,7 +313,7 @@ const array: Pieces[] = [
     name: 'black-pawn8',
     left: '7/8',
     src: 'peon-negro.png',
-    class: 'absolute left-7/8 top-1/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-7/8 top-1/8 w-1/8 cursor-pointer rotate-360',
     top: '1/8',
     movements: 0,
   },
@@ -297,7 +324,7 @@ const array: Pieces[] = [
     name: 'white-rook1',
     left: '0/8',
     src: 'torre-blanca.png',
-    class: 'absolute left-0/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-0/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -305,7 +332,7 @@ const array: Pieces[] = [
     name: 'white-knight1',
     left: '1/8',
     src: 'caballo-blanco.png',
-    class: 'absolute left-1/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-1/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -313,7 +340,7 @@ const array: Pieces[] = [
     name: 'white-bishop1',
     left: '2/8',
     src: 'alfil-blanco.png',
-    class: 'absolute left-2/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-2/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -321,7 +348,7 @@ const array: Pieces[] = [
     name: 'white-queen',
     left: '3/8',
     src: 'dama-blanca.png',
-    class: 'absolute left-3/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-3/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -329,7 +356,7 @@ const array: Pieces[] = [
     name: 'white-king',
     left: '4/8',
     src: 'rey-blanco.png',
-    class: 'absolute left-4/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-4/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -337,7 +364,7 @@ const array: Pieces[] = [
     name: 'white-bishop2',
     left: '5/8',
     src: 'alfil-blanco.png',
-    class: 'absolute left-5/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-5/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -345,7 +372,7 @@ const array: Pieces[] = [
     name: 'white-knight2',
     left: '6/8',
     src: 'caballo-blanco.png',
-    class: 'absolute left-6/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-6/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -353,7 +380,7 @@ const array: Pieces[] = [
     name: 'white-rook2',
     left: '7/8',
     src: 'torre-blanca.png',
-    class: 'absolute left-7/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-7/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -361,7 +388,7 @@ const array: Pieces[] = [
     name: 'white-pawn1',
     left: '0/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-0/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-0/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -369,7 +396,7 @@ const array: Pieces[] = [
     name: 'white-pawn2',
     left: '1/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-1/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-1/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -377,7 +404,7 @@ const array: Pieces[] = [
     name: 'white-pawn3',
     left: '2/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-2/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-2/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -385,7 +412,7 @@ const array: Pieces[] = [
     name: 'white-pawn4',
     left: '3/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-3/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-3/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -393,7 +420,7 @@ const array: Pieces[] = [
     name: 'white-pawn5',
     left: '4/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-4/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-4/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -401,7 +428,7 @@ const array: Pieces[] = [
     name: 'white-pawn6',
     left: '5/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-5/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-5/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -409,7 +436,7 @@ const array: Pieces[] = [
     name: 'white-pawn7',
     left: '6/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-6/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-6/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -417,7 +444,7 @@ const array: Pieces[] = [
     name: 'white-pawn8',
     left: '7/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-7/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-7/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -428,7 +455,7 @@ const arrayTest: Pieces[] = [
     name: 'white-pawn8',
     left: '5/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-5/8 top-2/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-5/8 top-2/8 w-1/8 cursor-pointer rotate-360',
     top: '2/8',
     movements: 0,
   },
@@ -436,7 +463,7 @@ const arrayTest: Pieces[] = [
     name: 'black-pawn5',
     left: '4/8',
     src: 'peon-negro.png',
-    class: 'absolute left-4/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-4/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },
@@ -444,7 +471,7 @@ const arrayTest: Pieces[] = [
     name: 'white-pawn9',
     left: '6/8',
     src: 'peon-blanco.png',
-    class: 'absolute left-6/8 top-7/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-6/8 top-7/8 w-1/8 cursor-pointer rotate-360',
     top: '7/8',
     movements: 0,
   },
@@ -452,7 +479,7 @@ const arrayTest: Pieces[] = [
     name: 'black-pawn3',
     left: '2/8',
     src: 'peon-negro.png',
-    class: 'absolute left-2/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-2/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -460,7 +487,7 @@ const arrayTest: Pieces[] = [
     name: 'black-pawn4',
     left: '5/8',
     src: 'peon-negro.png',
-    class: 'absolute left-5/8 top-6/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-5/8 top-6/8 w-1/8 cursor-pointer rotate-360',
     top: '6/8',
     movements: 0,
   },
@@ -468,7 +495,7 @@ const arrayTest: Pieces[] = [
     name: 'black-knight1',
     left: '1/8',
     src: 'caballo-negro.png',
-    class: 'absolute left-1/8 top-0/8 w-1/8 cursor-pointer',
+    class: 'absolute duration-700 left-1/8 top-0/8 w-1/8 cursor-pointer rotate-360',
     top: '0/8',
     movements: 0,
   },

@@ -14,7 +14,13 @@
 } */
 
 @theme {
-  --animate-grow: grow 1s ease-out;
+  --animate-grow: grow 1s ease-in-out;
+  --animate-rotateBoard: rotateBoard 1s ease-out;
+  @keyframes rotateBoard {
+    100% {
+      transform: rotate(180deg);
+    }
+  }
   @keyframes grow {
     0% {
       transform: scale(0);

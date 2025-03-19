@@ -63,6 +63,11 @@ const colCoronation = ref<number | null>(null);
 const pieceCo = ref<string | null>(null);
 const piechaCo = ref<string | null>('');
 
+interface Props {
+  change: number;
+}
+const propsRotate = defineProps<Props>();
+
 /* piezas del tablero*/
 
 const extractPositionPieces = piecesManipulator();
@@ -86,6 +91,12 @@ const dataPieceBoard = reactive({
 const checkmate = ref<boolean>(false);
 
 const colorWin = ref<string | null>(null);
+
+const datacheck = reactive({
+  checkmate,
+  colorWin,
+});
+
 /*control del juego */
 
 const orderGame = game(extractPositionPieces.pieces.value);
@@ -129,11 +140,11 @@ const stylesLetters = (i: number) => {
 /*onMounted(() => manipulatorTable.value?.addEventListener('click', boardClick));
 
 const boardClick = (e: { layerY: number; layerX: number; target: { clientHeight: number } }) => {
-  /*evento del mouse para capturar la posicion 
+  /*evento del mouse para capturar la posicion
   const y = e.layerY;
   const x = e.layerX;
 
-  /*tamaño del tablero 
+  /*tamaño del tablero
   const heightScreen = e.target.clientHeight;
 
   const row: number = Math.floor((y * 8) / heightScreen);
@@ -220,9 +231,13 @@ const coronationFuntion = (name: string | null) => {
 
 const emits = defineEmits<{ final: [f: boolean, color: string | null] }>();
 
-watch(checkmate, (check) => {
-  console.log(check);
+watch(datacheck, (check) => {
+  emits('final', check.checkmate, check.colorWin);
+});
 
-  emits('final', check, colorWin.value);
+/*rotar piezas del tablero */
+
+watch(propsRotate, (r) => {
+  extractPositionPieces.rotatePieces(r.change);
 });
 </script>
