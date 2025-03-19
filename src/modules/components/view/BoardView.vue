@@ -84,6 +84,8 @@ const dataPieceBoard = reactive({
   p,
 });
 const checkmate = ref<boolean>(false);
+
+const colorWin = ref<string | null>(null);
 /*control del juego */
 
 const orderGame = game(extractPositionPieces.pieces.value);
@@ -204,7 +206,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     orderGame.gameManipulator(extractPositionPieces.pieces.value);
     checkmate.value = check(orderGame.array.value, piece);
   }
-
+  colorWin.value = piece?.includes('white') ? 'Blancas' : 'Negras';
   movements.value++;
 };
 /*coronacion del peon */
@@ -216,11 +218,11 @@ const coronationFuntion = (name: string | null) => {
 
 /*jaque mate */
 
-const emits = defineEmits<{ final: [f: boolean] }>();
+const emits = defineEmits<{ final: [f: boolean, color: string | null] }>();
 
 watch(checkmate, (check) => {
   console.log(check);
 
-  emits('final', check);
+  emits('final', check, colorWin.value);
 });
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col bg-gray-500">
-    <EndGame v-if="final" @close="closeModal" />
+    <EndGame v-if="final" @close="closeModal" :color="colorWin" />
     <HeaderView />
     <main class="w-full h-auto flex justify-center">
       <div class="bg-gray-700 w-[90%]">
@@ -31,8 +31,9 @@ import EndGame from '../components/view/EndGame.vue';
 import { ref } from 'vue';
 
 const final = ref<boolean>(false);
-
-const checkMate = (f: boolean) => {
+const colorWin = ref<string | null>(null);
+const checkMate = (f: boolean, color: string | null) => {
+  colorWin.value = color;
   final.value = f;
 };
 
