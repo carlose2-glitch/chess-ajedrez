@@ -4,12 +4,12 @@
     <HeaderView />
     <main class="w-full h-auto flex justify-center">
       <div class="bg-gray-700 w-[90%]">
-        <div class="flex flex-col m-auto items-center bg-gray-400 max-w-[32rem]">
-          <PlayerBar1 />
+        <div v-bind:class="changeTurn">
+          <PlayerBlack v-bind:class="flip" :run="blackTurn" />
 
-          <BoardView v-bind:class="changeTurn" @final="checkMate" :change="grados" />
+          <BoardView @final="checkMate" :change="grados" />
 
-          <PlayerBar2 />
+          <PlayerWhite v-bind:class="flip" :run="whiteTurn" />
         </div>
       </div>
     </main>
@@ -29,13 +29,19 @@ import HeaderView from '../components/HeaderView.vue';
 import TimeOptions from '../components/TimeOptions.vue';
 import EndGame from '../components/view/EndGame.vue';
 import { ref } from 'vue';
-import PlayerBar1 from '../components/PlayerBar1.vue';
-import PlayerBar2 from '../components/PlayerBar2.vue';
+import PlayerBlack from '../components/PlayerBlack.vue';
+import PlayerWhite from '../components/PlayerWhite.vue';
 
 const grados = ref<number>(0);
-const changeTurn = ref<string>(`rotate-${grados.value}`);
+const changeTurn = ref<string>(
+  `rotate-${grados.value} flex flex-col m-auto items-center bg-gray-400 max-w-[32rem]`,
+);
 const final = ref<boolean>(false);
 const colorWin = ref<string | null>(null);
+const flip = ref<string>('rotate-0 duration-700');
+
+const whiteTurn = ref<boolean>(true);
+const blackTurn = ref<boolean>(false);
 
 const checkMate = (f: boolean, color: string | null) => {
   colorWin.value = color;
@@ -45,12 +51,16 @@ const checkMate = (f: boolean, color: string | null) => {
     setTimeout(() => {
       if (color === 'Blancas') {
         grados.value = 180;
-
-        changeTurn.value = `rotate-180 duration-700`;
+        flip.value = 'rotate-180 duration-700';
+        changeTurn.value = `rotate-180 duration-700 flex flex-col m-auto items-center bg-gray-400 max-w-[32rem]`;
+        blackTurn.value = true;
+        whiteTurn.value = false;
       } else {
         grados.value = 360;
-
-        changeTurn.value = `rotate-360 duration-700`;
+        flip.value = 'rotate-360 duration-700';
+        changeTurn.value = `rotate-360 duration-700 flex flex-col m-auto items-center bg-gray-400 max-w-[32rem]`;
+        whiteTurn.value = true;
+        blackTurn.value = false;
       }
     }, 1000);
   }

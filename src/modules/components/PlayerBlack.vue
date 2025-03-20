@@ -7,19 +7,32 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { useIntervalFn } from '@vueuse/core';
+import { ref, watch } from 'vue';
+
+interface Props {
+  run: boolean;
+}
+const data = defineProps<Props>();
 
 const min = ref<number>(10);
 const seg = ref<number>(0);
 
-const time = () => {
+const { pause, resume } = useIntervalFn(() => {
   seg.value = seg.value === 0 ? 59 : seg.value - 1;
   min.value = seg.value === 59 ? min.value - 1 : min.value;
   /*termino el tiempo */
   if (min.value === 0 && seg.value === 0) {
-    clearInterval(controlTime);
   }
-};
+}, 1000);
 
-const controlTime = setInterval(time, 1000);
+pause();
+
+watch(data, (e) => {
+  if (e.run) {
+    resume();
+  } else {
+    pause();
+  }
+});
 </script>
