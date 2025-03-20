@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "daisyui";
 /* ejemplos de hacer animaciones */
 /* @theme {
   --animate-wiggl: wiggle 1s ease-in-out infinite;
