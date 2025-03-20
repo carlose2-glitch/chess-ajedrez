@@ -194,7 +194,8 @@ const faci = (
   for (let i = c - 1; i >= 0; i--) {
     const findPosition = orderGame.find((e) => e.left === i && e.top === f);
     const ci = enemyToKing(i, f, c, f, orderGame, miKing);
-
+    console.log(i, f);
+    console.log(ci);
     final.d = ci;
 
     decisions.push({
@@ -215,7 +216,7 @@ const faci = (
       });
     }
 
-    if (findPosition?.piece === '' && ci) {
+    if (findPosition?.piece === '') {
       array.push({
         top: f,
         left: i,
@@ -270,7 +271,7 @@ const facd = (
     const cd = enemyToKing(i, f, c, f, orderGame, miKing);
 
     final.d = cd;
-
+    console.log(cd);
     decisions.push({
       d: cd,
     });
