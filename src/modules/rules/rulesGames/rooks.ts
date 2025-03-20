@@ -54,7 +54,6 @@ const fafb = (
     });
 
     if (findPosition?.piece === '' && fb) {
-      console.log('marcar');
       arrayTwo.push({
         top: i,
         left: c,

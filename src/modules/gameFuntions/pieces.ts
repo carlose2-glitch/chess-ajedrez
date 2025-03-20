@@ -156,8 +156,6 @@ export const piecesManipulator = () => {
   };
 
   const rotatePieces = (r: number) => {
-    console.log(r);
-
     //console.log(pieces.value);
 
     const newArray = pieces.value.map((e) => {
