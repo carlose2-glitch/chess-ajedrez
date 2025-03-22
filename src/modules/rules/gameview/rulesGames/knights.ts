@@ -17,6 +17,7 @@ export const Knights = (c: number, f: number, orderGame: GameManipulator[], name
   for (const i of positionsValid) {
     const findPost = orderGame.find((e) => e.left === c + i.left && e.top === f + i.top);
     const post = enemyToKing(c + i.left, f + i.top, c, f, orderGame, miKing);
+
     if (findPost && !findPost.piece.includes(nameFriend) && post) {
       array.push({
         top: findPost.top,

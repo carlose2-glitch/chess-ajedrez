@@ -10,7 +10,8 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
     /*encontrar pieza enemiga izquierda */
     if (c - 1 >= 0 && r - 1 >= 0) {
       const ei = orderGame.find((e) => e.left === c - 1 && e.top === r - 1);
-      if (ei?.piece === '') {
+
+      if (ei?.piece === '' || ei?.piece.includes('black')) {
         array.push({
           top: r - 1,
           left: c - 1,
@@ -24,7 +25,7 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
     if (c + 1 <= 7 && r - 1 >= 0) {
       const ed = orderGame.find((e) => e.left === c + 1 && e.top === r - 1);
 
-      if (ed?.piece === '') {
+      if (ed?.piece === '' || ed?.piece.includes('black')) {
         array.push({
           top: r - 1,
           left: c + 1,
@@ -39,7 +40,7 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
 
     if (c - 1 >= 0 && r + 1 <= 7) {
       const ei = orderGame.find((e) => e.left === c - 1 && e.top === r + 1);
-      if (ei?.piece === '') {
+      if (ei?.piece === '' || ei?.piece.includes('white')) {
         array.push({
           top: r + 1,
           left: c - 1,
@@ -53,7 +54,7 @@ export const pawnFuture = (c: number, r: number, orderGame: GameManipulator[], n
     if (c + 1 <= 7 && r + 1 <= 7) {
       const ed = orderGame.find((e) => e.left === c + 1 && e.top === r + 1);
 
-      if (ed?.piece === '') {
+      if (ed?.piece === '' || ed?.piece.includes('white')) {
         array.push({
           top: r + 1,
           left: c + 1,

@@ -76,6 +76,7 @@ export const enemyToKing = (
     const positions: RulesPieces[] = observer(arrayEnemy, color, newArray);
     //console.log(positions);
     //console.log(king);
+
     /*detecta si el rey esta en jaque con este movimiento */
     positions.find((e) => {
       if (e.left === king?.left && e.top === king.top) {

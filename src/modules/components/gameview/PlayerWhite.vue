@@ -1,15 +1,15 @@
 <template>
   <div class="flex gap-4 justify-around w-full">
-    <div class="w-[70%] flex gap-2">
+    <div class="w-[80%] flex gap-2">
       <img src="https://www.chess.com/bundles/web/images/black_400.png" class="w-8" alt="picture" />
-      <p class="">Blancas</p>
-      <div class="flex gap-0.5 w-full items-center">
+      <p class="font-bold text-gray-200">Blancas</p>
+      <div class="flex w-full">
         <img
           v-for="(p, i) in data.enemies"
           :key="i"
           :src="'/src/images/' + p.src"
           alt="enemigos"
-          class="w-1/17 h-4"
+          class="w-1/15 h-6"
         />
       </div>
     </div>
