@@ -15,6 +15,14 @@
     </div>
 
     <div
+      v-if="isNaN(min)"
+      class="font-bold justify-center text-gray-300 flex gap-1.5 w-[20%] bg-gray-600 pt-0.5 pb-0.5 pr-1 pl-1 rounded-md"
+    >
+      <span class="text-xl">infinite</span>
+    </div>
+
+    <div
+      v-else
       class="font-bold justify-center text-gray-300 flex gap-1.5 w-[20%] bg-gray-600 pt-0.5 pb-0.5 pr-1 pl-1 rounded-md"
     >
       <span class="text-xl">{{ min < 10 ? 0 : null }}{{ min }}</span
@@ -32,12 +40,16 @@ import { ref, watch } from 'vue';
 interface Props {
   run: boolean;
   enemies: deletePiece[];
+  time: string;
 }
 const data = defineProps<Props>();
 
 const emits = defineEmits<{ information: [loss: boolean, color: string] }>();
 
-const min = ref<number>(10);
+const runcant = ref<number>(0);
+
+const min = ref<number>(Number(data.time));
+
 const seg = ref<number>(0);
 
 const { pause, resume } = useIntervalFn(() => {
@@ -54,9 +66,14 @@ pause();
 
 watch(data, (e) => {
   if (e.run) {
+    runcant.value++;
     resume();
   } else {
     pause();
+  }
+
+  if (runcant.value === 0) {
+    min.value = Number(e.time);
   }
 });
 </script>

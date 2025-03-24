@@ -34,7 +34,7 @@
             Ganaron las {{ props.color }}
           </h3>
           <a
-            href="/Game"
+            href="/game-same-pc"
             class="text-white cursor-pointer bg-cyan-700 hover:bg-cyan-800 focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
           >
             Nuevo juego

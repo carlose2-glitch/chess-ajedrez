@@ -1,12 +1,7 @@
 <template>
-  <div class="w-full flex justify-center relative">
+  <div class="w-full justify-center relative">
     <!-- tablero -->
-    <img
-      src="/src/images/chess-background.jpg"
-      ref="manipulatorTable"
-      class="rounded-md w-full"
-      alt="tablero"
-    />
+    <img src="/src/images/chess-background.jpg" class="w-full" alt="tablero" />
     <!-- numeros y letras -->
     <p v-for="(n, index) in i" v-bind:key="n" :class="stylesNumbers(index)">{{ n }}</p>
     <p v-for="(l, index) in letters" v-bind:key="l" :class="stylesLetters(index)">{{ l }}</p>
@@ -76,8 +71,6 @@ const extractPositionPieces = piecesManipulator();
 /*colores de los cuadros del tablero */
 
 const paintings = funtionPaintins();
-
-const manipulatorTable = ref<HTMLElement | null>(null);
 
 const c = ref<number>(0);
 const r = ref<number>(0);

@@ -15,6 +15,14 @@
     </div>
 
     <div
+      v-if="isNaN(min)"
+      class="font-bold justify-center text-gray-300 flex gap-1.5 w-[20%] bg-gray-600 pt-0.5 pb-0.5 pr-1 pl-1 rounded-md"
+    >
+      <span class="text-xl">infinite</span>
+    </div>
+
+    <div
+      v-else
       class="font-bold justify-center text-gray-300 flex gap-1.5 w-[20%] bg-gray-600 pt-0.5 pb-0.5 pr-1 pl-1 rounded-md"
     >
       <span class="text-xl">{{ min < 10 ? 0 : null }}{{ min }}</span
@@ -27,21 +35,24 @@
 import type { deletePiece } from '@/modules/interfaces/gamefuntions/pieces.interface';
 import { useIntervalFn } from '@vueuse/core';
 import { ref, watch } from 'vue';
-
-const min = ref<number>(10);
+const data = defineProps<Props>();
+const min = ref<number>(Number(data.time));
 const seg = ref<number>(0);
 
 interface Props {
   run: boolean;
   enemies: deletePiece[];
+  time: string;
 }
-const data = defineProps<Props>();
 
 const emits = defineEmits<{ information: [loss: boolean, color: string] }>();
+
+const runcant = ref<number>(0);
 
 const { pause, resume } = useIntervalFn(() => {
   seg.value = seg.value === 0 ? 59 : seg.value - 1;
   min.value = seg.value === 59 ? min.value - 1 : min.value;
+
   /*termino el tiempo */
   if (min.value === 0 && seg.value === 0) {
     pause();
@@ -49,11 +60,18 @@ const { pause, resume } = useIntervalFn(() => {
   }
 }, 1000);
 
+pause();
+
 watch(data, (e) => {
   if (e.run) {
+    runcant.value++;
     resume();
   } else {
     pause();
+  }
+
+  if (runcant.value === 0) {
+    min.value = Number(e.time);
   }
 });
 </script>
