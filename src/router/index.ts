@@ -13,6 +13,22 @@ const router = createRouter({
       name: 'home',
       component: () => import('@/modules/views/HomeView.vue'),
     },
+    {
+      path: '/auth',
+      name: 'auth',
+      children: [
+        {
+          path: 'login',
+          name: 'login',
+          component: () => import('@/modules/views/LoginView.vue'),
+        },
+        {
+          path: 'sing',
+          name: 'sing',
+          component: () => import('@/modules/views/CreateAccount.vue'),
+        },
+      ],
+    },
   ],
 });
 
