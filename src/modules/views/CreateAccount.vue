@@ -2,7 +2,7 @@
   <section class="bg-gray-700 min-h-screen flex box-border justify-center items-center">
     <div class="bg-zinc-500 rounded-2xl flex max-w-3xl p-5 items-center">
       <div class="md:w-1/2 px-8">
-        <h2 class="font-bold text-3xl text-center text-white">Login</h2>
+        <h2 class="font-bold text-3xl text-center text-white">Sign</h2>
 
         <form @submit.prevent="data" class="flex flex-col gap-4">
           <input
@@ -108,6 +108,9 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
+import type { User } from '../interfaces/createUser/createUser';
+import { createUserApi } from '../actions/createUser';
+import { useToast } from 'vue-toastification';
 
 const user = ref<string>('');
 const email = ref<string>('');
@@ -118,6 +121,13 @@ const classLetter = ref<string>('text-transparent');
 const textContent = ref<string>('');
 const eyes = ref<boolean>(true);
 
+const createUser: User = {
+  user: '',
+  email: '',
+  password: '',
+  points: 0,
+};
+
 const information = reactive({
   user: user,
   email: email,
@@ -125,14 +135,38 @@ const information = reactive({
   confir: confirmPas,
 });
 
-const data = () => {
+const toast = useToast();
+const data = async () => {
   if (
     information.user.trim() !== '' &&
     information.email.trim() !== '' &&
     information.password.trim() !== '' &&
     information.confir.trim() !== ''
   ) {
-    console.log('si');
+    /*clave regex: la primera letra debe ser mayuscula seguido de letras y numeros y debe terminar con caracter especial (min 8 y max 16)*/
+    const userRegex = /^([A-Z]([a-z0-9]{7,14})[&%#*_.$!+-/\\"\[\]\?\¿!¡])/;
+    console.log('aqui');
+    if (information.password === information.confir) {
+      if (userRegex.test(information.password)) {
+        createUser.user = information.user;
+        createUser.email = information.email;
+        createUser.password = information.password;
+        const r = await createUserApi(createUser);
+
+        if (r.r.length > 15) {
+          toast.error(r.r);
+        } else {
+          toast.success(r.r);
+          localStorage.setItem('token-chess', r.token);
+        }
+      } else {
+        toast.error(
+          'la primera letra debe ser mayuscula seguido de letras y numeros y debe terminar con caracter especial (min 8 y max 16)',
+        );
+      }
+    } else {
+      toast.error('confirmacion de la clave debe ser igual');
+    }
   }
 };
 </script>
