@@ -13,9 +13,9 @@
       </a>
       <div class="flex items-center lg:order-2">
         <a
-          href="/auth/login"
+          :href="dataP.direction"
           class="text-white hidden lg:block hover:bg-gray-100 hover:text-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-          >Iniciar sesion</a
+          >{{ dataP.nameif }}</a
         >
 
         <button
@@ -121,10 +121,10 @@
         </a>
 
         <a
-          href="/auth/login"
+          :href="dataP.direction"
           class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 outline-none dark:focus:ring-teal-700 font-bold rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2"
         >
-          Iniciar sesion
+          {{ dataP.nameif }}
         </a>
       </div>
     </div>
@@ -136,6 +136,12 @@ import { ref } from 'vue';
 
 const modal = ref<boolean>(false);
 
+interface Props {
+  nameif: string;
+  direction: string;
+}
+
+const dataP = defineProps<Props>();
 const changeValue = () => {
   modal.value = !modal.value;
 };

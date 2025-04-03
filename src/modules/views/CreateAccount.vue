@@ -111,6 +111,7 @@ import { reactive, ref } from 'vue';
 import type { User } from '../interfaces/createUser/createUser';
 import { createUserApi } from '../actions/createUser';
 import { useToast } from 'vue-toastification';
+import { useRouter } from 'vue-router';
 
 const user = ref<string>('');
 const email = ref<string>('');
@@ -120,6 +121,7 @@ const confirmPas = ref<string>('');
 const classLetter = ref<string>('text-transparent');
 const textContent = ref<string>('');
 const eyes = ref<boolean>(true);
+const router = useRouter();
 
 const createUser: User = {
   user: '',
@@ -151,6 +153,7 @@ const data = async () => {
         createUser.user = information.user;
         createUser.email = information.email;
         createUser.password = information.password;
+
         const r = await createUserApi(createUser);
 
         if (r.r.length > 15) {
@@ -158,6 +161,7 @@ const data = async () => {
         } else {
           toast.success(r.r);
           localStorage.setItem('token-chess', r.token);
+          router.replace({ path: '/' });
         }
       } else {
         toast.error(

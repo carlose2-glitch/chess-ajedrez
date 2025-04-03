@@ -1,3 +1,4 @@
+import { isAuthenticatedGuard } from '@/guards/isAuthenticated.guards';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -20,11 +21,13 @@ const router = createRouter({
         {
           path: 'login',
           name: 'login',
+          beforeEnter: [isAuthenticatedGuard],
           component: () => import('@/modules/views/LoginView.vue'),
         },
         {
           path: 'sing',
           name: 'sing',
+          beforeEnter: [isAuthenticatedGuard],
           component: () => import('@/modules/views/CreateAccount.vue'),
         },
       ],
