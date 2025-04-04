@@ -1,6 +1,6 @@
 <template>
   <div v-if="isLoading">
-    <div role="status" aria-label="loading">
+    <div role="status" aria-label="loading" class="flex justify-center items-center h-screen">
       <svg
         class="w-6 h-6 stroke-indigo-600 animate-spin"
         viewBox="0 0 24 24"
