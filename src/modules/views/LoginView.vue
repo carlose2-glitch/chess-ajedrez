@@ -7,7 +7,7 @@
         <form @submit.prevent="data" class="flex flex-col gap-4">
           <input
             class="p-2 mt-8 rounded-xl border outline-none"
-            v-model="information.user"
+            v-model="information.email"
             type="email"
             name="email"
             placeholder="Email"
@@ -43,10 +43,15 @@
             </svg>
           </div>
           <button
-            class="bg-[#002D74] text-white py-2 rounded-xl cursor-pointer hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium"
+            class="bg-[#002D74] flex justify-center text-white py-2 rounded-xl cursor-pointer hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium"
             type="submit"
           >
-            Login
+            <svg
+              v-if="charger"
+              class="mr-3 border-r-black size-5 animate-spin border-4 rounded-[50%]"
+              viewBox="0 0 24 24"
+            ></svg>
+            <p v-else>Login</p>
           </button>
         </form>
 
@@ -77,19 +82,35 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
+import { loginUser } from '../actions/login';
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
-const user = ref<string>('');
+const email = ref<string>('');
 const password = ref<string>('');
 
 const eyes = ref<boolean>(true);
+const router = useRouter();
+
+const toast = useToast();
+
+const charger = ref<boolean>(false);
 
 const information = reactive({
-  user: user,
+  email: email,
   password: password,
 });
 
-const data = () => {
-  console.log(information.user);
-  console.log(information.password);
+const data = async () => {
+  const r = await loginUser({ email: information.email, password: information.password });
+
+  if (r.data === 'Ok') {
+    charger.value = true;
+    toast.success(r.data);
+    localStorage.setItem('token-chess', r.r);
+    return router.replace({ path: '/' });
+  }
+
+  return toast.error(r.data);
 };
 </script>
