@@ -5,7 +5,7 @@
     v-for="p in data.extractPositionPieces"
     v-bind:key="p.name"
     @click="choosePiece(p.name, p.left, p.top)"
-    :src="'/public/img/' + p.src"
+    :src="'/img/' + p.src"
     :alt="p.name"
     :class="p.class"
   />
@@ -21,9 +21,6 @@ interface ArrayPieces {
 }
 
 const data = defineProps<ArrayPieces>();
-
-const imgUrls = new URL(data.extractPositionPieces[0].src, import.meta.url).href;
-console.log(imgUrls);
 
 const emits = defineEmits<{
   information: [piece: string, column: number, row: number];
