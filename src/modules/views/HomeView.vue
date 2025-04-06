@@ -46,7 +46,7 @@
       <img
         src="https://i.pinimg.com/736x/3f/28/7b/3f287b9b817b861047a553bdfddae495.jpg"
         alt="imagen"
-        class="w-96 h-96 rounded-md"
+        class="w-96 h-96 rounded-md hidden md:flex"
       />
     </main>
   </div>
