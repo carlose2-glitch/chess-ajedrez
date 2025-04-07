@@ -37,7 +37,7 @@
           Mismo pc
         </RouterLink>
         <RouterLink
-          to="/"
+          to="/online"
           class="p-2 bg-gray-800 rounded-lg text-center text-gray-200 font-bold cursor-pointer hover:bg-gray-600"
         >
           Online

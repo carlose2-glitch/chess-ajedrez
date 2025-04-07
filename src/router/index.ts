@@ -33,6 +33,12 @@ const router = createRouter({
       ],
     },
     {
+      path: '/online',
+      name: 'online',
+      component: () => import('@/modules/views/GameOnline.vue'),
+    },
+
+    {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: () => import('@/modules/views/NotFound.vue'),
