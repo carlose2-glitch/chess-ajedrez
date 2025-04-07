@@ -88,10 +88,15 @@
             {{ textContent }}
           </p>
           <button
-            class="bg-[#002D74] text-white py-2 rounded-xl cursor-pointer hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium"
+            class="bg-[#002D74] text-white py-2 rounded-xl flex justify-center cursor-pointer hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium"
             type="submit"
           >
-            Crear
+            <svg
+              v-if="charger"
+              class="mr-3 border-r-black size-5 animate-spin border-4 rounded-[50%]"
+              viewBox="0 0 24 24"
+            ></svg>
+            <p v-else>Crear</p>
           </button>
         </form>
       </div>
@@ -113,6 +118,7 @@ import { createUserApi } from '../actions/createUser';
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
 
+const charger = ref<boolean>(false);
 const user = ref<string>('');
 const email = ref<string>('');
 const password = ref<string>('');
@@ -139,6 +145,7 @@ const information = reactive({
 
 const toast = useToast();
 const data = async () => {
+  charger.value = true;
   if (
     information.user.trim() !== '' &&
     information.email.trim() !== '' &&
@@ -147,7 +154,7 @@ const data = async () => {
   ) {
     /*clave regex: la primera letra debe ser mayuscula seguido de letras y numeros y debe terminar con caracter especial (min 8 y max 16)*/
     const userRegex = /^([A-Z]([a-z0-9]{7,14})[&%#*_.$!+-/\\"\[\]\?\¿!¡])/;
-    console.log('aqui');
+
     if (information.password === information.confir) {
       if (userRegex.test(information.password)) {
         createUser.user = information.user;
@@ -157,6 +164,7 @@ const data = async () => {
         const r = await createUserApi(createUser);
 
         if (r.r.length > 15) {
+          charger.value = false;
           toast.error(r.r);
         } else {
           toast.success(r.r);
@@ -164,11 +172,13 @@ const data = async () => {
           router.replace({ path: '/' });
         }
       } else {
+        charger.value = false;
         toast.error(
           'la primera letra debe ser mayuscula seguido de letras y numeros y debe terminar con caracter especial (min 8 y max 16)',
         );
       }
     } else {
+      charger.value = false;
       toast.error('confirmacion de la clave debe ser igual');
     }
   }

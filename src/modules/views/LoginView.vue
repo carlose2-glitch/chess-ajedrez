@@ -102,15 +102,16 @@ const information = reactive({
 });
 
 const data = async () => {
+  charger.value = true;
   const r = await loginUser({ email: information.email, password: information.password });
 
   if (r.data === 'Ok') {
-    charger.value = true;
     toast.success(r.data);
     localStorage.setItem('token-chess', r.r);
     return router.replace({ path: '/' });
+  } else {
+    charger.value = false;
+    return toast.error(r.data);
   }
-
-  return toast.error(r.data);
 };
 </script>
