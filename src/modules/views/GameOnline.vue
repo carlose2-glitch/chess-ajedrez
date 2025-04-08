@@ -1,5 +1,5 @@
 <template>
-  <!-- <div v-if="isLoading">
+  <div v-if="isLoading">
     <div role="status" aria-label="loading" class="flex justify-center items-center h-screen">
       <svg
         class="w-6 h-6 stroke-indigo-600 animate-spin"
@@ -44,137 +44,20 @@
     </div>
   </main>
 
-  <div v-else>online</div> -->
-  <div>
+  <div v-else>
     <HeaderView :nameif="p.data" :direction="p.to" />
-    <div class="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto mt-16">
-      <div class="bg-gray-100 py-2 px-4 flex gap-1 justify-center">
-        <p class="text-gray-800 font-bold">Jugadores conectados</p>
-      </div>
-      <ul class="divide-gray-200 h-63 overflow-auto scrollbar">
-        <li class="flex items-center justify-between py-4 px-6 hover:bg-gray-300 cursor-pointer">
-          <span class="text-gray-700 text-lg font-medium mr-4">1.</span>
-
-          <div class="flex-1">
-            <h3 class="text-lg font-medium text-gray-800">Emily Jones</h3>
-            <p class="text-gray-600 text-base">1234 points</p>
-          </div>
-
-          <div class="flex gap-4 items-center">
-            <div class="bg-gray-700 w-2 h-2 rounded-[50%]"></div>
-            <button
-              @click="challenge()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Desafiar
-            </button>
-            <button
-              @click="write()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Escribir
-            </button>
-          </div>
-        </li>
-        <li class="flex items-center py-4 px-6 hover:bg-gray-300 cursor-pointer">
-          <span class="text-gray-700 text-lg font-medium mr-4">2.</span>
-
-          <div class="flex-1">
-            <h3 class="text-lg font-medium text-gray-800">David Lee</h3>
-            <p class="text-gray-600 text-base">987 points</p>
-          </div>
-          <div class="flex gap-4 items-center">
-            <div class="bg-gray-700 w-2 h-2 rounded-[50%]"></div>
-            <button
-              @click="challenge()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Desafiar
-            </button>
-            <button
-              @click="write()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Escribir
-            </button>
-          </div>
-        </li>
-        <li class="flex items-center py-4 px-6 hover:bg-gray-300 cursor-pointer">
-          <span class="text-gray-700 text-lg font-medium mr-4">3.</span>
-
-          <div class="flex-1">
-            <h3 class="text-lg font-medium text-gray-800">Sophia Williams</h3>
-            <p class="text-gray-600 text-base">876 points</p>
-          </div>
-          <div class="flex gap-4 items-center">
-            <div class="bg-gray-700 w-2 h-2 rounded-[50%]"></div>
-            <button
-              @click="challenge()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Desafiar
-            </button>
-            <button
-              @click="write()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Escribir
-            </button>
-          </div>
-        </li>
-        <li class="flex items-center py-4 px-6 hover:bg-gray-300 cursor-pointer">
-          <span class="text-gray-700 text-lg font-medium mr-4">4.</span>
-
-          <div class="flex-1">
-            <h3 class="text-lg font-medium text-gray-800">Michael Chen</h3>
-            <p class="text-gray-600 text-base">765 points</p>
-          </div>
-          <div class="flex gap-4 items-center">
-            <div class="bg-gray-700 w-2 h-2 rounded-[50%]"></div>
-            <button
-              @click="challenge()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Desafiar
-            </button>
-            <button
-              @click="write()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Escribir
-            </button>
-          </div>
-        </li>
-        <li class="flex items-center py-4 px-6 hover:bg-gray-300 cursor-pointer">
-          <span class="text-gray-700 text-lg font-medium mr-4">5.</span>
-
-          <div class="flex-1">
-            <h3 class="text-lg font-medium text-gray-800">Mia Davis</h3>
-            <p class="text-gray-600 text-base">654 points</p>
-          </div>
-          <div class="flex gap-4 items-center">
-            <div class="bg-gray-700 w-2 h-2 rounded-[50%]"></div>
-            <button
-              @click="challenge()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Desafiar
-            </button>
-            <button
-              @click="write()"
-              class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-            >
-              Escribir
-            </button>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <ListPlayer :name="dataSearch" :name-user="p.data" />
     <div class="w-full flex justify-center gap-8 pt-4">
-      <button class="bg-blue-800 p-4 rounded-md cursor-pointer hover:bg-blue-500 font-bold">
+      <button
+        @click="findPlayer()"
+        class="bg-blue-800 p-4 rounded-md cursor-pointer hover:bg-blue-500 font-bold"
+      >
         Jugadores
       </button>
-      <button class="bg-blue-800 p-4 rounded-md cursor-pointer hover:bg-blue-500 font-bold">
+      <button
+        @click="findFriend()"
+        class="bg-blue-800 p-4 rounded-md cursor-pointer hover:bg-blue-500 font-bold"
+      >
         Amigos
       </button>
     </div>
@@ -185,8 +68,13 @@
 import { useQuery } from '@tanstack/vue-query';
 import { getToken } from '../actions/token';
 import HeaderView from '../components/gameview/HeaderView.vue';
+import { ref } from 'vue';
+
+import ListPlayer from '../components/gameonline/ListPlayer.vue';
 
 const token = localStorage.getItem('token-chess');
+
+const dataSearch = ref<string>('Jugadores conectados');
 
 const { data: p, isLoading } = useQuery({
   queryKey: ['token', token],
@@ -196,11 +84,13 @@ const { data: p, isLoading } = useQuery({
   },
 });
 
-const challenge = () => {
-  console.log('desafiar');
+const findPlayer = () => {
+  console.log('jugadores');
+  dataSearch.value = 'Jugadores conectados';
 };
 
-const write = () => {
-  console.log('chatear');
+const findFriend = () => {
+  console.log('amigos');
+  dataSearch.value = 'Amigos conectados';
 };
 </script>
