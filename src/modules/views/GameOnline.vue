@@ -46,7 +46,7 @@
 
   <div v-else>
     <HeaderView :nameif="p.data" :direction="p.to" />
-    <ListPlayer :name="dataSearch" :name-user="p.data" />
+    <ListPlayer :name="dataSearch" :name-user="p.data" @wait="waitF" />
     <div class="w-full flex justify-center gap-8 pt-4">
       <button
         @click="findPlayer()"
@@ -61,6 +61,8 @@
         Amigos
       </button>
     </div>
+    <WaitPlayer v-if="waitOpen" />
+    <AcceptedInvitation v-if="acceptedInvitation" :name="nameInvitation" />
   </div>
 </template>
 
@@ -71,11 +73,18 @@ import HeaderView from '../components/gameview/HeaderView.vue';
 import { ref } from 'vue';
 
 import ListPlayer from '../components/gameonline/ListPlayer.vue';
+import WaitPlayer from '../components/gameonline/WaitPlayer.vue';
+import AcceptedInvitation from '../components/gameonline/AcceptedInvitation.vue';
 
 const token = localStorage.getItem('token-chess');
 
 const dataSearch = ref<string>('Jugadores conectados');
 
+const waitOpen = ref<boolean>(false);
+const acceptedInvitation = ref<boolean>(false);
+const nameInvitation = ref<string>('');
+
+/*verifica si el token esta vigente */
 const { data: p, isLoading } = useQuery({
   queryKey: ['token', token],
   queryFn: async () => {
@@ -92,5 +101,11 @@ const findPlayer = () => {
 const findFriend = () => {
   console.log('amigos');
   dataSearch.value = 'Amigos conectados';
+};
+/*modal de esperar a que el usuario confirme */
+const waitF = (e: boolean, accepted: boolean, name: string) => {
+  waitOpen.value = e;
+  acceptedInvitation.value = accepted;
+  nameInvitation.value = name;
 };
 </script>

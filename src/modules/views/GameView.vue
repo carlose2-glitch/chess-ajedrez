@@ -66,8 +66,9 @@ import PlayerWhite from '../components/gameview/PlayerWhite.vue';
 import BoardView from '../components/gameview/view/BoardView.vue';
 import EndGame from '../components/gameview/view/EndGame.vue';
 import type { deletePiece } from '../interfaces/gamefuntions/pieces.interface';
-import ModalSelect from '../components/home/ModalSelect.vue';
+
 import { getToken } from '../actions/token';
+import ModalSelect from '../components/settingGame/ModalSelect.vue';
 
 const token = localStorage.getItem('token-chess');
 

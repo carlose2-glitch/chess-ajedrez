@@ -31,7 +31,7 @@
     </div>
     <ul class="divide-gray-200 h-63 overflow-auto scrollbar">
       <li
-        v-for="(u, index) in p"
+        v-for="(u, index) in arrayUsers"
         v-bind:key="index"
         class="flex items-center justify-between py-4 px-6 hover:bg-gray-300 cursor-pointer"
       >
@@ -43,23 +43,24 @@
         </div>
 
         <div class="flex gap-4 items-center">
-          <div class="bg-gray-700 w-2 h-2 rounded-[50%]"></div>
+          <div :class="statusPlayers(u.online)"></div>
           <button
-            @click="challenge()"
+            @click="challenge(u.user, u.online)"
             class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
           >
             Desafiar
-          </button>
-          <button
-            @click="write()"
-            class="text-white p-2 font-bold rounded-md hover:bg-gray-500 cursor-pointer bg-gray-700"
-          >
-            Escribir
           </button>
         </div>
       </li>
     </ul>
   </div>
+  <ModalInvitation
+    v-if="openSettings"
+    :userTo="nameGame"
+    :user-from="props.nameUser"
+    :open="openSettings"
+    @open-modal="openModal"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -67,6 +68,7 @@ import { findPlayers } from '@/modules/actions/findplayers';
 import { useQuery } from '@tanstack/vue-query';
 import { io } from 'socket.io-client';
 import { ref } from 'vue';
+import ModalInvitation from './ModalInvitation.vue';
 
 interface Props {
   name: string;
@@ -76,39 +78,90 @@ interface Props {
 interface Users {
   user: string;
   points: number;
+  online: boolean | null;
+}
+
+interface StatusPlayer {
+  user: string | null;
+
+  online: boolean | null;
+}
+
+interface Invitation {
+  userFrom: string;
+  userTo: string;
+  time: string;
+  movements: string;
 }
 
 const users = ref<Users[]>([]);
 
 const props = defineProps<Props>();
 
-const { data: p, isLoading } = useQuery({
-  queryKey: ['users', users],
-  queryFn: async () => {
-    const data = await findPlayers(props.nameUser);
-    return data;
-  },
-});
+const arrayUsers = ref<Users[]>([]);
 
+const openSettings = ref<boolean>(false);
+
+const nameGame = ref<string>('');
+
+const emits = defineEmits<{ wait: [d: boolean, a: boolean, name: string] }>();
+
+/*evento del websocket */
+
+//import.meta.env.VITE_URL_API_PROD,
 const socket = io(import.meta.env.VITE_URL_API_LOCAL, {
   auth: {
     user: props.nameUser,
   },
 });
 
-const challenge = () => {
-  console.log('desafiar');
+const arrayOn = ref<StatusPlayer[]>([]);
+
+socket.on('clients-online', (e: StatusPlayer[]) => {
+  arrayOn.value = e;
+});
+/*cargar usuarios */
+const { isLoading } = useQuery({
+  queryKey: ['users', users],
+  queryFn: async () => {
+    const data = await findPlayers(props.nameUser);
+    arrayUsers.value = data;
+
+    arrayUsers.value.forEach((e, i) => {
+      arrayOn.value.forEach((f) => {
+        if (e.user === f.user) {
+          arrayUsers.value[i].online = f.online;
+        }
+      });
+    });
+
+    return data;
+  },
+});
+/*abrir opciones del desafio */
+const challenge = (name: string, online: boolean | null) => {
+  if (online) {
+    nameGame.value = name;
+    openSettings.value = true;
+  }
+};
+/*si el jugador esta conectado estara en color verde de lo contrario gris */
+const statusPlayers = (on: boolean | null) => {
+  return on === true ? 'bg-green-400 w-2 h-2 rounded-[50%]' : 'bg-gray-700 w-2 h-2 rounded-[50%]';
 };
 
-const write = () => {
-  console.log('chatear');
+const openModal = (e: boolean, wait: boolean, userto: string, time: string, userFrom: string) => {
+  emits('wait', wait, !wait, '');
+  openSettings.value = e;
+
+  socket.emit('invitation', { userFrom: userFrom, userTo: userto, time: time, movements: '0' });
 };
 
-socket.on('connect', () => {
-  console.log('conectado');
-});
+/*invitacion de un jugador */
+const invitationF = (data: Invitation) => {
+  console.log(data);
+  emits('wait', false, true, data.userFrom);
+};
 
-socket.on('disconnect', () => {
-  console.log('desconectado');
-});
+socket.on(props.nameUser, invitationF);
 </script>
