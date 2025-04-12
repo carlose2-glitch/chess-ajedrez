@@ -52,8 +52,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 
-const closeModal = ref<boolean>(true);
-
 const time = ref<string>('5');
 
 interface Props {
@@ -68,8 +66,6 @@ const emits = defineEmits<{
 }>();
 
 const sendData = () => {
-  closeModal.value = false;
-
   emits('openModal', false, true, data.userTo, time.value, data.userFrom);
 };
 </script>

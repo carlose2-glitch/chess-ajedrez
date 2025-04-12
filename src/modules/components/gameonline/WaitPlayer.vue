@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex justify-center fixed top-0 right-0 w-full h-screen bg-gray-700/30 items-center space-x-2"
+    class="flex justify-center gap-4 fixed top-0 right-0 w-full h-screen bg-gray-700/50 items-center space-x-2"
   >
-    <svg class="h-20 w-20 animate-spin stroke-gray-500" viewBox="0 0 256 256">
+    <svg class="h-20 w-20 animate-spin stroke-white" viewBox="0 0 256 256">
       <line
         x1="128"
         y1="32"
@@ -76,6 +76,20 @@
         stroke-width="24"
       ></line>
     </svg>
-    <span class="text-4xl font-medium text-gray-500">Esperando...</span>
+    <span class="text-4xl font-medium text-white">Esperando...</span>
+
+    <button
+      @click="canceledInvite"
+      class="text-white cursor-pointer hover:bg-red-400 bg-red-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2"
+    >
+      Cancelar
+    </button>
   </div>
 </template>
+
+<script lang="ts" setup>
+const emits = defineEmits<{ canceledInvite: [d: boolean] }>();
+const canceledInvite = () => {
+  emits('canceledInvite', false);
+};
+</script>

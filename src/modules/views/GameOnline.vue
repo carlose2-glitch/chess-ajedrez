@@ -46,7 +46,13 @@
 
   <div v-else>
     <HeaderView :nameif="p.data" :direction="p.to" />
-    <ListPlayer :name="dataSearch" :name-user="p.data" @wait="waitF" />
+    <ListPlayer
+      :name="dataSearch"
+      :name-user="p.data"
+      @wait="waitF"
+      :cancel-game="gameAccepted"
+      :canceled-invite="gameCaInv"
+    />
     <div class="w-full flex justify-center gap-8 pt-4">
       <button
         @click="findPlayer()"
@@ -61,8 +67,13 @@
         Amigos
       </button>
     </div>
-    <WaitPlayer v-if="waitOpen" />
-    <AcceptedInvitation v-if="acceptedInvitation" :name="nameInvitation" />
+    <WaitPlayer v-if="waitOpen" @canceled-invite="canceledInvite" />
+    <AcceptedInvitation
+      v-if="acceptedInvitation"
+      :name="nameInvitation"
+      :time="timeInvitation"
+      @cancel="canceledGame"
+    />
   </div>
 </template>
 
@@ -81,8 +92,11 @@ const token = localStorage.getItem('token-chess');
 const dataSearch = ref<string>('Jugadores conectados');
 
 const waitOpen = ref<boolean>(false);
-const acceptedInvitation = ref<boolean>(false);
+const acceptedInvitation = ref<boolean | null>(false);
 const nameInvitation = ref<string>('');
+const timeInvitation = ref<string>('');
+const gameAccepted = ref<boolean | null>(null);
+const gameCaInv = ref<boolean | null>(null);
 
 /*verifica si el token esta vigente */
 const { data: p, isLoading } = useQuery({
@@ -103,9 +117,33 @@ const findFriend = () => {
   dataSearch.value = 'Amigos conectados';
 };
 /*modal de esperar a que el usuario confirme */
-const waitF = (e: boolean, accepted: boolean, name: string) => {
-  waitOpen.value = e;
+const waitF = (
+  wait: boolean,
+  accepted: boolean | null,
+  name: string,
+  time: string,
+  inv: boolean | null,
+) => {
+  waitOpen.value = wait;
   acceptedInvitation.value = accepted;
   nameInvitation.value = name;
+  gameCaInv.value = inv;
+  gameAccepted.value = null;
+
+  if (time === 'null') {
+    timeInvitation.value = 'Sin tiempo';
+  } else {
+    timeInvitation.value = time;
+  }
+};
+
+const canceledGame = (e: boolean) => {
+  gameAccepted.value = e;
+  acceptedInvitation.value = e;
+};
+
+const canceledInvite = (e: boolean) => {
+  gameCaInv.value = e;
+  waitOpen.value = false;
 };
 </script>

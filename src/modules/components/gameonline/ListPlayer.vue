@@ -67,12 +67,14 @@
 import { findPlayers } from '@/modules/actions/findplayers';
 import { useQuery } from '@tanstack/vue-query';
 import { io } from 'socket.io-client';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import ModalInvitation from './ModalInvitation.vue';
 
 interface Props {
   name: string;
   nameUser: string;
+  cancelGame: boolean | null;
+  canceledInvite: boolean | null;
 }
 
 interface Users {
@@ -104,7 +106,15 @@ const openSettings = ref<boolean>(false);
 
 const nameGame = ref<string>('');
 
-const emits = defineEmits<{ wait: [d: boolean, a: boolean, name: string] }>();
+const emits = defineEmits<{
+  wait: [d: boolean, a: boolean | null, name: string, t: string, inv: boolean | null];
+}>();
+
+const userInvited = ref<string>('');
+
+const emitCanceled = props.nameUser + 'canceled';
+
+const canceledInvite = props.nameUser + 'invite';
 
 /*evento del websocket */
 
@@ -119,6 +129,15 @@ const arrayOn = ref<StatusPlayer[]>([]);
 
 socket.on('clients-online', (e: StatusPlayer[]) => {
   arrayOn.value = e;
+  arrayUsers.value.forEach((e, i) => {
+    arrayOn.value.forEach((f) => {
+      if (e.user === f.user) {
+        arrayUsers.value[i].online = f.online;
+      } else {
+        arrayUsers.value[i].online = false;
+      }
+    });
+  });
 });
 /*cargar usuarios */
 const { isLoading } = useQuery({
@@ -151,17 +170,59 @@ const statusPlayers = (on: boolean | null) => {
 };
 
 const openModal = (e: boolean, wait: boolean, userto: string, time: string, userFrom: string) => {
-  emits('wait', wait, !wait, '');
+  emits('wait', wait, !wait, '', '', null);
   openSettings.value = e;
-
+  /* realiza la invitacion*/
   socket.emit('invitation', { userFrom: userFrom, userTo: userto, time: time, movements: '0' });
 };
 
 /*invitacion de un jugador */
 const invitationF = (data: Invitation) => {
-  console.log(data);
-  emits('wait', false, true, data.userFrom);
+  userInvited.value = data.userFrom;
+  emits('wait', false, true, data.userFrom, data.time, null);
+};
+/*recibe la invitacion */
+socket.on(props.nameUser, invitationF);
+
+/*verifica si el usuario invitado aun esta conectado */
+
+watch(arrayOn, (e) => {
+  e.find((e) => {
+    if (e.user !== userInvited.value) {
+      emits('wait', false, null, '', '', null);
+    }
+  });
+});
+
+/*verifica si el invitado cancelo el reto */
+
+watch(props, (e) => {
+  if (e.cancelGame === false) {
+    //console.log(e.cancelGame);
+    // console.log(userInvited.value);
+    socket.emit('canceled-invited', { userTo: userInvited.value, closeModal: false });
+  }
+});
+
+/*listener del socket para cancelar la invitacion */
+
+const canceledInvitation = (e: boolean) => {
+  console.log(emitCanceled);
+  emits('wait', e, null, '', '', null);
 };
 
-socket.on(props.nameUser, invitationF);
+socket.on(emitCanceled, canceledInvitation);
+
+/*verifica si el que invita cancela el juego */
+watch(props, (e) => {
+  if (e.canceledInvite === false) {
+    socket.emit('canceled-invite', { userTo: nameGame.value, closeModal: false });
+  }
+});
+
+const inviteCaF = (e: boolean) => {
+  emits('wait', e, null, '', '', null);
+};
+
+socket.on(canceledInvite, inviteCaF);
 </script>
