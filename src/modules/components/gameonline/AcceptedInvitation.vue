@@ -36,13 +36,13 @@ interface Props {
 
 const data = defineProps<Props>();
 
-const emits = defineEmits<{ cancel: [d: boolean] }>();
+const emits = defineEmits<{ cancel: [c: boolean | null, a: boolean | null] }>();
 
 const playGame = () => {
-  console.log('jugar');
+  emits('cancel', true, true);
 };
 
 const cancelGame = () => {
-  emits('cancel', false);
+  emits('cancel', false, null);
 };
 </script>

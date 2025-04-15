@@ -47,6 +47,7 @@
   <div v-else>
     <HeaderView :nameif="p.data" :direction="p.to" />
     <ListPlayer
+      :play-game="playGame"
       :name="dataSearch"
       :name-user="p.data"
       @wait="waitF"
@@ -72,7 +73,7 @@
       v-if="acceptedInvitation"
       :name="nameInvitation"
       :time="timeInvitation"
-      @cancel="canceledGame"
+      @cancel="cGaOrAc"
     />
   </div>
 </template>
@@ -97,6 +98,7 @@ const nameInvitation = ref<string>('');
 const timeInvitation = ref<string>('');
 const gameAccepted = ref<boolean | null>(null);
 const gameCaInv = ref<boolean | null>(null);
+const playGame = ref<boolean | null>(null);
 
 /*verifica si el token esta vigente */
 const { data: p, isLoading } = useQuery({
@@ -137,9 +139,10 @@ const waitF = (
   }
 };
 
-const canceledGame = (e: boolean) => {
+const cGaOrAc = (e: boolean | null, a: boolean | null) => {
   gameAccepted.value = e;
   acceptedInvitation.value = e;
+  playGame.value = a;
 };
 
 const canceledInvite = (e: boolean) => {

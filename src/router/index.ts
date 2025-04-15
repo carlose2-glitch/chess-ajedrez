@@ -37,6 +37,11 @@ const router = createRouter({
       name: 'online',
       component: () => import('@/modules/views/GameOnline.vue'),
     },
+    {
+      path: '/game/:token',
+      name: 'matchGame',
+      component: () => import('@/modules/views/GameMatch.vue'),
+    },
 
     {
       path: '/:pathMatch(.*)*',

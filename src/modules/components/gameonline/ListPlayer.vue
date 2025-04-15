@@ -69,12 +69,14 @@ import { useQuery } from '@tanstack/vue-query';
 import { io } from 'socket.io-client';
 import { ref, watch } from 'vue';
 import ModalInvitation from './ModalInvitation.vue';
+import { useRouter } from 'vue-router';
 
 interface Props {
   name: string;
   nameUser: string;
   cancelGame: boolean | null;
   canceledInvite: boolean | null;
+  playGame: boolean | null;
 }
 
 interface Users {
@@ -95,6 +97,7 @@ interface Invitation {
   time: string;
   movements: string;
 }
+const router = useRouter();
 
 const users = ref<Users[]>([]);
 
@@ -106,6 +109,8 @@ const openSettings = ref<boolean>(false);
 
 const nameGame = ref<string>('');
 
+const timeGame = ref<string>('');
+
 const emits = defineEmits<{
   wait: [d: boolean, a: boolean | null, name: string, t: string, inv: boolean | null];
 }>();
@@ -115,6 +120,10 @@ const userInvited = ref<string>('');
 const emitCanceled = props.nameUser + 'canceled';
 
 const canceledInvite = props.nameUser + 'invite';
+
+const emitAccept = props.nameUser + 'accepted';
+
+const gameToken = props.nameUser + 'token';
 
 /*evento del websocket */
 
@@ -179,10 +188,39 @@ const openModal = (e: boolean, wait: boolean, userto: string, time: string, user
 /*invitacion de un jugador */
 const invitationF = (data: Invitation) => {
   userInvited.value = data.userFrom;
+  timeGame.value = data.time;
   emits('wait', false, true, data.userFrom, data.time, null);
 };
 /*recibe la invitacion */
 socket.on(props.nameUser, invitationF);
+
+/*aceptar invitacion invitado*/
+watch(props, (e) => {
+  if (e.playGame) {
+    socket.emit('accept-invitation', {
+      userFrom: props.nameUser,
+      userTo: userInvited.value,
+      time: timeGame.value,
+    });
+  }
+});
+
+const matchGame = (token: string) => {
+  socket.emit('redirect-accept', { token: token, userTo: nameGame.value });
+  /*redirecciona al que hizo la invitacion */
+  router.replace({ path: `/game/:${token}` });
+};
+
+socket.on(emitAccept, matchGame);
+
+/*el invitado ha aceptado la invitacion y lo redirige a la partida */
+
+const startGame = (e: string) => {
+  /*redirecciona el que acepto la invitacion */
+  router.replace({ path: `/game/:${e}` });
+};
+
+socket.on(gameToken, startGame);
 
 /*verifica si el usuario invitado aun esta conectado */
 
@@ -194,7 +232,7 @@ watch(arrayOn, (e) => {
   });
 });
 
-/*verifica si el invitado cancelo el reto */
+/*verifica si el invitado cancelo el juego */
 
 watch(props, (e) => {
   if (e.cancelGame === false) {
@@ -207,7 +245,6 @@ watch(props, (e) => {
 /*listener del socket para cancelar la invitacion */
 
 const canceledInvitation = (e: boolean) => {
-  console.log(emitCanceled);
   emits('wait', e, null, '', '', null);
 };
 
