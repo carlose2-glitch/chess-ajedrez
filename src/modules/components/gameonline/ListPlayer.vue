@@ -216,7 +216,7 @@ socket.on(emitAccept, matchGame);
 /*el invitado ha aceptado la invitacion y lo redirige a la partida */
 
 const startGame = (e: string) => {
-  /*redirecciona el que acepto la invitacion */
+  /*redirecciona al que acepto la invitacion */
   router.replace({ path: `/game/:${e}` });
 };
 

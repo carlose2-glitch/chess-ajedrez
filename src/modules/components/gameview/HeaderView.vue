@@ -14,9 +14,16 @@
       <div class="flex items-center lg:order-2">
         <RouterLink
           :to="dataP.direction"
-          class="text-white hidden lg:block hover:bg-gray-100 hover:text-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+          class="text-white hidden lg:block hover:bg-gray-100 hover:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
           >{{ dataP.nameif }}</RouterLink
         >
+        <button
+          v-show="dataP.direction === '#'"
+          @click="closeSection"
+          class="text-white cursor-pointer hidden lg:block hover:bg-gray-100 hover:text-white focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
+        >
+          Cerrar sesion
+        </button>
 
         <button
           data-collapse-toggle="mobile-menu-2"
@@ -126,6 +133,13 @@
         >
           {{ dataP.nameif }}
         </RouterLink>
+        <button
+          v-show="dataP.direction === '#'"
+          @click="closeSection"
+          class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2"
+        >
+          Cerrar sesion
+        </button>
       </div>
     </div>
   </div>
@@ -133,9 +147,11 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 
 const modal = ref<boolean>(false);
+const router = useRouter();
+const route = useRoute();
 
 interface Props {
   nameif: string;
@@ -145,5 +161,14 @@ interface Props {
 const dataP = defineProps<Props>();
 const changeValue = () => {
   modal.value = !modal.value;
+};
+
+const closeSection = () => {
+  localStorage.removeItem('token-chess');
+  if (route.path === '/') {
+    location.reload();
+  } else {
+    router.replace({ path: '/' });
+  }
 };
 </script>
