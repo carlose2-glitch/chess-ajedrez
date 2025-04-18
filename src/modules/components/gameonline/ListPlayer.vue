@@ -208,7 +208,7 @@ watch(props, (e) => {
 const matchGame = (token: string) => {
   socket.emit('redirect-accept', { token: token, userTo: nameGame.value });
   /*redirecciona al que hizo la invitacion */
-  router.replace({ path: `/game/:${token}` });
+  router.replace({ path: `/game/${token}` });
 };
 
 socket.on(emitAccept, matchGame);
@@ -217,7 +217,7 @@ socket.on(emitAccept, matchGame);
 
 const startGame = (e: string) => {
   /*redirecciona al que acepto la invitacion */
-  router.replace({ path: `/game/:${e}` });
+  router.replace({ path: `/game/${e}` });
 };
 
 socket.on(gameToken, startGame);

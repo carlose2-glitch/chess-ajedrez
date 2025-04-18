@@ -9,3 +9,15 @@ export const getToken = async (token: string | null) => {
     return error;
   }
 };
+
+export const deaperture = async (tokenUser: string | null, token: string | string[]) => {
+  try {
+    const { data } = await userApi.post(`/token/deaperture`, {
+      tokenUser: tokenUser,
+      tokenDe: token,
+    });
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
