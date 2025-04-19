@@ -18,12 +18,19 @@ export const piecesManipulator = () => {
     f: number,
     namePiece: string | null,
     orderGame: GameManipulator[],
+    online: boolean | null,
   ) => {
     pieces.value.find((e, i) => {
+      const rotate = ref<string>('');
       if (e.name === namePiece) {
-        const rotate = e.class.includes('180') ? '180' : '360';
+        if (online) {
+          rotate.value = namePiece.includes('black') ? '180' : '0';
+        } else {
+          rotate.value = e.class.includes('180') ? '180' : '360';
+        }
+
         pieces.value[i].class =
-          `absolute duration-700 left-${c}/8 top-${f}/8 w-1/8 cursor-pointer rotate-${rotate}`;
+          `absolute duration-700 left-${c}/8 top-${f}/8 w-1/8 cursor-pointer rotate-${rotate.value}`;
         pieces.value[i].left = `${c}/8`;
         pieces.value[i].top = `${f}/8`;
         pieces.value[i].movements++;

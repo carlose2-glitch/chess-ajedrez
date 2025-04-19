@@ -1,5 +1,11 @@
 <template>
   <div class="w-full justify-center relative">
+    <img
+      src="/src/images/chess-background.jpg"
+      alt="opacity"
+      v-if="propsRotate.turnPlayer !== movements % 2"
+      class="absolute z-10 w-full bg-gray-600 opacity-0"
+    />
     <!-- tablero -->
     <img src="/src/images/chess-background.jpg" class="w-full" alt="tablero" />
     <!-- numeros y letras -->
@@ -7,6 +13,7 @@
     <p v-for="(l, index) in letters" v-bind:key="l" :class="stylesLetters(index)">{{ l }}</p>
 
     <!-- piezas -->
+
     <BoardPieces
       @information="choosePiece"
       :extract-position-pieces="extractPositionPieces.pieces.value"
@@ -45,6 +52,10 @@ import { piecesManipulator } from '@/modules/rules/gameview/gameFuntions/pieces.
 import { funtionPaintins } from '@/modules/rules/gameview/gameFuntions/paintingPictures.ts';
 import { game } from '@/modules/rules/gameview/gameFuntions/gameBoard.ts';
 import type { deletePiece } from '@/modules/interfaces/gamefuntions/pieces.interface.ts';
+import { io } from 'socket.io-client';
+
+//import.meta.env.VITE_URL_API_PROD,
+const socket = io(import.meta.env.VITE_URL_API_LOCAL);
 
 const turn = ['white', 'black'];
 
@@ -61,8 +72,25 @@ const piechaCo = ref<string | null>('');
 
 interface Props {
   change: number;
+  turnPlayer: number;
+  enemy: string;
+  user: string;
+}
+
+interface OnMovement {
+  userTo: string;
+
+  piece: string;
+
+  col: string;
+
+  row: string;
+
+  movements: number;
 }
 const propsRotate = defineProps<Props>();
+
+const onMovement = propsRotate.user + 'movement';
 
 /* piezas del tablero*/
 
@@ -186,7 +214,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
 
   if (coMovement.value) {
     /*mover pieza */
-    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
+    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value, true);
     /* coronacion del peon */
     extractPositionPieces.coPawnEvent(col, row, piece, piechaCo.value);
     /*eliminar pieza*/
@@ -200,7 +228,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     coMovement.value = false;
   } else {
     /*mover pieza */
-    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
+    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value, true);
 
     /* eliminar pieza graficamente */
     extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);
@@ -213,6 +241,18 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
   }
 
   colorWin.value = piece?.includes('white') ? 'Blancas' : 'Negras';
+
+  socket.emit('movement-piece', {
+    userTo: propsRotate.enemy,
+
+    piece: 'b',
+
+    col: '5',
+
+    row: 's',
+
+    movements: movements.value + 1,
+  });
   movements.value++;
 };
 /*coronacion del peon */
@@ -232,7 +272,10 @@ watch(datacheck, (check) => {
 
 /*rotar piezas del tablero */
 extractPositionPieces.rotatePieces(propsRotate.change);
-watch(propsRotate, (r) => {
-  extractPositionPieces.rotatePieces(r.change);
-});
+
+/*movimiento del enemigo */
+const movementF = (e: OnMovement) => {
+  movements.value = e.movements;
+};
+socket.on(onMovement, movementF);
 </script>

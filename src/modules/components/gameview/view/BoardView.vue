@@ -186,7 +186,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
 
   if (coMovement.value) {
     /*mover pieza */
-    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
+    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value, null);
     /* coronacion del peon */
     extractPositionPieces.coPawnEvent(col, row, piece, piechaCo.value);
     /*eliminar pieza*/
@@ -200,7 +200,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     coMovement.value = false;
   } else {
     /*mover pieza */
-    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value);
+    extractPositionPieces.modifyBoard(col, row, piece, orderGame.array.value, null);
 
     /* eliminar pieza graficamente */
     extractPositionPieces.deletePiece(piece, col, row, orderGame.array.value);

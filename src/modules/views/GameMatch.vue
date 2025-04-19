@@ -28,7 +28,7 @@
   <div v-else-if="isError">error</div>
   <div v-else class="flex flex-col bg-gray-700 gap-0.5">
     <HeaderView :nameif="d.name" direction="#" />
-    {{ d.juego }}
+
     <main class="w-full h-auto flex justify-center">
       <div class="w-[90%]">
         <div
@@ -38,7 +38,13 @@
               : 'rotate-180 flex flex-col m-auto h-auto items-center bg-gray-700 max-w-[32rem] gap-0.5'
           "
         >
-          <BoarOnline @final="checkMate" :change="d.juego === 0 ? 0 : 180" />
+          <BoarOnline
+            @final="checkMate"
+            :change="d.juego === 0 ? 0 : 180"
+            :turn-player="d.juego"
+            :enemy="d.enemy"
+            :user="d.name"
+          />
         </div>
       </div>
     </main>
@@ -80,10 +86,6 @@ const {
     return data;
   },
 });
-
-/*const changeTurn = ref<string>(
-  `rotate-${grados.value} flex flex-col m-auto h-auto items-center bg-gray-700 max-w-[32rem] gap-0.5`,
-);*/
 
 const checkMate = (f: boolean, color: string | null, deletes: deletePiece[]) => {
   whiteEnemies.value = deletes.filter((e) => e.name?.includes('white'));
