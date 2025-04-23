@@ -33,38 +33,42 @@
       <div class="w-[90%]">
         <div
           :class="
-            d.juego === 0
+            d.board.userWhite === d.name
               ? 'rotate-0 flex flex-col m-auto h-auto items-center bg-gray-700 max-w-[32rem] gap-0.5'
               : 'rotate-180 flex flex-col m-auto h-auto items-center bg-gray-700 max-w-[32rem] gap-0.5'
           "
         >
           <BoarOnline
             @final="checkMate"
-            :change="d.juego === 0 ? 0 : 180"
-            :turn-player="d.juego"
-            :enemy="d.enemy"
+            :change="d.board.userWhite === d.name ? 0 : 180"
+            :turn-player="d.board.userWhite === d.name ? 0 : 1"
+            :enemy="d.name === d.board.userWhite ? d.board.userBlack : d.board.userWhite"
             :user="d.name"
+            :movements-game="d.board.movements"
+            :id-game="d.board.id"
           />
         </div>
       </div>
     </main>
   </div>
+  {{ d }}
 </template>
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { deaperture } from '../actions/token';
+
 import { useQuery } from '@tanstack/vue-query';
 import BoarOnline from '../components/gameMatch/BoarOnline.vue';
 import { ref } from 'vue';
 import type { deletePiece } from '../interfaces/gamefuntions/pieces.interface';
 import HeaderView from '../components/gameview/HeaderView.vue';
+import { board } from '../actions/board';
 
 const route = useRoute();
 
 const tokenUser: string | null = localStorage.getItem('token-chess');
 
-const token: string | string[] = route.params.token;
+const id: string | string[] = route.params.token;
 
 const whiteEnemies = ref<deletePiece[]>([]);
 const blackEnemies = ref<deletePiece[]>([]);
@@ -80,9 +84,9 @@ const {
   isLoading,
   isError,
 } = useQuery({
-  queryKey: ['token', token],
+  queryKey: ['id', id],
   queryFn: async () => {
-    const data = await deaperture(tokenUser, token);
+    const data = await board(id, tokenUser);
     return data;
   },
 });

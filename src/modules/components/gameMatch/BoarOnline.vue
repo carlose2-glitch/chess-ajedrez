@@ -59,8 +59,6 @@ const socket = io(import.meta.env.VITE_URL_API_LOCAL);
 
 const turn = ['white', 'black'];
 
-const movements = ref<number>(0);
-
 /*mostrar piezas al hacer coronacion del peon */
 const coronationView = ref<boolean>(false);
 const coMovement = ref<boolean>(false);
@@ -75,6 +73,8 @@ interface Props {
   turnPlayer: number;
   enemy: string;
   user: string;
+  movementsGame: number;
+  idGame: number;
 }
 
 interface OnMovement {
@@ -90,11 +90,15 @@ interface OnMovement {
 }
 const propsRotate = defineProps<Props>();
 
+const movements = ref<number>(propsRotate.movementsGame);
+
 const onMovement = propsRotate.user + 'movement';
 
 /* piezas del tablero*/
 
 const extractPositionPieces = piecesManipulator();
+
+console.log(extractPositionPieces.pieces.value);
 
 /*colores de los cuadros del tablero */
 
@@ -252,6 +256,8 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     row: 's',
 
     movements: movements.value + 1,
+
+    id: propsRotate.idGame,
   });
   movements.value++;
 };

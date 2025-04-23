@@ -7,7 +7,6 @@ export const createUserApi = async (create: User) => {
 
     return data;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
