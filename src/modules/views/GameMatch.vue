@@ -25,8 +25,8 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <div v-else-if="isError">error</div>
-  <div v-else class="flex flex-col bg-gray-700 gap-0.5">
+  <div v-else-if="isError">{{ error }}</div>
+  <div v-else-if="isSuccess" class="flex flex-col bg-gray-700 gap-0.5">
     <HeaderView :nameif="d.name" direction="#" />
 
     <main class="w-full h-auto flex justify-center">
@@ -83,10 +83,16 @@ const {
   data: d,
   isLoading,
   isError,
+  isSuccess,
+  error,
 } = useQuery({
   queryKey: ['id', id],
   queryFn: async () => {
     const data = await board(id, tokenUser);
+
+    if (!data.ok) {
+      throw new Error('Puede ser que la partida ya este finalizada');
+    }
     return data;
   },
 });
