@@ -82,9 +82,9 @@ interface OnMovement {
 
   piece: string;
 
-  col: string;
+  col: number;
 
-  row: string;
+  row: number;
 
   movements: number;
 }
@@ -249,11 +249,11 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
   socket.emit('movement-piece', {
     userTo: propsRotate.enemy,
 
-    piece: 'b',
+    piece: piece,
 
-    col: '5',
+    col: col,
 
-    row: 's',
+    row: row,
 
     movements: movements.value + 1,
 
@@ -281,6 +281,37 @@ extractPositionPieces.rotatePieces(propsRotate.change);
 
 /*movimiento del enemigo */
 const movementF = (e: OnMovement) => {
+  console.log(e);
+
+  if (coMovement.value) {
+    /*mover pieza */
+    extractPositionPieces.modifyBoard(e.col, e.row, e.piece, orderGame.array.value, false);
+    /* coronacion del peon */
+    extractPositionPieces.coPawnEvent(e.col, e.row, e.piece, piechaCo.value);
+    /*eliminar pieza*/
+    extractPositionPieces.deletePiece(e.piece, e.col, e.row, orderGame.array.value);
+
+    paintings.reload();
+    orderGame.gameManipulator(extractPositionPieces.pieces.value);
+
+    checkmate.value = check(orderGame.array.value, e.piece);
+
+    coMovement.value = false;
+  } else {
+    /*mover pieza */
+    extractPositionPieces.modifyBoard(e.col, e.row, e.piece, orderGame.array.value, false);
+
+    /* eliminar pieza graficamente */
+    extractPositionPieces.deletePiece(e.piece, e.col, e.row, orderGame.array.value);
+
+    /* poner todos los cuadros verdes a transparentes */
+    paintings.reload();
+    /* control del juego */
+    orderGame.gameManipulator(extractPositionPieces.pieces.value);
+    checkmate.value = check(orderGame.array.value, e.piece);
+  }
+  colorWin.value = e.piece?.includes('white') ? 'Blancas' : 'Negras';
+
   movements.value = e.movements;
 };
 socket.on(onMovement, movementF);

@@ -90,7 +90,7 @@ const {
   queryFn: async () => {
     const data = await board(id, tokenUser);
 
-    if (!data.ok) {
+    if (data.status !== 200) {
       throw new Error('Puede ser que la partida ya este finalizada');
     }
     return data;

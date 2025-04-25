@@ -24,9 +24,11 @@ export const piecesManipulator = () => {
       const rotate = ref<string>('');
       if (e.name === namePiece) {
         if (online) {
+          console.log('aqui');
           rotate.value = namePiece.includes('black') ? '180' : '0';
         } else {
-          rotate.value = e.class.includes('180') ? '180' : '360';
+          console.log('alla');
+          rotate.value = e.class.includes('180') ? '180' : '0';
         }
 
         pieces.value[i].class =
