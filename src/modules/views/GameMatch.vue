@@ -46,6 +46,7 @@
             :user="d.name"
             :movements-game="d.board.movements"
             :id-game="d.board.id"
+            :pieces="d.board.pieces"
           />
         </div>
       </div>

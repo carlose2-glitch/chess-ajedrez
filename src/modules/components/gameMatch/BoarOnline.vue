@@ -51,7 +51,7 @@ import { check } from '@/modules/rules/gameview/gameFuntions/check.ts';
 import { piecesManipulator } from '@/modules/rules/gameview/gameFuntions/pieces.ts';
 import { funtionPaintins } from '@/modules/rules/gameview/gameFuntions/paintingPictures.ts';
 import { game } from '@/modules/rules/gameview/gameFuntions/gameBoard.ts';
-import type { deletePiece } from '@/modules/interfaces/gamefuntions/pieces.interface.ts';
+import type { deletePiece, Pieces } from '@/modules/interfaces/gamefuntions/pieces.interface.ts';
 import { io } from 'socket.io-client';
 
 //import.meta.env.VITE_URL_API_PROD,
@@ -75,6 +75,7 @@ interface Props {
   user: string;
   movementsGame: number;
   idGame: number;
+  pieces: Pieces[];
 }
 
 interface OnMovement {
@@ -96,9 +97,7 @@ const onMovement = propsRotate.user + 'movement';
 
 /* piezas del tablero*/
 
-const extractPositionPieces = piecesManipulator();
-
-console.log(extractPositionPieces.pieces.value);
+const extractPositionPieces = piecesManipulator(propsRotate.pieces);
 
 /*colores de los cuadros del tablero */
 
@@ -258,6 +257,8 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     movements: movements.value + 1,
 
     id: propsRotate.idGame,
+
+    array: extractPositionPieces.pieces.value,
   });
   movements.value++;
 };

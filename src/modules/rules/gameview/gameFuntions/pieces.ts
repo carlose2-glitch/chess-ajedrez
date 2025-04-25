@@ -5,9 +5,9 @@ import type {
 } from '@/modules/interfaces/gamefuntions/pieces.interface';
 import { computed, ref } from 'vue';
 
-export const piecesManipulator = () => {
+export const piecesManipulator = (arrayPieces: Pieces[]) => {
   /* orden de las piezas en el juego*/
-  const pieces = ref<Pieces[]>(array);
+  const pieces = ref<Pieces[]>(arrayPieces);
   const piecesCoronation = array;
   /*arreglo de las piezas borradas */
   const deletePieces = ref<deletePiece[]>([]);
@@ -223,7 +223,7 @@ export const piecesManipulator = () => {
 };
 
 /* piezas */
-const array: Pieces[] = [
+export const array: Pieces[] = [
   /*piezas negras */
   {
     name: 'black-rook1',

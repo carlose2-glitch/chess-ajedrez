@@ -41,7 +41,7 @@ import { rulesGames } from '../../../rules/gameview/rulesGames/rulesOfPieces.ts'
 import { coronation } from '../../../rules/gameview/gameFuntions/coronation.ts';
 import CoronationPawn from '../manipulationBoard/CoronationPawn.vue';
 import { check } from '@/modules/rules/gameview/gameFuntions/check.ts';
-import { piecesManipulator } from '@/modules/rules/gameview/gameFuntions/pieces.ts';
+import { array, piecesManipulator } from '@/modules/rules/gameview/gameFuntions/pieces.ts';
 import { funtionPaintins } from '@/modules/rules/gameview/gameFuntions/paintingPictures.ts';
 import { game } from '@/modules/rules/gameview/gameFuntions/gameBoard.ts';
 import type { deletePiece } from '@/modules/interfaces/gamefuntions/pieces.interface.ts';
@@ -66,7 +66,7 @@ const propsRotate = defineProps<Props>();
 
 /* piezas del tablero*/
 
-const extractPositionPieces = piecesManipulator();
+const extractPositionPieces = piecesManipulator(array);
 
 /*colores de los cuadros del tablero */
 
