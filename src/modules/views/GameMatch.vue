@@ -42,13 +42,13 @@
           <PlayerBlack
             :class="d.board.userWhite === d.name ? 'rotate-0' : 'rotate-180'"
             :run="blackTurn"
-            :time="d.board.timeBlack.min"
+            :time="minBlack"
             @information="finalGame"
             :enemies="whiteEnemies"
             :online="true"
             :name="d.board.userBlack"
             :player="d.name"
-            :segg="d.board.timeBlack.seg"
+            :segg="segBlack"
             :movements="d.board.movements"
           />
 
@@ -68,13 +68,13 @@
           <PlayerWhite
             :class="d.board.userWhite === d.name ? 'rotate-0' : 'rotate-180'"
             :run="whiteTurn"
-            :time="d.board.timeWhite.min"
+            :time="minWhite"
             @information="finalGame"
             :enemies="blackEnemies"
             :online="true"
             :name="d.board.userWhite"
             :player="d.name"
-            :segg="d.board.timeWhite.seg"
+            :segg="segWhite"
             :movements="d.board.movements"
           />
         </div>
@@ -114,6 +114,11 @@ const final = ref<boolean>(false);
 const whiteTurn = ref<boolean>(false);
 const blackTurn = ref<boolean>(false);
 
+const minWhite = ref<number | null>(null);
+const segWhite = ref<number | null>(null);
+const minBlack = ref<number | null>(null);
+const segBlack = ref<number | null>(null);
+
 const {
   data: d,
   isLoading,
@@ -130,11 +135,20 @@ const {
     }
     whiteTurn.value = data.board.movements % 2 === 0 ? true : false;
     blackTurn.value = data.board.movements % 2 !== 0 ? true : false;
+    minWhite.value = data.board.timeWhite.min;
+    segWhite.value = data.board.timeWhite.seg;
+    minBlack.value = data.board.timeBlack.min;
+    segBlack.value = data.board.timeBlack.seg;
     return data;
   },
 });
 
-const checkMate = (f: boolean, color: string | null, deletes: deletePiece[]) => {
+interface Time {
+  min: number;
+  seg: number;
+}
+
+const checkMate = (f: boolean, color: string | null, deletes: deletePiece[], t: Time | null) => {
   whiteEnemies.value = deletes.filter((e) => e.name?.includes('white'));
   blackEnemies.value = deletes.filter((e) => e.name?.includes('black'));
   colorWin.value = color;
@@ -161,6 +175,15 @@ const checkMate = (f: boolean, color: string | null, deletes: deletePiece[]) => 
     }
 
     winerPlayer(winer.value, idGame, colorWin.value);
+  }
+  console.log(t);
+
+  if (d.value.name !== d.value.board.userWhite && t) {
+    minWhite.value = t.min;
+    segWhite.value = t.seg;
+  } else if (d.value.name !== d.value.board.userBlack && t) {
+    minBlack.value = t.min;
+    segBlack.value = t.seg;
   }
 };
 const closeModal = (d: boolean) => {

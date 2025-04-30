@@ -40,11 +40,11 @@ import { ref, watch } from 'vue';
 interface Props {
   run: boolean;
   enemies: deletePiece[];
-  time: number;
+  time: number | null;
   online: boolean;
   name: string | null;
   player: string | null;
-  segg: number;
+  segg: number | null;
   movements: number;
 }
 
@@ -89,7 +89,13 @@ const start = () => {
     if (data.name === data.player && data.run) {
       resume();
     } else {
-      pause();
+      if (!data.run) {
+        pause();
+      }
+      if (data.name !== data.player) {
+        seg.value = Number(data.segg);
+        min.value = Number(data.time);
+      }
     }
   } else {
     pause();
@@ -97,11 +103,7 @@ const start = () => {
 };
 
 start();
-watch(data, (e) => {
-  if (e.run) {
-    start();
-  } else {
-    start();
-  }
+watch(data, () => {
+  start();
 });
 </script>

@@ -62,11 +62,15 @@ const turn = ['white', 'black'];
 /*mostrar piezas al hacer coronacion del peon */
 const coronationView = ref<boolean>(false);
 const coMovement = ref<boolean>(false);
-
+interface Time {
+  min: number;
+  seg: number;
+}
 const rowCoronation = ref<number | null>(null);
 const colCoronation = ref<number | null>(null);
 const pieceCo = ref<string | null>(null);
 const piechaCo = ref<string | null>('');
+const sendTime = ref<Time | null>(null);
 
 interface Props {
   change: number;
@@ -90,6 +94,8 @@ interface OnMovement {
   row: number;
 
   movements: number;
+
+  time: string;
 }
 const propsRotate = defineProps<Props>();
 
@@ -275,10 +281,19 @@ const coronationFuntion = (name: string | null) => {
 
 /*jaque mate */
 
-const emits = defineEmits<{ final: [f: boolean, color: string | null, deleteP: deletePiece[]] }>();
+const emits = defineEmits<{
+  final: [f: boolean, color: string | null, deleteP: deletePiece[], time: Time | null];
+}>();
 
 watch(datacheck, (check) => {
-  emits('final', check.checkmate, check.colorWin, extractPositionPieces.deletes.value);
+  emits(
+    'final',
+    check.checkmate,
+    check.colorWin,
+    extractPositionPieces.deletes.value,
+    sendTime.value,
+  );
+  sendTime.value = null;
 });
 
 /*rotar piezas del tablero */
@@ -316,9 +331,11 @@ const movementF = (e: OnMovement) => {
   colorWin.value = e.piece?.includes('white') ? 'Blancas' : 'Negras';
 
   movements.value = e.movements;
+
+  sendTime.value = JSON.parse(e.time);
 };
 socket.on(onMovement, movementF);
-
+/*final de la partida */
 watch(propsRotate, (final) => {
   if (final.fGame) {
     console.log('final');
