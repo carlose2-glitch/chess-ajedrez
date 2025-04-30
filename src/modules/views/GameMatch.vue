@@ -27,6 +27,7 @@
   </div>
   <div v-else-if="isError">{{ error }}</div>
   <div v-else-if="isSuccess" class="flex flex-col bg-gray-700 gap-0.5">
+    <EndGame v-if="final" @close="closeModal" :color="colorWin" :url="url" />
     <HeaderView :nameif="d.name" direction="#" />
 
     <main class="w-full h-auto flex justify-center">
@@ -38,6 +39,19 @@
               : 'rotate-180 flex flex-col m-auto h-auto items-center bg-gray-700 max-w-[32rem] gap-0.5'
           "
         >
+          <PlayerBlack
+            :class="d.board.userWhite === d.name ? 'rotate-0' : 'rotate-180'"
+            :run="blackTurn"
+            :time="d.board.timeBlack.min"
+            @information="finalGame"
+            :enemies="whiteEnemies"
+            :online="true"
+            :name="d.board.userBlack"
+            :player="d.name"
+            :segg="d.board.timeBlack.seg"
+            :movements="d.board.movements"
+          />
+
           <BoarOnline
             @final="checkMate"
             :change="d.board.userWhite === d.name ? 0 : 180"
@@ -47,12 +61,26 @@
             :movements-game="d.board.movements"
             :id-game="d.board.id"
             :pieces="d.board.pieces"
+            :fGame="final"
+            :colorF="colorWin"
+          />
+
+          <PlayerWhite
+            :class="d.board.userWhite === d.name ? 'rotate-0' : 'rotate-180'"
+            :run="whiteTurn"
+            :time="d.board.timeWhite.min"
+            @information="finalGame"
+            :enemies="blackEnemies"
+            :online="true"
+            :name="d.board.userWhite"
+            :player="d.name"
+            :segg="d.board.timeWhite.seg"
+            :movements="d.board.movements"
           />
         </div>
       </div>
     </main>
   </div>
-  {{ d }}
 </template>
 
 <script lang="ts" setup>
@@ -64,8 +92,14 @@ import { ref } from 'vue';
 import type { deletePiece } from '../interfaces/gamefuntions/pieces.interface';
 import HeaderView from '../components/gameview/HeaderView.vue';
 import { board } from '../actions/board';
+import EndGame from '../components/gameview/view/EndGame.vue';
+import { winerPlayer } from '../actions/winerPlayer';
+import PlayerBlack from '../components/gameview/PlayerBlack.vue';
+import PlayerWhite from '../components/gameview/PlayerWhite.vue';
 
 const route = useRoute();
+
+const url = '/online';
 
 const tokenUser: string | null = localStorage.getItem('token-chess');
 
@@ -76,7 +110,7 @@ const blackEnemies = ref<deletePiece[]>([]);
 
 const colorWin = ref<string | null>(null);
 const final = ref<boolean>(false);
-const flip = ref<string>('rotate-0');
+
 const whiteTurn = ref<boolean>(false);
 const blackTurn = ref<boolean>(false);
 
@@ -94,6 +128,8 @@ const {
     if (data.status !== 200) {
       throw new Error('Puede ser que la partida ya este finalizada');
     }
+    whiteTurn.value = data.board.movements % 2 === 0 ? true : false;
+    blackTurn.value = data.board.movements % 2 !== 0 ? true : false;
     return data;
   },
 });
@@ -104,20 +140,35 @@ const checkMate = (f: boolean, color: string | null, deletes: deletePiece[]) => 
   colorWin.value = color;
   final.value = f;
 
+  const winer = ref<string>('');
+  const idGame = d.value.board.id;
+
   if (!f) {
     setTimeout(() => {
       if (color === 'Blancas') {
-        flip.value = 'rotate-180';
-
         blackTurn.value = true;
         whiteTurn.value = false;
       } else {
-        flip.value = 'rotate-360';
-
         whiteTurn.value = true;
         blackTurn.value = false;
       }
     }, 1000);
+  } else {
+    if (colorWin.value === 'Blancas') {
+      winer.value = d.value.board.userWhite;
+    } else {
+      winer.value = d.value.board.userBlack;
+    }
+
+    winerPlayer(winer.value, idGame, colorWin.value);
   }
+};
+const closeModal = (d: boolean) => {
+  final.value = d;
+};
+
+const finalGame = (f: boolean, c: string) => {
+  final.value = f;
+  colorWin.value = c;
 };
 </script>

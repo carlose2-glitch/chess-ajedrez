@@ -24,10 +24,8 @@ export const piecesManipulator = (arrayPieces: Pieces[]) => {
       const rotate = ref<string>('');
       if (e.name === namePiece) {
         if (online) {
-          console.log('aqui');
           rotate.value = namePiece.includes('black') ? '180' : '0';
         } else {
-          console.log('alla');
           rotate.value = e.class.includes('180') ? '180' : '0';
         }
 

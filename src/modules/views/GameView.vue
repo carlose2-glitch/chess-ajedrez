@@ -26,7 +26,7 @@
     </div>
   </div>
   <div v-else class="flex flex-col bg-gray-700 gap-0.5">
-    <EndGame v-if="final" @close="closeModal" :color="colorWin" />
+    <EndGame v-if="final" @close="closeModal" :color="colorWin" :url="url" />
     <HeaderView :nameif="p.data" :direction="p.to" />
     <main class="w-full h-auto flex justify-center">
       <div class="w-[90%]">
@@ -37,6 +37,9 @@
             :time="timeGame"
             @information="finalGame"
             :enemies="whiteEnemies"
+            :online="false"
+            :name="null"
+            :player="null"
           />
 
           <BoardView @final="checkMate" :change="grados" />
@@ -47,6 +50,9 @@
             :time="timeGame"
             @information="finalGame"
             :enemies="blackEnemies"
+            :online="false"
+            :name="null"
+            :player="null"
           />
         </div>
       </div>
@@ -80,6 +86,7 @@ const { data: p, isLoading } = useQuery({
   },
 });
 
+const url = '/game-same-pc';
 const timeGame = ref<string>('5');
 
 const whiteEnemies = ref<deletePiece[]>([]);

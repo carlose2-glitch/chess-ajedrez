@@ -2,7 +2,8 @@
   <div class="flex gap-4 justify-around w-full">
     <div class="w-[80%] flex gap-2">
       <img src="https://www.chess.com/bundles/web/images/black_400.png" class="w-8" alt="picture" />
-      <p class="font-bold text-gray-200">Blancas</p>
+
+      <p class="font-bold text-gray-200">{{ data.name !== null ? data.name : 'Blancas' }}</p>
       <div class="flex w-full">
         <img
           v-for="(p, i) in data.enemies"
@@ -35,43 +36,72 @@
 import type { deletePiece } from '@/modules/interfaces/gamefuntions/pieces.interface';
 import { useIntervalFn } from '@vueuse/core';
 import { ref, watch } from 'vue';
-const data = defineProps<Props>();
-const min = ref<number>(Number(data.time));
-const seg = ref<number>(0);
 
 interface Props {
   run: boolean;
   enemies: deletePiece[];
-  time: string;
+  time: number;
+  online: boolean;
+  name: string | null;
+  player: string | null;
+  segg: number;
+  movements: number;
 }
 
+interface Time {
+  min: number;
+  seg: number;
+}
+const data = defineProps<Props>();
+const min = ref<number>(Number(data.time));
+const seg = ref<number>(Number(data.segg));
 const emits = defineEmits<{ information: [loss: boolean, color: string] }>();
-
-const runcant = ref<number>(0);
 
 const { pause, resume } = useIntervalFn(() => {
   seg.value = seg.value === 0 ? 59 : seg.value - 1;
   min.value = seg.value === 59 ? min.value - 1 : min.value;
 
+  window.localStorage.setItem('time-chess', JSON.stringify({ min: min.value, seg: seg.value }));
+
   /*termino el tiempo */
   if (min.value === 0 && seg.value === 0) {
     pause();
+    window.localStorage.removeItem('time-chess');
     emits('information', true, 'Negras');
   }
 }, 1000);
 
-pause();
+if (data.movements === 0) {
+  window.localStorage.removeItem('time-chess');
+}
 
-watch(data, (e) => {
-  if (e.run) {
-    runcant.value++;
-    resume();
+const timeLocal: string | null = window.localStorage.getItem('time-chess');
+
+if (timeLocal && data.name === data.player) {
+  const timeParse: Time = JSON.parse(timeLocal as string);
+
+  min.value = timeParse.min;
+  seg.value = timeParse.seg;
+}
+
+const start = () => {
+  if (data.online) {
+    if (data.name === data.player && data.run) {
+      resume();
+    } else {
+      pause();
+    }
   } else {
     pause();
   }
+};
 
-  if (runcant.value === 0) {
-    min.value = Number(e.time);
+start();
+watch(data, (e) => {
+  if (e.run) {
+    start();
+  } else {
+    start();
   }
 });
 </script>

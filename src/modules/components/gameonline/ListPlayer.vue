@@ -218,7 +218,7 @@ socket.on(emitAccept, matchGame);
 
 const startGame = (id: string) => {
   /*redirecciona al que acepto la invitacion */
-  console.log(id);
+
   router.replace({ path: `/game/${id}` });
 };
 

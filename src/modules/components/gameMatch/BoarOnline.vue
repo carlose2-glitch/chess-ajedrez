@@ -76,6 +76,8 @@ interface Props {
   movementsGame: number;
   idGame: number;
   pieces: Pieces[];
+  fGame: boolean;
+  colorF: string | null;
 }
 
 interface OnMovement {
@@ -259,6 +261,8 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
     id: propsRotate.idGame,
 
     array: extractPositionPieces.pieces.value,
+
+    time: window.localStorage.getItem('time-chess'),
   });
   movements.value++;
 };
@@ -282,8 +286,6 @@ extractPositionPieces.rotatePieces(propsRotate.change);
 
 /*movimiento del enemigo */
 const movementF = (e: OnMovement) => {
-  console.log(e);
-
   if (coMovement.value) {
     /*mover pieza */
     extractPositionPieces.modifyBoard(e.col, e.row, e.piece, orderGame.array.value, false);
@@ -316,4 +318,11 @@ const movementF = (e: OnMovement) => {
   movements.value = e.movements;
 };
 socket.on(onMovement, movementF);
+
+watch(propsRotate, (final) => {
+  if (final.fGame) {
+    console.log('final');
+    console.log(final.colorF);
+  }
+});
 </script>

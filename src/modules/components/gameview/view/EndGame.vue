@@ -33,12 +33,12 @@
           <h3 class="mb-5 text-lg font-normal text-white dark:text-gray-400">
             Ganaron las {{ props.color }}
           </h3>
-          <a
-            href="/game-same-pc"
+          <button
+            @click="direction()"
             class="text-white cursor-pointer bg-cyan-700 hover:bg-cyan-800 focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
           >
             Nuevo juego
-          </a>
+          </button>
           <RouterLink
             to="/"
             class="text-white ml-4 cursor-pointer bg-cyan-700 hover:bg-cyan-800 focus:outline-none font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
@@ -52,16 +52,28 @@
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+
 const emits = defineEmits<{ close: [checkmate: boolean] }>();
 
 interface Props {
   color: string | null;
+  url: string;
 }
 
 const props = defineProps<Props>();
+const router = useRouter();
 
 const closeModal = () => {
   const close = false;
   emits('close', close);
+};
+
+const direction = () => {
+  if (props.url === '/game-same-pc') {
+    router.replace({ path: props.url });
+  } else {
+    router.replace({ path: props.url });
+  }
 };
 </script>

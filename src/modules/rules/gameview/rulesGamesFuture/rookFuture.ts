@@ -85,9 +85,6 @@ export const rookFuture = (c: number, f: number, orderGame: GameManipulator[], n
         co: false,
       });
 
-      if (findPosition.piece.includes(opposite + '-king')) {
-        console.log('jaque');
-      }
       break;
     }
   }
