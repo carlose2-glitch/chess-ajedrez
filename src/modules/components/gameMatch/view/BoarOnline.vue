@@ -41,18 +41,19 @@
 
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue';
-import BoardPieces from '@/modules/components/gameview/manipulationBoard/BoardPieces.vue';
-import ManipulatorBoard from '@/modules/components/gameview/manipulationBoard/ManipulatorBoard.vue';
+import BoardPieces from '@/modules/components/global/BoardPieces.vue';
+import ManipulatorBoard from '@/modules/components/global/ManipulatorBoard.vue';
 
 import { rulesGames } from '@/modules/rules/gameview/rulesGames/rulesOfPieces.ts';
 import { coronation } from '@/modules/rules/gameview/gameFuntions/coronation';
-import CoronationPawn from '../gameview/manipulationBoard/CoronationPawn.vue';
+
 import { check } from '@/modules/rules/gameview/gameFuntions/check.ts';
 import { piecesManipulator } from '@/modules/rules/gameview/gameFuntions/pieces.ts';
 import { funtionPaintins } from '@/modules/rules/gameview/gameFuntions/paintingPictures.ts';
 import { game } from '@/modules/rules/gameview/gameFuntions/gameBoard.ts';
 import type { deletePiece, Pieces } from '@/modules/interfaces/gamefuntions/pieces.interface.ts';
 import { io } from 'socket.io-client';
+import CoronationPawn from '../../global/CoronationPawn.vue';
 
 //import.meta.env.VITE_URL_API_PROD,
 const socket = io(import.meta.env.VITE_URL_API_LOCAL);

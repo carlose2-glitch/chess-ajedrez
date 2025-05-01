@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
-import HeaderView from '../components/gameview/HeaderView.vue';
+import HeaderView from '../components/global/HeaderView.vue';
 import { getToken } from '../actions/token';
 
 const token = localStorage.getItem('token-chess');

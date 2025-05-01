@@ -81,7 +81,7 @@
 <script lang="ts" setup>
 import { useQuery } from '@tanstack/vue-query';
 import { getToken } from '../actions/token';
-import HeaderView from '../components/gameview/HeaderView.vue';
+import HeaderView from '../components/global/HeaderView.vue';
 import { ref } from 'vue';
 
 import ListPlayer from '../components/gameonline/ListPlayer.vue';

@@ -90,15 +90,15 @@
 import { useRoute } from 'vue-router';
 
 import { useQuery } from '@tanstack/vue-query';
-import BoarOnline from '../components/gameMatch/BoarOnline.vue';
+import BoarOnline from '../components/gameMatch/view/BoarOnline.vue';
 import { ref } from 'vue';
 import type { deletePiece } from '../interfaces/gamefuntions/pieces.interface';
-import HeaderView from '../components/gameview/HeaderView.vue';
+import HeaderView from '../components/global/HeaderView.vue';
 import { board } from '../actions/board';
-import EndGame from '../components/gameview/view/EndGame.vue';
+import EndGame from '../components/global/EndGame.vue';
 import { winerPlayer } from '../actions/winerPlayer';
-import PlayerBlack from '../components/gameview/PlayerBlack.vue';
-import PlayerWhite from '../components/gameview/PlayerWhite.vue';
+import PlayerBlack from '../components/gameMatch/time/PlayerBlack.vue';
+import PlayerWhite from '../components/gameMatch/time/PlayerWhite.vue';
 import LossOnline from '../components/gameMatch/LossOnline.vue';
 
 const route = useRoute();

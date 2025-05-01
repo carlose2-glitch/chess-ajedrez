@@ -31,28 +31,22 @@
     <main class="w-full h-auto flex justify-center">
       <div class="w-[90%]">
         <div v-bind:class="changeTurn">
-          <PlayerBlack
+          <TimeBlack
             v-bind:class="flip"
             :run="blackTurn"
             :time="timeGame"
             @information="finalGame"
             :enemies="whiteEnemies"
-            :online="false"
-            :name="null"
-            :player="null"
           />
 
           <BoardView @final="checkMate" :change="grados" />
 
-          <PlayerWhite
+          <TimeWhite
             v-bind:class="flip"
             :run="whiteTurn"
             :time="timeGame"
             @information="finalGame"
             :enemies="blackEnemies"
-            :online="false"
-            :name="null"
-            :player="null"
           />
         </div>
       </div>
@@ -63,18 +57,19 @@
 </template>
 
 <script lang="ts" setup>
-import HeaderView from '../components/gameview/HeaderView.vue';
+import HeaderView from '../components/global/HeaderView.vue';
 import { useQuery } from '@tanstack/vue-query';
 
 import { ref } from 'vue';
-import PlayerBlack from '../components/gameview/PlayerBlack.vue';
-import PlayerWhite from '../components/gameview/PlayerWhite.vue';
+
 import BoardView from '../components/gameview/view/BoardView.vue';
-import EndGame from '../components/gameview/view/EndGame.vue';
+import EndGame from '../components/global/EndGame.vue';
 import type { deletePiece } from '../interfaces/gamefuntions/pieces.interface';
 
 import { getToken } from '../actions/token';
-import ModalSelect from '../components/settingGame/ModalSelect.vue';
+import ModalSelect from '../components/gameview/ModalSelect.vue';
+import TimeBlack from '../components/gameview/time/TimeBlack.vue';
+import TimeWhite from '../components/gameview/time/TimeWhite.vue';
 
 const token = localStorage.getItem('token-chess');
 
@@ -126,10 +121,6 @@ const checkMate = (f: boolean, color: string | null, deletes: deletePiece[]) => 
       }
     }, 1000);
   }
-};
-
-const closeModal = (d: boolean) => {
-  final.value = d;
 };
 
 const finalGame = (f: boolean, c: string) => {

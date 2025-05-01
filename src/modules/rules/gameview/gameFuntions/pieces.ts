@@ -26,7 +26,7 @@ export const piecesManipulator = (arrayPieces: Pieces[]) => {
         if (online) {
           rotate.value = namePiece.includes('black') ? '180' : '0';
         } else {
-          rotate.value = e.class.includes('180') ? '180' : '0';
+          rotate.value = e.class.includes('180') ? '180' : '360';
         }
 
         pieces.value[i].class =
