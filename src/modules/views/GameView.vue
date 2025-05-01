@@ -26,7 +26,7 @@
     </div>
   </div>
   <div v-else class="flex flex-col bg-gray-700 gap-0.5">
-    <EndGame v-if="final" @close="closeModal" :color="colorWin" :url="url" />
+    <EndGame v-if="final" :color="colorWin" :url="url" />
     <HeaderView :nameif="p.data" :direction="p.to" />
     <main class="w-full h-auto flex justify-center">
       <div class="w-[90%]">

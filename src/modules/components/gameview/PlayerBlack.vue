@@ -91,9 +91,8 @@ const start = () => {
     if (data.name === data.player && data.run) {
       resume();
     } else {
-      if (!data.run) {
-        pause();
-      }
+      pause();
+
       if (data.name !== data.player) {
         seg.value = Number(data.segg);
         min.value = Number(data.time);

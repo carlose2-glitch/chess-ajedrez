@@ -97,11 +97,20 @@ interface OnMovement {
 
   time: string;
 }
+
+interface winnerGame {
+  color: string;
+
+  user: string;
+
+  idBoard: number;
+}
 const propsRotate = defineProps<Props>();
 
 const movements = ref<number>(propsRotate.movementsGame);
 
 const onMovement = propsRotate.user + 'movement';
+const finalEmit = propsRotate.user + 'winner';
 
 /* piezas del tablero*/
 
@@ -220,7 +229,7 @@ watch(dataPieceBoard, (d) => {
 
 /* segundo movimiento*/
 
-const finalMovement = (col: number, row: number, piece: string | null) => {
+const finalMovement = async (col: number, row: number, piece: string | null) => {
   /* mover pieza graficamente*/
 
   if (coMovement.value) {
@@ -253,6 +262,8 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
 
   colorWin.value = piece?.includes('white') ? 'Blancas' : 'Negras';
 
+  const time = window.localStorage.getItem('time-chess');
+
   socket.emit('movement-piece', {
     userTo: propsRotate.enemy,
 
@@ -268,7 +279,7 @@ const finalMovement = (col: number, row: number, piece: string | null) => {
 
     array: extractPositionPieces.pieces.value,
 
-    time: window.localStorage.getItem('time-chess'),
+    time: time,
   });
   movements.value++;
 };
@@ -282,13 +293,20 @@ const coronationFuntion = (name: string | null) => {
 /*jaque mate */
 
 const emits = defineEmits<{
-  final: [f: boolean, color: string | null, deleteP: deletePiece[], time: Time | null];
+  final: [
+    winner: boolean,
+    loss: boolean,
+    color: string | null,
+    deleteP: deletePiece[],
+    time: Time | null,
+  ];
 }>();
 
 watch(datacheck, (check) => {
   emits(
     'final',
     check.checkmate,
+    false,
     check.colorWin,
     extractPositionPieces.deletes.value,
     sendTime.value,
@@ -335,11 +353,23 @@ const movementF = (e: OnMovement) => {
   sendTime.value = JSON.parse(e.time);
 };
 socket.on(onMovement, movementF);
-/*final de la partida */
+/*final de la partida del perdedor tiempo*/
 watch(propsRotate, (final) => {
   if (final.fGame) {
-    console.log('final');
-    console.log(final.colorF);
+    socket.emit('winner', {
+      color: final.colorF,
+      user: propsRotate.enemy,
+      idBoard: propsRotate.idGame,
+    });
+    emits('final', true, false, final.colorF, extractPositionPieces.deletes.value, null);
   }
 });
+
+/*escuchar el final de la partida ganador tiempo*/
+
+const winner = (e: winnerGame) => {
+  emits('final', false, true, e.color, extractPositionPieces.deletes.value, null);
+};
+
+socket.on(finalEmit, winner);
 </script>

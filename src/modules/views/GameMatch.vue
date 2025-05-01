@@ -27,7 +27,8 @@
   </div>
   <div v-else-if="isError">{{ error }}</div>
   <div v-else-if="isSuccess" class="flex flex-col bg-gray-700 gap-0.5">
-    <EndGame v-if="final" @close="closeModal" :color="colorWin" :url="url" />
+    <EndGame v-if="final" :color="colorWin" :url="url" />
+    <LossOnline v-if="loss" :color="colorWin" :url="url" />
     <HeaderView :nameif="d.name" direction="#" />
 
     <main class="w-full h-auto flex justify-center">
@@ -96,6 +97,7 @@ import EndGame from '../components/gameview/view/EndGame.vue';
 import { winerPlayer } from '../actions/winerPlayer';
 import PlayerBlack from '../components/gameview/PlayerBlack.vue';
 import PlayerWhite from '../components/gameview/PlayerWhite.vue';
+import LossOnline from '../components/gameMatch/LossOnline.vue';
 
 const route = useRoute();
 
@@ -110,6 +112,7 @@ const blackEnemies = ref<deletePiece[]>([]);
 
 const colorWin = ref<string | null>(null);
 const final = ref<boolean>(false);
+const loss = ref<boolean>(false);
 
 const whiteTurn = ref<boolean>(false);
 const blackTurn = ref<boolean>(false);
@@ -148,16 +151,23 @@ interface Time {
   seg: number;
 }
 
-const checkMate = (f: boolean, color: string | null, deletes: deletePiece[], t: Time | null) => {
+const checkMate = (
+  wi: boolean,
+  ls: boolean,
+  color: string | null,
+  deletes: deletePiece[],
+  t: Time | null,
+) => {
   whiteEnemies.value = deletes.filter((e) => e.name?.includes('white'));
   blackEnemies.value = deletes.filter((e) => e.name?.includes('black'));
   colorWin.value = color;
-  final.value = f;
+  final.value = wi;
+  loss.value = ls;
 
   const winer = ref<string>('');
   const idGame = d.value.board.id;
 
-  if (!f) {
+  if (!wi) {
     setTimeout(() => {
       if (color === 'Blancas') {
         blackTurn.value = true;
@@ -173,10 +183,9 @@ const checkMate = (f: boolean, color: string | null, deletes: deletePiece[], t: 
     } else {
       winer.value = d.value.board.userBlack;
     }
-
+    console.log(winer.value);
     winerPlayer(winer.value, idGame, colorWin.value);
   }
-  console.log(t);
 
   if (d.value.name !== d.value.board.userWhite && t) {
     minWhite.value = t.min;
@@ -186,12 +195,11 @@ const checkMate = (f: boolean, color: string | null, deletes: deletePiece[], t: 
     segBlack.value = t.seg;
   }
 };
-const closeModal = (d: boolean) => {
-  final.value = d;
-};
 
 const finalGame = (f: boolean, c: string) => {
   final.value = f;
   colorWin.value = c;
+  whiteTurn.value = false;
+  blackTurn.value = false;
 };
 </script>
