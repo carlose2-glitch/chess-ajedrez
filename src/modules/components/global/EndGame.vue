@@ -41,7 +41,7 @@ const router = useRouter();
 
 const direction = () => {
   if (props.url === '/game-same-pc') {
-    router.replace({ path: props.url });
+    location.reload();
   } else {
     router.replace({ path: props.url });
   }

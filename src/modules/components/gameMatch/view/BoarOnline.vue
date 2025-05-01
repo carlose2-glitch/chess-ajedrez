@@ -322,7 +322,7 @@ extractPositionPieces.rotatePieces(propsRotate.change);
 const movementF = (e: OnMovement) => {
   if (coMovement.value) {
     /*mover pieza */
-    extractPositionPieces.modifyBoard(e.col, e.row, e.piece, orderGame.array.value, false);
+    extractPositionPieces.modifyBoard(e.col, e.row, e.piece, orderGame.array.value, true);
     /* coronacion del peon */
     extractPositionPieces.coPawnEvent(e.col, e.row, e.piece, piechaCo.value);
     /*eliminar pieza*/
@@ -336,7 +336,7 @@ const movementF = (e: OnMovement) => {
     coMovement.value = false;
   } else {
     /*mover pieza */
-    extractPositionPieces.modifyBoard(e.col, e.row, e.piece, orderGame.array.value, false);
+    extractPositionPieces.modifyBoard(e.col, e.row, e.piece, orderGame.array.value, true);
 
     /* eliminar pieza graficamente */
     extractPositionPieces.deletePiece(e.piece, e.col, e.row, orderGame.array.value);
