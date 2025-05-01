@@ -185,7 +185,7 @@ const checkMate = (
     } else {
       winer.value = d.value.board.userBlack;
     }
-    console.log(winer.value);
+    /*ganador */
     winerPlayer(winer.value, idGame, colorWin.value);
   }
 
