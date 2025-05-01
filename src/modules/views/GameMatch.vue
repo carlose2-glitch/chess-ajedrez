@@ -51,6 +51,7 @@
             :player="d.name"
             :segg="segBlack"
             :movements="d.board.movements"
+            :run-time="d.board.time"
           />
 
           <BoarOnline
@@ -77,6 +78,7 @@
             :player="d.name"
             :segg="segWhite"
             :movements="d.board.movements"
+            :run-time="d.board.time"
           />
         </div>
       </div>

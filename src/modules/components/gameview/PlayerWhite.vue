@@ -46,6 +46,7 @@ interface Props {
   player: string | null;
   segg: number | null;
   movements: number;
+  runTime: string | null;
 }
 
 interface Time {
@@ -58,16 +59,19 @@ const seg = ref<number>(Number(data.segg));
 const emits = defineEmits<{ information: [loss: boolean, color: string] }>();
 
 const { pause, resume } = useIntervalFn(() => {
-  seg.value = seg.value === 0 ? 59 : seg.value - 1;
-  min.value = seg.value === 59 ? min.value - 1 : min.value;
-
-  window.localStorage.setItem('time-chess', JSON.stringify({ min: min.value, seg: seg.value }));
-
   /*termino el tiempo */
-  if (min.value === 0 && seg.value === 0) {
+  if (min.value === 0 && seg.value === 0 && data.runTime !== 'null') {
     pause();
     window.localStorage.removeItem('time-chess');
     emits('information', true, 'Negras');
+    /*seguir tiempo */
+  } else {
+    if (data.runTime !== 'null') {
+      seg.value = seg.value === 0 ? 59 : seg.value - 1;
+      min.value = seg.value === 59 ? min.value - 1 : min.value;
+
+      window.localStorage.setItem('time-chess', JSON.stringify({ min: min.value, seg: seg.value }));
+    }
   }
 }, 1000);
 
