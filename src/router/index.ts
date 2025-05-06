@@ -42,7 +42,11 @@ const router = createRouter({
       name: 'matchGame',
       component: () => import('@/modules/views/GameMatch.vue'),
     },
-
+    {
+      path: '/ranking',
+      name: 'ranking',
+      component: () => import('@/modules/views/RankingView.vue'),
+    },
     {
       path: '/:pathMatch(.*)*',
       name: 'notFound',

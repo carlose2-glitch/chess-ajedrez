@@ -59,11 +59,11 @@
       >
         <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
           <li>
-            <a
-              href="#"
+            <RouterLink
+              to="/ranking"
               class="block py-2 pr-4 pl-3 text-gray-400 hover:text-gray-200 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
               aria-current="page"
-              >Ranking</a
+              >Ranking</RouterLink
             >
           </li>
           <li>
@@ -114,12 +114,12 @@
           </g>
         </svg>
 
-        <a
-          href="#"
+        <RouterLink
+          to="/ranking"
           class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 rounded-lg font-bold text-xl px-5 py-2.5 text-center me-2 mb-2"
         >
           Ranking
-        </a>
+        </RouterLink>
         <a
           href="#"
           class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2"
