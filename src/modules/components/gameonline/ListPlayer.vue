@@ -125,6 +125,8 @@ const emitAccept = props.nameUser + 'accepted';
 
 const gameToken = props.nameUser + 'token';
 
+const arrayOn = ref<StatusPlayer[]>([]);
+
 /*evento del websocket */
 
 //import.meta.env.VITE_URL_API_PROD,
@@ -134,20 +136,20 @@ const socket = io(import.meta.env.VITE_URL_API_LOCAL, {
   },
 });
 
-const arrayOn = ref<StatusPlayer[]>([]);
+socket.on('clients-online', (a: StatusPlayer[]) => {
+  arrayOn.value = a;
 
-socket.on('clients-online', (e: StatusPlayer[]) => {
-  arrayOn.value = e;
   arrayUsers.value.forEach((e, i) => {
-    arrayOn.value.forEach((f) => {
+    arrayOn.value.find((f) => {
       if (e.user === f.user) {
-        arrayUsers.value[i].online = f.online;
+        return arrayUsers.value.splice(i, 1, { user: e.user, points: e.points, online: f.online });
       } else {
-        arrayUsers.value[i].online = false;
+        return (arrayUsers.value[i].online = false);
       }
     });
   });
 });
+
 /*cargar usuarios */
 const { isLoading } = useQuery({
   queryKey: ['users', users],
@@ -166,6 +168,7 @@ const { isLoading } = useQuery({
     return data;
   },
 });
+
 /*abrir opciones del desafio */
 const challenge = (name: string, online: boolean | null) => {
   if (online) {
