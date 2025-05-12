@@ -26,7 +26,7 @@
     </div>
   </div>
   <div v-else class="w-full h-screen bg-[#a3a3a3]">
-    <HeaderView :nameif="p.data" :direction="p.to" />
+    <HeaderView :nameif="p.data" :direction="p.to" :online="false" />
 
     <main class="flex w-full justify-center pt-8 gap-4 items-center">
       <div class="flex flex-col gap-2">
@@ -66,6 +66,4 @@ const { data: p, isLoading } = useQuery({
     return data;
   },
 });
-
-/*opciones del juego */
 </script>

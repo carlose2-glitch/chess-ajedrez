@@ -1,7 +1,7 @@
 <template>
   <nav class="bg-gray-800 border-gray-200 px-4 lg:px-6 py-2.5">
     <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-      <RouterLink to="/" class="flex items-center">
+      <div @click="closeGame()" class="flex items-center cursor-pointer">
         <img
           src="/src/images/logo-ajedrez-transparente.png"
           class="mr-3 h-6 sm:h-9"
@@ -10,7 +10,8 @@
         <span class="self-center text-xl text-white font-semibold whitespace-nowrap dark:text-white"
           >Chess</span
         >
-      </RouterLink>
+      </div>
+
       <div class="flex items-center lg:order-2">
         <RouterLink
           :to="dataP.direction"
@@ -26,14 +27,13 @@
         </button>
 
         <button
+          @click="changeValue"
           data-collapse-toggle="mobile-menu-2"
-          type="button"
-          class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          class="inline-flex items-center hover:cursor-pointer p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 dark:text-gray-400 dark:hover:bg-gray-700"
           aria-controls="mobile-menu-2"
           aria-expanded="false"
         >
           <svg
-            @click="changeValue"
             class="w-6 h-6"
             viewBox="0 0 14 14"
             id="meteor-icon-kit__solid-bars-s"
@@ -59,12 +59,13 @@
       >
         <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
           <li>
-            <RouterLink
-              to="/ranking"
-              class="block py-2 pr-4 pl-3 text-gray-400 hover:text-gray-200 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
+            <button
+              @click="ranking()"
+              class="block py-2 pr-4 pl-3 hover:cursor-pointer text-gray-400 hover:text-gray-200 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
               aria-current="page"
-              >Ranking</RouterLink
             >
+              Ranking
+            </button>
           </li>
           <li>
             <a
@@ -79,7 +80,7 @@
   </nav>
 
   <!-- Ventana nodal del menu hamburguesa -->
-  <div v-if="modal" class="w-full h-screen bg-gray-700/50 fixed">
+  <div v-if="modal" class="w-full h-screen bg-gray-700/50 fixed z-20">
     <div class="p-6 flex flex-col">
       <div class="flex flex-col items-center justify-center gap-4 h-[40rem]">
         <svg
@@ -114,12 +115,12 @@
           </g>
         </svg>
 
-        <RouterLink
-          to="/ranking"
-          class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 rounded-lg font-bold text-xl px-5 py-2.5 text-center me-2 mb-2"
+        <button
+          @click="ranking()"
+          class="text-gray-900 bg-gradient-to-r hover:cursor-pointer from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 rounded-lg font-bold text-xl px-5 py-2.5 text-center me-2 mb-2"
         >
           Ranking
-        </RouterLink>
+        </button>
         <a
           href="#"
           class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2"
@@ -156,6 +157,7 @@ const route = useRoute();
 interface Props {
   nameif: string;
   direction: string;
+  online: boolean;
 }
 
 const dataP = defineProps<Props>();
@@ -163,12 +165,35 @@ const changeValue = () => {
   modal.value = !modal.value;
 };
 
+const emit = defineEmits<{ close: [c: boolean] }>();
+/*cerrar sesion */
 const closeSection = () => {
-  localStorage.removeItem('token-chess');
-  if (route.path === '/') {
-    location.reload();
+  if (dataP.online) {
+    emit('close', dataP.online);
+  } else {
+    localStorage.removeItem('token-chess');
+    if (route.path === '/') {
+      location.reload();
+    } else {
+      router.replace({ path: '/' });
+    }
+  }
+};
+/* evalua si esta en una partida online  */
+const closeGame = () => {
+  if (dataP.online) {
+    emit('close', dataP.online);
   } else {
     router.replace({ path: '/' });
+  }
+};
+/*ranking */
+
+const ranking = () => {
+  if (dataP.online) {
+    emit('close', dataP.online);
+  } else {
+    router.replace({ path: '/ranking' });
   }
 };
 </script>

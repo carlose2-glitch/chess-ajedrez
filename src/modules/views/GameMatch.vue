@@ -27,9 +27,10 @@
   </div>
   <div v-else-if="isError">{{ error }}</div>
   <div v-else-if="isSuccess" class="flex flex-col bg-gray-700 gap-0.5">
+    <WarningGame v-if="finishedGame" @exit="exitGame" />
     <EndGame v-if="final" :color="colorWin" :url="url" />
     <LossOnline v-if="loss" :color="colorWin" :url="url" />
-    <HeaderView :nameif="d.name" direction="#" />
+    <HeaderView :nameif="d.name" direction="#" :online="true" @close="finished" />
 
     <main class="w-full h-auto flex justify-center">
       <div class="w-[90%]">
@@ -100,6 +101,9 @@ import { winerPlayer } from '../actions/winerPlayer';
 import PlayerBlack from '../components/gameMatch/time/PlayerBlack.vue';
 import PlayerWhite from '../components/gameMatch/time/PlayerWhite.vue';
 import LossOnline from '../components/gameMatch/LossOnline.vue';
+import WarningGame from '../components/gameMatch/WarningGame.vue';
+
+const finishedGame = ref<boolean>(false);
 
 const route = useRoute();
 
@@ -203,5 +207,19 @@ const finalGame = (f: boolean, c: string) => {
   colorWin.value = c;
   whiteTurn.value = false;
   blackTurn.value = false;
+};
+/*opcion si el usuario quiere terminar el juego al presionar cualquier elemento de la cabecera */
+const finished = (e: boolean) => {
+  finishedGame.value = e;
+};
+/*salir del juego */
+const exitGame = (e: boolean) => {
+  if (e) {
+    final.value = e;
+    colorWin.value = d.value.board.userWhite === d.value.name ? 'Negras' : 'Blancas';
+    whiteTurn.value = false;
+    blackTurn.value = false;
+  }
+  finishedGame.value = e;
 };
 </script>

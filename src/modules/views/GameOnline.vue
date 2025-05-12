@@ -45,7 +45,7 @@
   </main>
 
   <div v-else>
-    <HeaderView :nameif="p.data" :direction="p.to" />
+    <HeaderView :nameif="p.data" :direction="p.to" :online="false" />
     <ListPlayer
       :play-game="playGame"
       :name="dataSearch"
