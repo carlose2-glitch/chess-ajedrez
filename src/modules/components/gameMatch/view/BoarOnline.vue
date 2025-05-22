@@ -55,8 +55,35 @@ import type { deletePiece, Pieces } from '@/modules/interfaces/gamefuntions/piec
 import { io } from 'socket.io-client';
 import CoronationPawn from '../../global/CoronationPawn.vue';
 
+interface StatusPlayer {
+  user: string | null;
+
+  online: boolean | null;
+  g: boolean;
+  b: number;
+}
+
+interface Props {
+  change: number;
+  turnPlayer: number;
+  enemy: string;
+  user: string;
+  movementsGame: number;
+  idGame: number;
+  pieces: Pieces[];
+  fGame: boolean;
+  colorF: string | null;
+}
+
+const propsRotate = defineProps<Props>();
 //import.meta.env.VITE_URL_API_PROD,
-const socket = io(import.meta.env.VITE_URL_API_LOCAL);
+const socket = io(import.meta.env.VITE_URL_API_LOCAL, {
+  auth: {
+    user: propsRotate.user,
+    game: true,
+    board: propsRotate.idGame,
+  },
+});
 
 const turn = ['white', 'black'];
 
@@ -72,18 +99,6 @@ const colCoronation = ref<number | null>(null);
 const pieceCo = ref<string | null>(null);
 const piechaCo = ref<string | null>('');
 const sendTime = ref<Time | null>(null);
-
-interface Props {
-  change: number;
-  turnPlayer: number;
-  enemy: string;
-  user: string;
-  movementsGame: number;
-  idGame: number;
-  pieces: Pieces[];
-  fGame: boolean;
-  colorF: string | null;
-}
 
 interface OnMovement {
   userTo: string;
@@ -106,7 +121,6 @@ interface winnerGame {
 
   idBoard: number;
 }
-const propsRotate = defineProps<Props>();
 
 const movements = ref<number>(propsRotate.movementsGame);
 
@@ -373,4 +387,17 @@ const winner = (e: winnerGame) => {
 };
 
 socket.on(finalEmit, winner);
+
+/* observacion de los que estan desconectados */
+
+socket.on('clients-online', (a: StatusPlayer[]) => {
+  const find = a.find(
+    (e) => e.user === propsRotate.enemy && e.g === true && e.b === propsRotate.idGame,
+  );
+
+  if (!find) {
+    console.log('el usuario no esta conectado');
+    emits('final', false, false, propsRotate.colorF, extractPositionPieces.deletes.value, null);
+  }
+});
 </script>

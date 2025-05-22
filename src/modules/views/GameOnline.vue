@@ -45,7 +45,6 @@
   </main>
 
   <div v-else>
-    <TimeLimit />
     <HeaderView :nameif="p.data" :direction="p.to" :online="false" />
     <ListPlayer
       :play-game="playGame"
@@ -88,7 +87,6 @@ import { ref } from 'vue';
 import ListPlayer from '../components/gameonline/ListPlayer.vue';
 import WaitPlayer from '../components/gameonline/WaitPlayer.vue';
 import AcceptedInvitation from '../components/gameonline/AcceptedInvitation.vue';
-import TimeLimit from '../components/gameMatch/TimeLimit.vue';
 
 const token = localStorage.getItem('token-chess');
 

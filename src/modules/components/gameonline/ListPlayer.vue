@@ -133,6 +133,8 @@ const arrayOn = ref<StatusPlayer[]>([]);
 const socket = io(import.meta.env.VITE_URL_API_LOCAL, {
   auth: {
     user: props.nameUser,
+    game: false,
+    board: 0,
   },
 });
 
