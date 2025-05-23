@@ -1,7 +1,10 @@
 <template>
-  <div class="flex fixed justify-center items-center w-full h-screen text-black">
-    <span class="countdown font-mono text-6xl">
-      <span :style="'--value:' + time + ';'" aria-live="polite" aria-label="10">{{ time }}</span>
+  <div
+    class="flex z-30 bg-gray-700/50 fixed justify-center items-center w-full h-screen text-black flex-col"
+  >
+    <p class="font-bold text-white">El contricante no esta conectado</p>
+    <span class="countdown font-mono text-6xl text-white">
+      <span :style="'--value:' + t + ';'" aria-live="polite" aria-label="10">{{ time }}</span>
     </span>
   </div>
 </template>
@@ -10,13 +13,21 @@
 import { useIntervalFn } from '@vueuse/core';
 import { ref } from 'vue';
 
-const time = ref<number>(10);
+interface Props {
+  time: number;
+}
+
+const props = defineProps<Props>();
+const emits = defineEmits<{ end: [f: boolean] }>();
+
+const t = ref<number>(props.time);
 
 const { resume } = useIntervalFn(() => {
-  if (time.value === 0) {
+  if (t.value === 0) {
     console.log('se acabo');
+    emits('end', true);
   }
-  time.value = time.value - 1;
+  t.value = t.value - 1;
 }, 1000);
 
 resume();

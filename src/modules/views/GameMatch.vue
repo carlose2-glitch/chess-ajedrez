@@ -25,8 +25,18 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <div v-else-if="isError">{{ error }}</div>
+  <div v-else-if="isError" class="flex items-center justify-center gap-4 flex-col w-full h-screen">
+    <div>
+      {{ error }}
+    </div>
+    <RouterLink
+      to="/"
+      class="text-black block bg-gray-400 hover:bg-gray-300 hover:text-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-300 focus:outline-none dark:focus:ring-gray-300"
+      >Home</RouterLink
+    >
+  </div>
   <div v-else-if="isSuccess" class="flex flex-col bg-gray-700 gap-0.5">
+    <TimeLimit v-if="disco" :time="time" @end="timeOut" />
     <WarningGame v-if="finishedGame" @exit="exitGame" />
     <EndGame v-if="final" :color="colorWin" :url="url" />
     <LossOnline v-if="loss" :color="colorWin" :url="url" />
@@ -102,8 +112,12 @@ import PlayerBlack from '../components/gameMatch/time/PlayerBlack.vue';
 import PlayerWhite from '../components/gameMatch/time/PlayerWhite.vue';
 import LossOnline from '../components/gameMatch/LossOnline.vue';
 import WarningGame from '../components/gameMatch/WarningGame.vue';
+import TimeLimit from '../components/gameMatch/TimeLimit.vue';
 
 const finishedGame = ref<boolean>(false);
+
+const disco = ref<boolean>(false);
+const time = ref<number>(30);
 
 const route = useRoute();
 
@@ -163,6 +177,7 @@ const checkMate = (
   color: string | null,
   deletes: deletePiece[],
   t: Time | null,
+  dis: boolean,
 ) => {
   whiteEnemies.value = deletes.filter((e) => e.name?.includes('white'));
   blackEnemies.value = deletes.filter((e) => e.name?.includes('black'));
@@ -200,6 +215,13 @@ const checkMate = (
     minBlack.value = t.min;
     segBlack.value = t.seg;
   }
+  /*verifica si el usuario se conecto o no */
+  if (dis) {
+    disco.value = dis;
+  } else {
+    disco.value = dis;
+    time.value = 30;
+  }
 };
 
 const finalGame = (f: boolean, c: string) => {
@@ -221,5 +243,12 @@ const exitGame = (e: boolean) => {
     blackTurn.value = false;
   }
   finishedGame.value = e;
+};
+/*tiempo del usuario desconectado */
+const timeOut = (e: boolean) => {
+  final.value = e;
+  colorWin.value = d.value.board.userWhite === d.value.name ? 'Blancas' : 'Negras';
+  whiteTurn.value = false;
+  blackTurn.value = false;
 };
 </script>

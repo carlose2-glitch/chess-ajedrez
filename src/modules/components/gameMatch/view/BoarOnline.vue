@@ -314,6 +314,7 @@ const emits = defineEmits<{
     color: string | null,
     deleteP: deletePiece[],
     time: Time | null,
+    dis: boolean,
   ];
 }>();
 
@@ -325,6 +326,7 @@ watch(datacheck, (check) => {
     check.colorWin,
     extractPositionPieces.deletes.value,
     sendTime.value,
+    false,
   );
   sendTime.value = null;
 });
@@ -376,14 +378,14 @@ watch(propsRotate, (final) => {
       user: propsRotate.enemy,
       idBoard: propsRotate.idGame,
     });
-    emits('final', true, false, final.colorF, extractPositionPieces.deletes.value, null);
+    emits('final', true, false, final.colorF, extractPositionPieces.deletes.value, null, false);
   }
 });
 
 /*escuchar el final de la partida ganador tiempo*/
 
 const winner = (e: winnerGame) => {
-  emits('final', false, true, e.color, extractPositionPieces.deletes.value, null);
+  emits('final', false, true, e.color, extractPositionPieces.deletes.value, null, false);
 };
 
 socket.on(finalEmit, winner);
@@ -394,10 +396,29 @@ socket.on('clients-online', (a: StatusPlayer[]) => {
   const find = a.find(
     (e) => e.user === propsRotate.enemy && e.g === true && e.b === propsRotate.idGame,
   );
-
+  /*observando que los 2 usuarios esten conetados */
+  /*desconectado  */
   if (!find) {
-    console.log('el usuario no esta conectado');
-    emits('final', false, false, propsRotate.colorF, extractPositionPieces.deletes.value, null);
+    emits(
+      'final',
+      false,
+      false,
+      propsRotate.colorF,
+      extractPositionPieces.deletes.value,
+      null,
+      true,
+    );
+  } else {
+  /*conectado */
+    emits(
+      'final',
+      false,
+      false,
+      propsRotate.colorF,
+      extractPositionPieces.deletes.value,
+      null,
+      false,
+    );
   }
 });
 </script>
