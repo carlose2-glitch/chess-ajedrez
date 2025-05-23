@@ -67,13 +67,6 @@
               Ranking
             </button>
           </li>
-          <li>
-            <a
-              href="#"
-              class="block py-2 pr-4 pl-3 text-gray-400 hover:text-gray-200 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-              >Ver partida</a
-            >
-          </li>
         </ul>
       </div>
     </div>
@@ -121,12 +114,6 @@
         >
           Ranking
         </button>
-        <a
-          href="#"
-          class="text-gray-900 bg-gradient-to-r from-gray-300 to-gray-600 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2"
-        >
-          Ver partida
-        </a>
 
         <RouterLink
           :to="dataP.direction"

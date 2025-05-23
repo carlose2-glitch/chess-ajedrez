@@ -77,7 +77,8 @@ interface Props {
 
 const propsRotate = defineProps<Props>();
 //import.meta.env.VITE_URL_API_PROD,
-const socket = io(import.meta.env.VITE_URL_API_LOCAL, {
+//import.meta.env.VITE_URL_API_LOCAL,
+const socket = io(import.meta.env.VITE_URL_API_PROD, {
   auth: {
     user: propsRotate.user,
     game: true,
@@ -409,7 +410,7 @@ socket.on('clients-online', (a: StatusPlayer[]) => {
       true,
     );
   } else {
-  /*conectado */
+    /*conectado */
     emits(
       'final',
       false,

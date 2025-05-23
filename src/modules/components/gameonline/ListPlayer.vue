@@ -130,7 +130,8 @@ const arrayOn = ref<StatusPlayer[]>([]);
 /*evento del websocket */
 
 //import.meta.env.VITE_URL_API_PROD,
-const socket = io(import.meta.env.VITE_URL_API_LOCAL, {
+//import.meta.env.VITE_URL_API_LOCAL,
+const socket = io(import.meta.env.VITE_URL_API_PROD, {
   auth: {
     user: props.nameUser,
     game: false,
