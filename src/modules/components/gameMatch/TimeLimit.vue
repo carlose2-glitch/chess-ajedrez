@@ -24,7 +24,6 @@ const t = ref<number>(props.time);
 
 const { resume } = useIntervalFn(() => {
   if (t.value === 0) {
-    console.log('se acabo');
     emits('end', true);
   }
   t.value = t.value - 1;

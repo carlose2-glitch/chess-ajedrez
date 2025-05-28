@@ -8,7 +8,7 @@
         <img
           v-for="(p, i) in data.enemies"
           :key="i"
-          :src="'/src/images/' + p.src"
+          :src="'/img/' + p.src"
           alt="enemigos"
           class="w-1/15 h-6"
         />

@@ -200,7 +200,7 @@ const invitationF = (data: Invitation) => {
 /*recibe la invitacion */
 socket.on(props.nameUser, invitationF);
 
-/*aceptar invitacion invitado*/
+/*aceptar invitacion del anfitrion*/
 watch(props, (e) => {
   if (e.playGame) {
     socket.emit('accept-invitation', {

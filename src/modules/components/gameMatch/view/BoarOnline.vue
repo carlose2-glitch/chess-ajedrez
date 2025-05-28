@@ -73,6 +73,7 @@ interface Props {
   pieces: Pieces[];
   fGame: boolean;
   colorF: string | null;
+  endTime: boolean;
 }
 
 const propsRotate = defineProps<Props>();
@@ -310,15 +311,15 @@ const coronationFuntion = (name: string | null) => {
 
 const emits = defineEmits<{
   final: [
-    winner: boolean,
-    loss: boolean,
-    color: string | null,
-    deleteP: deletePiece[],
-    time: Time | null,
-    dis: boolean,
+    jm: boolean /*jaque mate */,
+    loss: boolean /* perdedor */,
+    color: string | null /*color de las piezas */,
+    deleteP: deletePiece[] /*piezas eliminadas */,
+    time: Time | null /*tiempo transcurrido del enemigo */,
+    dis: boolean /*jaque mate desconectado */,
   ];
 }>();
-
+/*si checkmate es verdadero (jaque mate) */
 watch(datacheck, (check) => {
   emits(
     'final',
@@ -371,7 +372,7 @@ const movementF = (e: OnMovement) => {
   sendTime.value = JSON.parse(e.time);
 };
 socket.on(onMovement, movementF);
-/*final de la partida del perdedor tiempo*/
+/*final de la partida del perdedor jaque mate*/
 watch(propsRotate, (final) => {
   if (final.fGame) {
     socket.emit('winner', {
@@ -379,14 +380,20 @@ watch(propsRotate, (final) => {
       user: propsRotate.enemy,
       idBoard: propsRotate.idGame,
     });
+  }
+  /* pasa por aca solamente cuando se acaba el tiempo de cualquier usuario */
+  if (final.endTime) {
     emits('final', true, false, final.colorF, extractPositionPieces.deletes.value, null, false);
   }
 });
 
-/*escuchar el final de la partida ganador tiempo*/
+/*escuchar el final de la partida perdedor jaque mate*/
+
+const timeOut = ref<boolean>(false);
 
 const winner = (e: winnerGame) => {
-  emits('final', false, true, e.color, extractPositionPieces.deletes.value, null, false);
+  timeOut.value = true;
+  emits('final', false, timeOut.value, e.color, extractPositionPieces.deletes.value, null, false);
 };
 
 socket.on(finalEmit, winner);
@@ -403,7 +410,7 @@ socket.on('clients-online', (a: StatusPlayer[]) => {
     emits(
       'final',
       false,
-      false,
+      timeOut.value,
       propsRotate.colorF,
       extractPositionPieces.deletes.value,
       null,

@@ -76,6 +76,7 @@
             :pieces="d.board.pieces"
             :fGame="final"
             :colorF="colorWin"
+            :end-time="finalTime"
           />
 
           <PlayerWhite
@@ -141,6 +142,7 @@ const minWhite = ref<number | null>(null);
 const segWhite = ref<number | null>(null);
 const minBlack = ref<number | null>(null);
 const segBlack = ref<number | null>(null);
+const finalTime = ref<boolean>(false);
 
 const {
   data: d,
@@ -172,7 +174,7 @@ interface Time {
 }
 
 const checkMate = (
-  wi: boolean,
+  jm: boolean,
   ls: boolean,
   color: string | null,
   deletes: deletePiece[],
@@ -182,13 +184,13 @@ const checkMate = (
   whiteEnemies.value = deletes.filter((e) => e.name?.includes('white'));
   blackEnemies.value = deletes.filter((e) => e.name?.includes('black'));
   colorWin.value = color;
-  final.value = wi;
+  final.value = jm;
   loss.value = ls;
 
   const winer = ref<string>('');
   const idGame = d.value.board.id;
-
-  if (!wi) {
+  /*jaque mate */
+  if (!jm) {
     setTimeout(() => {
       if (color === 'Blancas') {
         blackTurn.value = true;
@@ -205,7 +207,18 @@ const checkMate = (
       winer.value = d.value.board.userBlack;
     }
     /*ganador */
-    winerPlayer(winer.value, idGame, colorWin.value);
+
+    if (d.value.name === winer.value && finalTime.value) {
+      winerPlayer(winer.value, idGame, colorWin.value);
+    } else {
+      if (d.value.name === winer.value) {
+        winerPlayer(winer.value, idGame, colorWin.value);
+      }
+      /*se acabo el tiempo o desconeccion guardar puntos*/
+      if (finalTime.value) {
+        winerPlayer(winer.value, idGame, colorWin.value);
+      }
+    }
   }
 
   if (d.value.name !== d.value.board.userWhite && t) {
@@ -215,18 +228,19 @@ const checkMate = (
     minBlack.value = t.min;
     segBlack.value = t.seg;
   }
-  /*verifica si el usuario se conecto o no */
-  if (dis) {
+  /*verifica si el usuario esta conectado*/
+  if (dis && !ls && !final.value) {
     disco.value = dis;
   } else {
-    disco.value = dis;
+    disco.value = false;
     time.value = 30;
   }
 };
-
+/*se acabo el tiempo */
 const finalGame = (f: boolean, c: string) => {
   final.value = f;
   colorWin.value = c;
+  finalTime.value = f;
   whiteTurn.value = false;
   blackTurn.value = false;
 };
@@ -248,6 +262,7 @@ const exitGame = (e: boolean) => {
 const timeOut = (e: boolean) => {
   final.value = e;
   colorWin.value = d.value.board.userWhite === d.value.name ? 'Blancas' : 'Negras';
+  finalTime.value = e;
   whiteTurn.value = false;
   blackTurn.value = false;
 };
